@@ -8,8 +8,17 @@
     "start": "next start"
   },
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^3.0.0",
+    "mongoose": "^5.10.8",
     "next": "9.5.3",
+    "next-connect": "^0.9.0",
+    "postcss-import": "^12.0.1",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "tailwindcss": "^1.8.10"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.7.0",
+    "postcss": "^8.1.1"
   }
 }
