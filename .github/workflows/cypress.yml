@@ -1,0 +1,19 @@
+name: E2E Tests
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      - run: npm ci
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          start: npm run dev
+          wait-on: "http://localhost:3000"
