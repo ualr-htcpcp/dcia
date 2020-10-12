@@ -16,7 +16,6 @@ handler.post(async (req, res) => {
     offendingFields: [],
   };
   try {
-    //TODO: we should probably abstract this to use throughout the solution
     // General field validation checks
     if (!req.body.email) {
       validationError.error = true;
