@@ -19,7 +19,8 @@
     "next": "9.5.3",
     "next-connect": "^0.9.0",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "swr": "^0.3.5"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^3.0.0",
