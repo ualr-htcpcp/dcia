@@ -14,6 +14,7 @@
     "cy:open": "cypress open"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "mongoose": "^5.10.9",
     "next": "9.5.3",
     "next-connect": "^0.9.0",

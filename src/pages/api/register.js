@@ -1,10 +1,12 @@
 import nextConnect from "next-connect";
 import middleware from "../../middleware";
+import bcrypt from "bcrypt";
 import RegistrationRequest from "../../models/RegistrationRequest";
 
 const handler = nextConnect();
 handler.use(middleware);
 
+const saltRounds = 10; //? Does this need to be moved somewhere else?
 const accessLevels = ["instructor", "admin"];
 
 handler.post(async (req, res) => {
@@ -62,16 +64,22 @@ handler.post(async (req, res) => {
       throw new Error(errorMessage);
     }
 
-    const newRequest = new RegistrationRequest({
-      email: req.body.email,
-      password: req.body.password, //TODO: hash password
-      accessLevel: req.body.accessLevel,
+    await bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
+      if (err) {
+        throw new Error(err);
+      }
+      const newRequest = new RegistrationRequest({
+        email: req.body.email,
+        password: hash,
+        accessLevel: req.body.accessLevel,
+      });
+      await newRequest.save();
     });
 
-    await newRequest.save();
     res.status(200).json({ message: "Registration request submitted." });
   } catch (err) {
-    console.log(...err);
+    //TODO: Differentiate between the errorMessage object and existing request errors
+    res.status(400).json({ error: true, message: err.message });
   }
 });
 
