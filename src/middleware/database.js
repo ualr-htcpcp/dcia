@@ -8,9 +8,6 @@ const client = mongoose.connect(process.env.MONGO_URL, {
 async function database(req, res, next) {
   if (!client) {
     await client;
-    console.log("connecting to mongo");
-  } else {
-    console.log("mongo already connected");
   }
 
   return next();
