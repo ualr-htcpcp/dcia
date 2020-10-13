@@ -36,3 +36,6 @@ yarn-error.log*
 # cypress
 cypress/videos
 cypress/screenshots
+
+# vs code plugin: local history
+.history
