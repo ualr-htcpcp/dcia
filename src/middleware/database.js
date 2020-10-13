@@ -7,9 +7,8 @@ const client = mongoose.connect(process.env.MONGO_URL, {
 });
 
 async function database(req, res, next) {
-  if (!client) {
-    await client;
-  }
+  if (!client) await client;
+  req.dbClient = client;
 
   return next();
 }

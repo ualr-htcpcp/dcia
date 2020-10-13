@@ -5,5 +5,5 @@ const TestSchema = new Schema({
   content: { type: String, required: true },
 });
 
-const Test = mongoose.model("Test", TestSchema);
+const Test = mongoose.models.Test || mongoose.model("Test", TestSchema);
 export default Test;

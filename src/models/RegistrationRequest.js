@@ -24,6 +24,13 @@ const RegistrationRequestSchema = new Schema({
   },
 });
 
+/**
+  For some reason using const RegistrationRequest = mongoose.model("RegistrationRequest", RegistrationRequestSchema);
+  gives the error: OverwriteModelError: Cannot overwrite `RegistrationRequest` model once compiled.
+
+  I found the solution below in a Github comment, and don't see the error now.
+  If you have a better solution, please let me know!
+*/
 const RegistrationRequest =
   mongoose.models.RegistrationRequest ||
   mongoose.model("RegistrationRequest", RegistrationRequestSchema);
