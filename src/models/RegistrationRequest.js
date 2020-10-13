@@ -1,22 +1,23 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
+import { hashPassword } from "../utils/auth";
 
 const RegistrationRequestSchema = new Schema(
   {
     email: {
       type: String,
-      required: true,
+      required: [true, "Email is required"],
       unique: true,
       trim: true,
     },
     password: {
       type: String,
-      required: true,
+      required: [true, "Password is required"],
     },
     accessLevel: {
       type: String,
       enum: ["instructor", "admin"],
-      required: true,
+      required: [true, "Access Level is required"],
     },
     requestStatus: {
       type: String,
@@ -27,6 +28,20 @@ const RegistrationRequestSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// Hash password when password changes
+RegistrationRequestSchema.pre("save", async function (next) {
+  try {
+    if (!this.isModified()) return next();
+    console.log("NEW ACCOUNT");
+    const hashed = await hashPassword(this.password);
+    console.log(`hashed: ${hashed}`);
+    this.password = hashed;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+});
 
 /**
   For some reason using const RegistrationRequest = mongoose.model("RegistrationRequest", RegistrationRequestSchema);
