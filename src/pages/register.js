@@ -1,54 +1,28 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+const emailRegex = new RegExp(
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
 
 export default function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [accessLevel, setAccessLevel] = useState(null);
-  const [errors, setErrors] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const { register, handleSubmit, errors } = useForm();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const formContents = {
-        email: email,
-        password: password,
-        accessLevel: accessLevel,
-      };
-      const posted = await fetch("/api/register", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(formContents),
-      });
-      if (posted.ok) {
-        const response = await posted.json();
-        setSuccess(response.message);
+  const onSubmit = (data) => console.log(data);
 
-        // Clear form
-        setEmail("");
-        setPassword("");
-        setAccessLevel("");
-      } else {
-        //TODO: If form validation error, focus/outline offending fields and display error text.
-        // Otherwise, just display error text.
-        const response = await posted.json();
-        setErrors(response.message);
-      }
-    } catch (err) {
-      //TODO: Handle network errors
-      setErrors(err);
-    }
-  };
   return (
     <>
       <h2 className="text-xl font-semibold">Sign Up for DCIA</h2>
-
-      {success && <h2 className="font-bold text-green-500">{success}</h2>}
-      {errors && <h2 className=" font-bold text-red-500">{errors}</h2>}
       <br />
-      <form className="w-full max-w-sm" onSubmit={handleSubmit}>
+      <form className="w-full max-w-sm" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          {errors && errors.email?.message}
+          <br />
+          {errors && errors.password?.message}
+          <br />
+          {errors && errors.accessLevel?.message}
+        </div>
+
         <label
           className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
           htmlFor="email"
@@ -58,9 +32,14 @@ export default function Register() {
         <input
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
           type="text"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          ref={register({
+            required: "Email is required",
+            pattern: {
+              value: emailRegex,
+              message: "Not a valid email address.",
+            },
+          })}
         />
 
         <label
@@ -72,9 +51,10 @@ export default function Register() {
         <input
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
           type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          ref={register({
+            required: "Password is required",
+          })}
         />
 
         <label
@@ -85,9 +65,10 @@ export default function Register() {
         </label>
         <select
           className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="accessLevel"
-          onBlur={(e) => setAccessLevel(e.target.value)}
-          defaultValue={""}
+          name="accessLevel"
+          ref={register({
+            required: "Access level is required",
+          })}
         >
           <option value="" disabled>
             Select an Option

@@ -35,7 +35,6 @@ handler.post(async (req, res) => {
     });
 
     await newRequest.save();
-    console.log(newRequest);
 
     res.status(200).json({ message: "Registration request submitted." });
   } catch (err) {
