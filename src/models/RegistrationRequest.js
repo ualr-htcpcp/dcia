@@ -32,10 +32,8 @@ const RegistrationRequestSchema = new Schema(
 // Hash password when password changes
 RegistrationRequestSchema.pre("save", async function (next) {
   try {
-    if (!this.isModified()) return next();
-    console.log("NEW ACCOUNT");
+    if (!this.isModified("password")) return next();
     const hashed = await hashPassword(this.password);
-    console.log(`hashed: ${hashed}`);
     this.password = hashed;
     return next();
   } catch (err) {
