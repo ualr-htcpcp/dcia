@@ -1,21 +1,54 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-const emailRegex = new RegExp(
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
+import { emailRegex } from "../utils/validation";
 
 export default function Register() {
-  const { register, handleSubmit, errors } = useForm();
+  const [success, setSuccess] = useState(null);
+  const { register, handleSubmit, setError, errors, reset } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      accessLevel: "",
+    },
+  });
 
-  const onSubmit = (data) => console.log(data);
-
+  const clearSuccess = () => {
+    if (success) setSuccess(null);
+  };
+  const onSubmit = async (data) => {
+    try {
+      const postForm = await fetch("/api/register", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(data),
+      });
+      const res = await postForm.json();
+      if (postForm.ok) {
+        setSuccess(res.message);
+        reset();
+      } else {
+        // validation error from server
+        setError("email", { type: "manual", message: res.message });
+      }
+    } catch (err) {
+      //TODO: This only catches network failure etc, should probably handle this better
+      setError("email", { type: "manual", message: err.message });
+    }
+  };
   return (
     <>
-      <h2 className="text-xl font-semibold">Sign Up for DCIA</h2>
+      <h2 className="font-bold text-xl font-semibold">Sign Up for DCIA</h2>
       <br />
-      <form className="w-full max-w-sm" onSubmit={handleSubmit(onSubmit)}>
-        <div>
+      <form
+        className="w-full max-w-sm"
+        onSubmit={handleSubmit(onSubmit)}
+        onChange={clearSuccess}
+      >
+        <div className="font-semibold text-green-600">{success}</div>
+
+        <div className="font-semibold text-red-600" id="form-errors">
           {errors && errors.email?.message}
           <br />
           {errors && errors.password?.message}
