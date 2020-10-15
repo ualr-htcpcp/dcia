@@ -1,16 +1,36 @@
 # DCIA
 
+## Table of Contents
+
+- [Overview](#overview)
+  - [Team](#team)
+  - [Application Stack](#application-stack)
+- [Setup](#setup)
+  - [Prerequisites](#prerequisites)
+  - [IDE Plugins](#ide-plugins)
+  - [Clone Repo](#clone-repo)
+  - [Running](#running)
+  - [Development Process](#development-process)
+    - [Project Board](#project-board)
+    - [Feature Development](#feature-development)
+      - [Creating a Branch](#creating-a-branch)
+      - [Adding Files](#adding-files)
+      - [Committing Changes](#committing-changes)
+      - [Push Changes](#push-changes-to-remote)
+      - [Draft Pull Request](#draft-pull-request)
+      - [Merge to `main`](#merge-to-main)
+
 ## Overview
 
 The **D**epartment **C**ontinuous **I**mprovement **A**pplication is a web application developed for our coursework in UA Little Rock's CPSC 4392 Capstone Project course.
 
-## Team
+### Team
 
 - Justin Cypret
 - Dylan Johnson
 - Scott White
 
-## Application Stack
+### Application Stack
 
 DCIA leverages a variation of the MERN stack through the following technologies:
 
@@ -39,23 +59,33 @@ Some optional plugins that improve developer experience:
 - [Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2): Color matching brackets for improved visibility.
 - [Local History](https://marketplace.visualstudio.com/items?itemName=xyz.local-history) : Creates a `.history` folder in case of catastrophe.
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
 ### Clone Repo
 
-1. Clone the `dcia` repository locally by using the appropriate `git` command:
+Clone the `dcia` repository locally by using the appropriate `git` command:
 
-   - HTTPS: `git clone https://github.com/ualr-htcpcp/dcia.git`
-   - SSH: `git clone git@github.com:ualr-htcpcp/dcia.git`
+HTTPS:
 
-2. Once the repo has been cloned, enter the directory using the command: `cd dcia`
-3. Run `npm install` to install the project's dependencies.
+```bash
+git clone https://github.com/ualr-htcpcp/dcia.git
+```
+
+SSH:
+
+```bash
+git clone git@github.com:ualr-htcpcp/dcia.git
+```
+
+Once the repo has been cloned, enter the directory using the command:
+
+```bash
+cd dcia
+```
+
+To install the project's dependencies:
+
+```bash
+npm install
+```
 
 ## Running
 
@@ -70,7 +100,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 The [Project Board](https://github.com/ualr-htcpcp/dcia/projects/1) is used to visualize our current "sprint" tasks. Most feature-related development will specify the related use case from the functional requirements.
 
 - **To Do**: Represents tasks to be done. A task that is unassigned is up for grabs and can be claimed by assigning it to yourself.
-- \*_In Progress_: Represents tasks that are actively being worked on.
+- **In Progress**: Represents tasks that are actively being worked on.
 - **In Review**: Represents tasks that have been deemed complete by the assignee, but requires feedback from the team before merging.
 - **Done**: Represents tasks that have been completed. In the case of development tasks, this usually means the feature branch has been merged into `main`.
 
@@ -110,7 +140,7 @@ You can also check the status of your branch. This command will show what files 
 git status
 ```
 
-#### Commiting changes
+#### Committing changes
 
 When you're ready to commit your changes, create a succinct message to describe your work. All files that have been added to Git will be included:
 
@@ -130,4 +160,14 @@ git push -u origin <branch_name>
 
 Once your feature is in a usable state, you can open a draft pull request to get feedback from the team.
 
-On the Github repository page, you
+Once you've pushed your changes, the `dcia` Github page will show a prompt "<branch_name> had recent pushes, Compare and Pull Request".
+
+Selecting this option will take you to the "Open a Pull Request" form. This form is fairly self explanatory, but make sure to add the "draft" label and add a reviewer.
+
+Reviewers can add comments referencing specific lines of code to allow for easy feedback and iteration.
+
+#### Merge to `main`
+
+Once a pull request has been completed and reviewed, the reviewer can merge the pull request to main.
+
+After a feature branch has been merged, delete the source branch to keep the repository tidy and move the appropriate card on the Project Board to the "Done" column.
