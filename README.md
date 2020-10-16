@@ -81,6 +81,20 @@ Once the repo has been cloned, enter the directory using the command:
 cd dcia
 ```
 
+Create a `.env.local` file for environment variables.
+
+```bash
+touch .env.local
+```
+
+In order for the application to interact with the database, you'll need to add the MongoDB connection string. This can be found on the Mongo Atlas dashboard by selecting the "Connect" button, then "Connect Your Application". 
+
+Copy that connection string into your new `.env.local` file:
+
+```bash
+MONGO_URL=<connection_string>
+```
+
 To install the project's dependencies:
 
 ```bash
