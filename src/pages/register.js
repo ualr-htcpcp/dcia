@@ -1,6 +1,20 @@
+import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+} from "react-bootstrap";
+import Teapot from "../components/Teapot.jsx";
 import { emailRegex } from "../utils/validation";
+
+const pageTitle = "Register for DCIA";
 
 export default function Register() {
   const [success, setSuccess] = useState(null);
@@ -37,90 +51,93 @@ export default function Register() {
       setError("email", { type: "manual", message: err.message });
     }
   };
+
   return (
     <>
-      <h2 className="font-bold text-xl font-semibold">Sign Up for DCIA</h2>
-      <br />
-      <form
-        className="w-full max-w-sm"
-        onSubmit={handleSubmit(onSubmit)}
-        onChange={clearSuccess}
-      >
-        <div className="font-semibold text-green-600">{success}</div>
+      <Head>
+        <title>{pageTitle}</title>
+      </Head>
+      <Container>
+        <Row className="vh-100 justify-content-center">
+          <Col md={8} lg={6} xl={5} className="my-auto py-3 d-flex flex-column">
+            <Teapot className="mx-auto text-secondary mb-3" />
+            <h1 className="dimmed text-center">{pageTitle}</h1>
+            <p className="text-center text-secondary">
+              Already have any account? <Link href="/signin">Sign In</Link>
+            </p>
 
-        <div className="font-semibold text-red-600" id="form-errors">
-          {errors && errors.email?.message}
-          <br />
-          {errors && errors.password?.message}
-          <br />
-          {errors && errors.accessLevel?.message}
-        </div>
+            {success && <Alert variant="success">{success}</Alert>}
 
-        <label
-          className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-          htmlFor="email"
-        >
-          Email
-        </label>
-        <input
-          className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-          type="text"
-          name="email"
-          ref={register({
-            required: "Email is required",
-            pattern: {
-              value: emailRegex,
-              message: "Not a valid email address.",
-            },
-          })}
-        />
+            <Card body className="mt-4">
+              <Form
+                noValidate
+                onSubmit={handleSubmit(onSubmit)}
+                onChange={clearSuccess}
+              >
+                <Form.Group controlId="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    isInvalid={errors.email}
+                    ref={register({
+                      required: "Email is required",
+                      pattern: {
+                        value: emailRegex,
+                        message: "Not a valid email address",
+                      },
+                    })}
+                  />
+                  {errors.email && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.email.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
 
-        <label
-          className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-          htmlFor="password"
-        >
-          Password
-        </label>
-        <input
-          className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-          type="password"
-          name="password"
-          ref={register({
-            required: "Password is required",
-          })}
-        />
+                <Form.Group controlId="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    isInvalid={errors.password}
+                    ref={register({ required: "Password is required" })}
+                  />
+                  {errors.password && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.password.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
 
-        <label
-          className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-          htmlFor="accessLevel"
-        >
-          Access Level
-        </label>
-        <select
-          className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          name="accessLevel"
-          ref={register({
-            required: "Access level is required",
-          })}
-        >
-          <option value="" disabled>
-            Select an Option
-          </option>
-          <option value="instructor">Instructor</option>
-          <option value="admin">Administrator</option>
-        </select>
+                <Form.Group controlId="accessLevel">
+                  <Form.Label>Access Level</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="accessLevel"
+                    isInvalid={errors.accessLevel}
+                    custom
+                    ref={register({ required: "Access Level is required" })}
+                  >
+                    <option disabled defaultValue></option>
+                    <option value="instructor">Instructor</option>
+                    <option value="admin">Administrator</option>
+                  </Form.Control>
+                  {errors.accessLevel && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.accessLevel.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
 
-        <button
-          className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-          type="submit"
-        >
-          Sign Up
-        </button>
-      </form>
-
-      <span>
-        Already have an account? <a href="/sign-in">Sign in</a>
-      </span>
+                <Button block variant="primary" type="submit" className="mt-4">
+                  Register
+                </Button>
+              </Form>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }
