@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 import { hashPassword } from "../utils/auth";
+import { sendRegistrationConfirmation } from "../utils/email";
 
 const RegistrationRequestSchema = new Schema(
   {
@@ -38,6 +39,26 @@ RegistrationRequestSchema.pre("save", async function (next) {
     return next();
   } catch (err) {
     return next(err);
+  }
+});
+
+RegistrationRequestSchema.pre("save", function (next) {
+  this.wasNew = this.isNew;
+  next();
+});
+
+RegistrationRequestSchema.post("save", async function () {
+  if (this.wasNew) {
+    // Send success email to user
+    try {
+      const sent = await sendRegistrationConfirmation(this.email);
+
+      if (!sent) {
+        throw new Error("Error sending notification email to new user.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 });
 
