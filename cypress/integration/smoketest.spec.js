@@ -4,6 +4,6 @@ context("Smoke Test", () => {
   });
 
   it("displays DCIA TEST", () => {
-    cy.get("h1").should("have.text", "DCIA TEST");
+    cy.get("h1").should("have.text", "Dashboard");
   });
 });
