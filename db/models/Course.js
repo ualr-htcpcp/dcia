@@ -1,11 +1,9 @@
-const mongoose = require('mongoose')
+import { connect } from "utils/db";
+await connect();
+
 
 const course = new mongoose.Schema({
     title: { 
-      type: String,
-      required: true
-    },
-    departmentID: {
       type: String,
       required: true
     },
@@ -16,21 +14,16 @@ const course = new mongoose.Schema({
       required: true,
       unique: true
     },
-    department: {
+    courseInstanceSchema: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'department'
-    },
-    classInstance: {
+      ref: 'courseInstanceSchema'
+    }],
+    studentOutcomeSchema: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'classInstance'
-    },
-    studentOutcome: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'studentOutcome'
-    }
+      ref: 'studentOutcomeSchema'
+    }]
   }, {timestamps: true})
 
-const Course = mongoose.model('course', course)
+export const Course = mongoose.model('Course', courseSchema)

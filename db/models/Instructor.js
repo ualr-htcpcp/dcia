@@ -1,29 +1,16 @@
-const mongoose = require('mongoose')
+import { connect } from "utils/db";
+await connect();
 
 const instructor = new mongoose.Schema({
-    firstName: {
-      type: String,
-      required: true
+    name :{
+        first: String,
+        last: String
     },
-    lastName: {
-      type: String,
-      required: true
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    credentials: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'credentials'
-    },
-    classInstance: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'classInstance'
-    }
-  }, {timestamps: true})
+    courseInstanceSchema: [{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'courseInstanceSchema'
+    }]
+}, {timestamps: true})
 
-  const Instructor = mongoose.model('instructor', instructor)
+export const Instructor = mongoose.model('Instructor', instructorSchema)

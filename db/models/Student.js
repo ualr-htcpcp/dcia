@@ -1,12 +1,11 @@
-const mongoose = require('mongoose')
+import { connect } from "utils/db";
+await connect();
+
 
 const student =  new mongoose.Schema({
-    firstName: {
-      type: String,
-      required: true
-    },
-    lastName : { 
-      type: String,
+    name: {
+      first: String,
+      last: String,
       required: true
     },
     tNumber: {
@@ -16,11 +15,11 @@ const student =  new mongoose.Schema({
       min: 0,
       max: 99999999
     },
-    classInstance: {
+    courseInstanceSchema: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'classInstance'
-    }
+      ref: 'courseInstanceSchema'
+    }]
   }, {timestamps: true})
 
-  const Student = mongoose.model('student', student)
+  export const Student = mongoose.model('Student', studentSchema)

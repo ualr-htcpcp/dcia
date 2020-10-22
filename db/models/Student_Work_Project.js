@@ -1,36 +1,22 @@
-const mongoose = require('mongoose')
+import { connect } from "utils/db";
+await connect();
+
 
 const studentWorkProject = new mongoose.Schema({
     name: {
       type: String,
       required: true
     },
-    courseNumber: {
-      type: Number,
-      required: True,
-      min: 1000,
-      max: 9999
-    },
-    type: {
-      type: String,
-      enum: ['Assignment', 'Test', 'Project'],
-      required: true,
-    },
-    studentWorkProjectID: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    classInstance: {
+    CourseInstanceSchema: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'classInstance'
+      ref: 'CourseInstanceSchema'
     },
-    studentWorkProject: {
+    studentOutcomeSchema: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'studentWorkProject'
-    }
+      ref: 'StudentOutcomeSchema'
+    }]
   }, {timestamps: true})
 
-  const StudentWorkProject = mongoose.model('studentWorkProject', studentWorkProject)
+  export const StudentWorkProject = mongoose.model('StudentWorkProject', studentWorkProjectSchema)

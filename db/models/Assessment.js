@@ -1,40 +1,28 @@
-const mongoose = require('mongoose')
+import { connect } from "utils/db";
+await connect();
+
 
 const assessment = new mongoose.Schema({
-    tNumber: {
-      type: Number,
-      required: true,
-      min: 0,
-      max: 99999999
-    },
-    studentOutcomeNumber: {
-      type: [Number],
-      required: true,
-    },
-    studentWorkProjectID: {
-      type: String,
-      required: true
-    },
     score: {
       type: Number,
       required: true,
       enum: [0, 1, 2, 3, 4]
     },
-    student: {
+    studentSchema: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'student'
     },
-    studentWorkProject: {
+    studentWorkProjectSchema: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'studentWorkProject'
     },
-    studentOutcome: [{
+    studentOutcomeSchema: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'studentOutcome'
     }]
   }, {timestamps: true})
 
-const Assessment = mongoose.model('assessment', assessment)
+export const Assessment = mongoose.model('Assessment', assessmentSchema)
