@@ -1,20 +1,15 @@
 import * as sendGrid from "@sendgrid/mail";
 
+const templateIds = {
+  registrationConfirmation: "d-02ed81f7628548248c3ecf1853714d6b",
+};
+
 export async function sendRegistrationConfirmation(sendTo) {
   sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
   const msgContent = {
     to: sendTo,
     from: process.env.SENDGRID_SENDER,
-    subject: "Registration Request Submitted",
-    html: `
-    <div style="font-family: sans-serif;">
-      <h3>Your registration request was submitted successfully!</h3>
-      <br/>
-      <p>
-        You will receive another email once your request has been evaluated.
-      </p>
-    </div>
-    `,
+    templateId: templateIds.registrationConfirmation,
   };
 
   return await new Promise((resolve, reject) => {
