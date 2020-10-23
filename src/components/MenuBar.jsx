@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Navbar } from "react-bootstrap";
+import { signOut } from "next-auth/client";
 import Teapot from "../components/Teapot.jsx";
 
 export default function MenuBar() {
@@ -19,7 +19,9 @@ export default function MenuBar() {
       </Navbar.Brand>
       <Navbar.Collapse className="justify-content-end">
         <Navbar.Text>
-          <Link href="/signin">Sign out</Link>
+          <button onClick={signOut} className="btn btn-link text-white">
+            Sign out
+          </button>
         </Navbar.Text>
       </Navbar.Collapse>
     </Navbar>

@@ -6,6 +6,8 @@ import ScoresByLevelChart from "../components/ScoresByLevelChart.jsx";
 import ScoresByTermChart from "../components/ScoresByTermChart.jsx";
 import TermSelector from "../components/TermSelector.jsx";
 
+export { ProtectPage as getServerSideProps } from "../utils/auth";
+
 export default function Dashboard() {
   return (
     <>
