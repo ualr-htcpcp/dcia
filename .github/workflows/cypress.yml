@@ -8,12 +8,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v1
         with:
           node-version: "12"
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.3.0
+        with:
+          mongodb-version: "4.4"
+
       - run: npm ci
+
+      - name: Seed the Database
+        run: npm run db:seed
+        env:
+          MONGO_URL: mongodb://localhost:27017/dcia
+
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
           start: npm run dev
           wait-on: "http://localhost:3000"
+        env:
+          NEXTAUTH_URL: http://localhost:3000
+          MONGO_URL: mongodb://localhost:27017/dcia

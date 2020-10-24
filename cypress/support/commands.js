@@ -23,3 +23,20 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("typeCredentials", (email, password) => {
+  cy.get("input[name=email]").type(email).should("have.value", email);
+  cy.get("input[name=password]").type(password).should("have.value", password);
+});
+
+Cypress.Commands.add("signin", (email, password) => {
+  password = password || email.split("@")[0];
+
+  cy.visit("/signin");
+  cy.get("h1").should("have.text", "Sign in to DCIA");
+
+  cy.typeCredentials(email, password);
+  cy.get("button[type=submit]").click();
+
+  cy.get("h1").should("have.text", "Dashboard");
+});
