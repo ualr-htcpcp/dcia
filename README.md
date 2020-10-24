@@ -101,6 +101,15 @@ To install the project's dependencies:
 npm install
 ```
 
+## Seed Data
+
+To seed a new database, you can run: `npm run db:seed`. However, if you have any
+data already in the collection, the seeding for that collection is skipped.
+
+The seed command uses the `MONGO_URL` environmental variable, so if you're not
+running a local instance of the database, you'll need to prefix the command with
+`MONGO_URL=<your-database-url> npm run db:seed`
+
 ## Running
 
 Once the project has been installed, you can run the development server using the command `npm run dev`. This server makes use of "hot reloading" so it updates automatically after a file has been saved.

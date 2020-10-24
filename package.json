@@ -11,7 +11,9 @@
     "start": "next start",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
     "e2e": "start-test dev 3000 cy:open",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "db:seed": "md-seed run",
+    "db:reseed": "md-seed run --dropdb"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -38,7 +40,11 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-react-hooks": "^4.1.2",
+    "mongoose-data-seed": "^2.1.6",
     "prettier": "^2.1.2",
     "start-server-and-test": "^1.11.5"
+  },
+  "mdSeed": {
+    "seedersFolder": "./seeders"
   }
 }

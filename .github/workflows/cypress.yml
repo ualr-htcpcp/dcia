@@ -20,6 +20,11 @@ jobs:
 
       - run: npm ci
 
+      - name: Seed the Database
+        run: npm run db:seed
+        env:
+          MONGO_URL: mongodb://localhost:27017/dcia
+
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
