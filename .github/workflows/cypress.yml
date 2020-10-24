@@ -31,4 +31,5 @@ jobs:
           start: npm run dev
           wait-on: "http://localhost:3000"
         env:
+          NEXTAUTH_URL: http://localhost:3000
           MONGO_URL: mongodb://localhost:27017/dcia
