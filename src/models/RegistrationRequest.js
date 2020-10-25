@@ -51,11 +51,7 @@ RegistrationRequestSchema.post("save", async function () {
   if (this.wasNew) {
     // Send success email to user
     try {
-      const sent = await sendRegistrationConfirmation(this.email);
-
-      if (!sent) {
-        throw new Error("Error sending notification email to new user.");
-      }
+      await sendRegistrationConfirmation(this.email);
     } catch (err) {
       console.log(err);
     }
