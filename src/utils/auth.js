@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { getSession } from "next-auth/client";
 
 const saltRounds = 10;
 
@@ -9,4 +10,26 @@ export async function hashPassword(pwd) {
       resolve(hash);
     });
   });
+}
+
+export async function checkPassword(password, passwordHash) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, passwordHash, (err, same) => {
+      if (err) {
+        return reject(err);
+      } else {
+        resolve(same);
+      }
+    });
+  });
+}
+
+export async function ProtectPage(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    context.res.writeHeader(307, { Location: "/signin" });
+    context.res.end();
+  }
+  return { props: {} };
 }
