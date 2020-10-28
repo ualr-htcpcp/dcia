@@ -18,6 +18,11 @@ const data = [
     password: "revoked",
     accessLevel: "revoked",
   },
+  {
+    email: "root@example.com",
+    password: "root1",
+    accessLevel: "root",
+  },
 ];
 
 class UsersSeeder extends Seeder {
