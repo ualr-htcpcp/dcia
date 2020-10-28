@@ -16,7 +16,7 @@ const UserSchema = new Schema(
     },
     accessLevel: {
       type: String,
-      enum: ["instructor", "admin", "revoked"],
+      enum: ["instructor", "admin", "root", "revoked"],
       required: [true, "Access Level is required"],
     },
   },
