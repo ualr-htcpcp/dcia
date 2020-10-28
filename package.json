@@ -16,6 +16,7 @@
     "db:reseed": "md-seed run --dropdb"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.3.0",
     "bcrypt": "^5.0.0",
     "bootstrap": "^4.5.3",
     "mongoose": "^5.10.9",
