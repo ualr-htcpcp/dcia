@@ -2,7 +2,7 @@ import * as sendGrid from "@sendgrid/mail";
 import User from "../models/User";
 
 const unsubscribeId = 14692;
-const emailFromName = "Team DCIA";
+const emailFromName = "DCIA Application";
 const templateIds = {
   registrationConfirmation: "d-02ed81f7628548248c3ecf1853714d6b",
   notifyRootUser: "d-d0831e054c9c433896a36b2430ebb580",
