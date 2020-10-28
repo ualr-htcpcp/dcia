@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 import { hashPassword } from "../utils/auth";
-import { sendRegistrationConfirmation } from "../utils/email";
+import {
+  sendRegistrationConfirmation,
+  sendRootUserNotification,
+} from "../utils/email";
 
 const RegistrationRequestSchema = new Schema(
   {
@@ -52,6 +55,10 @@ RegistrationRequestSchema.post("save", async function () {
     // Send success email to user
     try {
       await sendRegistrationConfirmation(this.email);
+      await sendRootUserNotification({
+        email: this.email,
+        accessLevel: this.accessLevel,
+      });
     } catch (err) {
       console.log(err);
     }
