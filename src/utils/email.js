@@ -3,6 +3,7 @@ import * as sendGrid from "@sendgrid/mail";
 const unsubscribeId = 14692;
 const templateIds = {
   registrationConfirmation: "d-02ed81f7628548248c3ecf1853714d6b",
+  notifyRootUser: "d-d0831e054c9c433896a36b2430ebb580",
 };
 
 export async function sendRegistrationConfirmation(sendTo) {
