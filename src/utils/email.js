@@ -12,14 +12,19 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-async function getLocationData(ipAddress) {
+export async function getLocationData(ipAddress) {
   const url = `${process.env.IP_API_ENDPOINT}/${ipAddress}?access_key=${process.env.IP_API_KEY}`;
   try {
+    if (process.env.NODE_ENV !== "production") {
+      return Promise.resolve("Localhost, USA");
+    }
+
     const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(response.statusText);
     }
+
     const json = await response.json();
 
     return Promise.resolve(
