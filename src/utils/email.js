@@ -61,6 +61,8 @@ export async function sendRootUserNotification(newRequestDetails) {
     dynamicTemplateData: {
       request_email: newRequestDetails.email,
       request_access_level: capitalize(newRequestDetails.accessLevel),
+      request_ip: newRequestDetails.ipAddress,
+      request_location: newRequestDetails.requestLocation,
     },
   };
   return new Promise((resolve, reject) => {
@@ -83,15 +85,19 @@ export async function sendRootUserNotification(newRequestDetails) {
   });
 }
 
-export async function sendRegistrationConfirmation(sendTo) {
+export async function sendRegistrationConfirmation(newRequestDetails) {
   sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
   const msgContent = {
-    to: sendTo,
+    to: newRequestDetails.email,
     from: { email: process.env.SENDGRID_SENDER, name: emailFromName },
     asm: {
       groupId: unsubscribeId,
     },
     templateId: templateIds.registrationConfirmation,
+    dynamicTemplateData: {
+      request_ip: newRequestDetails.ipAddress,
+      request_location: newRequestDetails.requestLocation,
+    },
   };
 
   return new Promise((resolve, reject) => {

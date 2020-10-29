@@ -71,11 +71,14 @@ RegistrationRequestSchema.post("save", async function () {
   if (this.wasNew) {
     // Send success email to user, notify root users of new registration request
     try {
-      await sendRegistrationConfirmation(this.email);
-      await sendRootUserNotification({
+      const requestDetails = {
         email: this.email,
         accessLevel: this.accessLevel,
-      });
+        ipAddress: this.locationInformation.ipAddress,
+        location: this.locationInformation.location,
+      };
+      await sendRegistrationConfirmation(requestDetails);
+      await sendRootUserNotification(requestDetails);
     } catch (err) {
       //TODO: is there better error handling we can do here?
       console.log(err);
