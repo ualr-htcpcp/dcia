@@ -12,6 +12,24 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+async function getLocationData(ipAddress) {
+  const url = `${process.env.IP_API_ENDPOINT}/${ipAddress}?access_key=${process.env.IP_API_KEY}`;
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const json = await response.json();
+
+    return Promise.resolve(
+      `${json.city}, ${json.region_name} ${json.country_flag_emoji}`
+    );
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}
+
 async function getRootUserEmails() {
   try {
     const emails = await User.find(
