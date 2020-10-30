@@ -6,6 +6,7 @@ const emailFromName = "DCIA Application";
 const templateIds = {
   registrationConfirmation: "d-02ed81f7628548248c3ecf1853714d6b",
   notifyRootUser: "d-d0831e054c9c433896a36b2430ebb580",
+  passwordReset: "d-3cedb1dc419944c2bb960e8782a17681",
 };
 
 function capitalize(str) {
