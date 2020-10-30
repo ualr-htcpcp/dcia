@@ -19,6 +19,10 @@ const UserSchema = new Schema(
       enum: ["instructor", "admin", "root", "revoked"],
       required: [true, "Access Level is required"],
     },
+    passwordReset: {
+      token: { type: String, default: null },
+      expiration: { type: Date, default: null },
+    },
   },
   { timestamps: true }
 );
