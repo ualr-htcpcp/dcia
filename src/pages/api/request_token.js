@@ -26,7 +26,6 @@ async function handler(req, res) {
     await user.save();
     res.status(200).json({ message: successMessage });
   } catch (err) {
-    console.log(err.typ);
     res.status(400).json({ error: true, message: err.message });
   }
 }
