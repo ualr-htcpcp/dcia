@@ -1,6 +1,4 @@
-import { connect } from "utils/db";
-await connect();
-
+import mongoose from "mongoose";
 
 const course = new mongoose.Schema({
     title: { 
@@ -14,15 +12,15 @@ const course = new mongoose.Schema({
       required: true,
       unique: true
     },
-    courseInstanceSchema: [{
+    courseInstance: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'courseInstanceSchema'
+      ref: 'CourseInstance'
     }],
-    studentOutcomeSchema: [{
+    studentOutcome: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'studentOutcomeSchema'
+      ref: 'StudentOutcome'
     }]
   }, {timestamps: true})
 

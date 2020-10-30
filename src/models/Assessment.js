@@ -1,6 +1,4 @@
-import { connect } from "utils/db";
-await connect();
-
+import mongoose from "mongoose";
 
 const assessment = new mongoose.Schema({
     score: {
@@ -8,21 +6,16 @@ const assessment = new mongoose.Schema({
       required: true,
       enum: [0, 1, 2, 3, 4]
     },
-    studentSchema: {
+    student: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'student'
+      ref: 'Student'
     },
-    studentWorkProjectSchema: {
+    studentWorkProject: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'studentWorkProject'
-    },
-    studentOutcomeSchema: [{
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'studentOutcome'
-    }]
+      ref: 'StudentWorkProject'
+    }
   }, {timestamps: true})
 
 export const Assessment = mongoose.model('Assessment', assessmentSchema)

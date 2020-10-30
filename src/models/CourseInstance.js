@@ -1,27 +1,25 @@
-import { connect } from "utils/db";
-await connect();
-
+import mongoose from "mongoose";
 
 const courseInstance = new mongoose.Schema({
-    userSchema: {
+    instructor: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'userSchema'
+      ref: 'Instructor'
     },
-    courseSchema: {
+    student: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'courseSchema'
+      ref: 'Student'
     },
-    semesterSchema: {
+    semester: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'semesterSchema'
+      ref: 'Semester'
     },
-    studentWorkProjectSchema: [{
+    studentWorkProject: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'studentWorkProjectSchema'
+      ref: 'StudentWorkProject'
     }]
   }, {timestamps: true})
 

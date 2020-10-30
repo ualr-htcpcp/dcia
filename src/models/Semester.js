@@ -1,6 +1,4 @@
-import { connect } from "utils/db";
-await connect();
-
+import mongoose from "mongoose";
 
 const semester =  new mongoose.Schema({
     year: {
@@ -14,12 +12,7 @@ const semester =  new mongoose.Schema({
       type: String,
       required: true,
       enum: ['Fall', 'Spring', 'Summer']
-    },
-    courseInstanceSchema: [{
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'courseInstanceSchema'
-    }]
+    }
   }, {timestamps: true})
 
   export const Semester = mongoose.model('Semester', semesterSchema)

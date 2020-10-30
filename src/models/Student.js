@@ -1,6 +1,4 @@
-import { connect } from "utils/db";
-await connect();
-
+import mongoose from "mongoose";
 
 const student =  new mongoose.Schema({
     name: {
@@ -14,12 +12,7 @@ const student =  new mongoose.Schema({
       unigue: true,
       min: 0,
       max: 99999999
-    },
-    courseInstanceSchema: [{
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'courseInstanceSchema'
-    }]
+    }
   }, {timestamps: true})
 
   export const Student = mongoose.model('Student', studentSchema)
