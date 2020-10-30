@@ -20,7 +20,7 @@ export default function ForgotPassword() {
   const [success, setSuccess] = useState(null);
   const [baseError, setBaseError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const { register, handleSubmit, setError, errors, reset } = useForm({
+  const { register, handleSubmit, errors, reset } = useForm({
     defaultValues: {
       email: "",
     },

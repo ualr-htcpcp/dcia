@@ -3,7 +3,7 @@ import User from "../../models/User";
 import { createExpirationDate, createResetToken } from "../../utils/auth";
 
 const incorrectEmailMessage = "Invalid email address provided.";
-const successMessage = "Generated reset token successfully.";
+const successMessage = "Password reset link emailed successfully.";
 
 async function handler(req, res) {
   try {

@@ -108,8 +108,8 @@ export async function sendPasswordResetEmail(sendTo, token) {
     },
     templateId: templateIds.passwordReset,
     dynamicTemplateData: {
-      reset_link: createResetUrl(token);
-    }
+      reset_link: createResetUrl(token),
+    },
   };
 
   return new Promise((resolve, reject) => {
