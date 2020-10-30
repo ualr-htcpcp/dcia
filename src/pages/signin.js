@@ -65,7 +65,7 @@ export default function Signin() {
             <Teapot className="mx-auto text-secondary mb-3" />
             <h1 className="dimmed text-center">{pageTitle}</h1>
             <p className="text-center text-secondary">
-              Don&rsquo;t have any account?{" "}
+              Don&rsquo;t have an account?{" "}
               <Link href="/register">Register</Link>
             </p>
 
@@ -102,6 +102,11 @@ export default function Signin() {
                 >
                   {isProcessing ? "Signing in..." : "Sign in"}
                 </Button>
+
+                <p className="text-center text-secondary">
+                  Forgot password?{" "}
+                  <Link href="/forgot_password">Request Reset</Link>
+                </p>
               </Form>
             </Card>
           </Col>
