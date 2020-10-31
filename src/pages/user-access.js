@@ -53,12 +53,12 @@ export default function AccessRequests({ registrationRequests }) {
 }
 
 export async function getServerSideProps(context) {
-  await ProtectPage(context);
+  const { props } = await ProtectPage(context, ["root"]);
 
   let registrationRequests = await RegistrationRequest.find()
     .select("_id accessLevel email createdAt")
     .lean();
   registrationRequests = JSON.parse(JSON.stringify(registrationRequests));
 
-  return { props: { registrationRequests } };
+  return { props: { ...props, registrationRequests } };
 }
