@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Button, Card, Table } from "react-bootstrap";
+import { Button, Card, Form, Table } from "react-bootstrap";
 import AppLayout from "../components/AppLayout.jsx";
 import RegistrationRequest from "../models/RegistrationRequest";
 import { ProtectPage } from "../utils/auth";
@@ -20,21 +20,43 @@ export default function AccessRequests({ registrationRequests }) {
           <Table responsive className="mb-0">
             <thead>
               <tr>
-                <th className="col-md-2 pl-4">Access Level</th>
-                <th className="col-md-4">Email</th>
-                <th className="col-md-3">Requested On</th>
-                <th className="col-md-3"></th>
+                <th className="pl-4">Access Level</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Requested On</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {registrationRequests.map((registrationRequest) => {
+                const isdenied = registrationRequest.requestStatus === "denied";
+
                 return (
-                  <tr key={registrationRequest._id}>
-                    <td className="pl-4">{registrationRequest.accessLevel}</td>
+                  <tr
+                    key={registrationRequest._id}
+                    style={isdenied ? { textDecoration: "line-through" } : {}}
+                  >
+                    <td className="pl-4">
+                      <Form.Control
+                        as="select"
+                        size="sm"
+                        custom
+                        defaultValue={registrationRequest.accessLevel}
+                      >
+                        <option value="instructor">Instructor</option>
+                        <option value="admin">Administrator</option>
+                      </Form.Control>
+                    </td>
                     <td>{registrationRequest.email}</td>
+                    <td>{registrationRequest.requestStatus}</td>
                     <td>{registrationRequest.createdAt}</td>
                     <td className="pr-4 text-right">
-                      <Button size="sm" variant="danger" className="ml-3">
+                      <Button
+                        size="sm"
+                        variant="danger"
+                        className="ml-3"
+                        disabled={isdenied}
+                      >
                         Deny Request
                       </Button>
                       <Button size="sm" variant="success" className="ml-3">
@@ -55,9 +77,12 @@ export default function AccessRequests({ registrationRequests }) {
 export async function getServerSideProps(context) {
   const { props } = await ProtectPage(context, ["root"]);
 
-  let registrationRequests = await RegistrationRequest.find()
-    .select("_id accessLevel email createdAt")
-    .lean();
+  let registrationRequests = await RegistrationRequest.find(
+    {
+      requestStatus: { $in: ["pending", "denied"] },
+    },
+    { password: 0 }
+  ).lean();
   registrationRequests = JSON.parse(JSON.stringify(registrationRequests));
 
   return { props: { ...props, registrationRequests } };
