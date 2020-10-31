@@ -1,14 +1,18 @@
 import mongoose from "mongoose";
 
-const studentOutcomeSchema = new mongoose.Schema({
+const studentOutcomeSchema = new mongoose.Schema(
+  {
     studentOutcomeNumber: {
       type: Number,
-      required: true
+      required: true,
     },
     definition: {
       type: String,
-      required: true
-    }
-  }, {timestamps: true})
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-  export default mongoose.models.StudentOutcome || mongoose.model('StudentOutcome', studentOutcomeSchema)
+export default mongoose.models.StudentOutcome ||
+  mongoose.model("StudentOutcome", studentOutcomeSchema);
