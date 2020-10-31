@@ -1,19 +1,32 @@
+import React from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import { Nav } from "react-bootstrap";
 import {
   RiBook2Fill,
   RiBriefcase2Fill,
   RiCalendarFill,
+  RiGitRepositoryPrivateFill,
   RiGroupFill,
   RiLineChartFill,
 } from "react-icons/ri";
 
-export default function Navigation() {
+export default function Navigation({ session }) {
+  const router = useRouter();
+
   return (
-    <Nav variant="pills" defaultActiveKey="/" className="flex-column">
-      <Nav.Link href="/">
-        <RiLineChartFill className="mr-2" />
-        Dashboard
-      </Nav.Link>
+    <Nav
+      variant="pills"
+      defaultActiveKey="/"
+      activeKey={router.pathname}
+      className="flex-column"
+    >
+      <Link href="/" passHref={true}>
+        <Nav.Link>
+          <RiLineChartFill className="mr-2" />
+          Dashboard
+        </Nav.Link>
+      </Link>
       <Nav.Link href="#department">
         <RiBriefcase2Fill className="mr-2" />
         Department
@@ -30,6 +43,14 @@ export default function Navigation() {
         <RiGroupFill className="mr-2" />
         Instructors
       </Nav.Link>
+      {session?.user.accessLevel === "root" && (
+        <Link href="/access-requests" passHref={true}>
+          <Nav.Link>
+            <RiGitRepositoryPrivateFill className="mr-2" />
+            Access Requests
+          </Nav.Link>
+        </Link>
+      )}
     </Nav>
   );
 }
