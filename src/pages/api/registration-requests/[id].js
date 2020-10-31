@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
 import middleware from "../../../middleware";
 import RegistrationRequest from "../../../models/RegistrationRequest";
+import User from "../../../models/User";
 import { getSession } from "next-auth/client";
 
 const handler = nextConnect();
@@ -32,8 +33,13 @@ handler.patch(async (req, res) => {
   try {
     const registrationRequest = await RegistrationRequest.findById(id);
     if (registrationRequest) {
-      await registrationRequest.update({ accessLevel, requestStatus });
-      res.status(200).json({ message: `updated ${id} to ${requestStatus}` });
+      await registrationRequest.update({ requestStatus });
+
+      if (requestStatus === "approved") {
+        const { email, password } = registrationRequest;
+        await User.create({ email, password, accessLevel });
+      }
+      res.status(200).json({ message: `Updated to ${requestStatus} status` });
     } else {
       res.status(404).json({ error: true, message: "not found" });
     }
