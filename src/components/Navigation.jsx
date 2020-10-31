@@ -44,10 +44,10 @@ export default function Navigation({ session }) {
         Instructors
       </Nav.Link>
       {session?.user.accessLevel === "root" && (
-        <Link href="/access-requests" passHref={true}>
+        <Link href="/user-access" passHref={true}>
           <Nav.Link>
             <RiGitRepositoryPrivateFill className="mr-2" />
-            Access Requests
+            User Access
           </Nav.Link>
         </Link>
       )}
