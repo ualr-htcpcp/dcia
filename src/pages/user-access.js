@@ -3,10 +3,26 @@ import { Button, Card, Form, Table } from "react-bootstrap";
 import AppLayout from "../components/AppLayout.jsx";
 import RegistrationRequest from "../models/RegistrationRequest";
 import { ProtectPage } from "../utils/auth";
+import { useRouter } from "next/router";
 
 const pageTitle = "User Access";
 
 export default function AccessRequests({ registrationRequests }) {
+  const router = useRouter();
+
+  const changeRequestStatus = async (
+    { _id: registrationRequestId },
+    requestStatus
+  ) => {
+    await fetch(`/api/registration-requests/${registrationRequestId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ requestStatus }),
+    });
+    router.replace(router.pathname); // reload data
+  };
+  const isDenied = ({ requestStatus }) => requestStatus === "denied";
+
   return (
     <>
       <Head>
@@ -29,12 +45,14 @@ export default function AccessRequests({ registrationRequests }) {
             </thead>
             <tbody>
               {registrationRequests.map((registrationRequest) => {
-                const isdenied = registrationRequest.requestStatus === "denied";
-
                 return (
                   <tr
                     key={registrationRequest._id}
-                    style={isdenied ? { textDecoration: "line-through" } : {}}
+                    style={
+                      isDenied(registrationRequest)
+                        ? { textDecoration: "line-through" }
+                        : {}
+                    }
                   >
                     <td className="pl-4">
                       <Form.Control
@@ -52,14 +70,24 @@ export default function AccessRequests({ registrationRequests }) {
                     <td>{registrationRequest.createdAt}</td>
                     <td className="pr-4 text-right">
                       <Button
+                        onClick={() =>
+                          changeRequestStatus(registrationRequest, "denied")
+                        }
                         size="sm"
                         variant="danger"
                         className="ml-3"
-                        disabled={isdenied}
+                        disabled={isDenied(registrationRequest)}
                       >
                         Deny Request
                       </Button>
-                      <Button size="sm" variant="success" className="ml-3">
+                      <Button
+                        onClick={() =>
+                          changeRequestStatus(registrationRequest, "approved")
+                        }
+                        size="sm"
+                        variant="success"
+                        className="ml-3"
+                      >
                         Grant Access
                       </Button>
                     </td>
