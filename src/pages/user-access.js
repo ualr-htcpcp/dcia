@@ -11,13 +11,17 @@ export default function AccessRequests({ registrationRequests }) {
   const router = useRouter();
 
   const changeRequestStatus = async (
+    event,
     { _id: registrationRequestId },
     requestStatus
   ) => {
+    const currentRow = event.target.parentElement.parentElement;
+    const accessLevel = currentRow.querySelector("select").value;
+
     await fetch(`/api/registration-requests/${registrationRequestId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ requestStatus }),
+      body: JSON.stringify({ accessLevel, requestStatus }),
     });
     router.replace(router.pathname); // reload data
   };
@@ -70,8 +74,12 @@ export default function AccessRequests({ registrationRequests }) {
                     <td>{registrationRequest.createdAt}</td>
                     <td className="text-right">
                       <Button
-                        onClick={() =>
-                          changeRequestStatus(registrationRequest, "denied")
+                        onClick={(event) =>
+                          changeRequestStatus(
+                            event,
+                            registrationRequest,
+                            "denied"
+                          )
                         }
                         size="sm"
                         variant="danger"
@@ -81,8 +89,12 @@ export default function AccessRequests({ registrationRequests }) {
                         Deny Request
                       </Button>
                       <Button
-                        onClick={() =>
-                          changeRequestStatus(registrationRequest, "approved")
+                        onClick={(event) =>
+                          changeRequestStatus(
+                            event,
+                            registrationRequest,
+                            "approved"
+                          )
                         }
                         size="sm"
                         variant="success"
@@ -94,7 +106,7 @@ export default function AccessRequests({ registrationRequests }) {
                   </tr>
                 );
               })}
-              {registrationRequests.length || (
+              {registrationRequests.length > 0 || (
                 <tr>
                   <td>
                     <em>No registration requests found.</em>
