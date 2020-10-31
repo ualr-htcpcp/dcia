@@ -6,9 +6,9 @@ const instructorSchema = new mongoose.Schema(
       first: String,
       last: String,
     },
-  }, 
+  },
   { timestamps: true }
 );
 
-export default mongoose.models.Instructor || 
- mongoose.model('Instructor', instructorSchema);
+export default mongoose.models.Instructor ||
+  mongoose.model("Instructor", instructorSchema);
