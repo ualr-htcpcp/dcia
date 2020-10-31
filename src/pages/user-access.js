@@ -36,7 +36,7 @@ export default function AccessRequests({ registrationRequests }) {
           <Table responsive className="mb-0">
             <thead>
               <tr>
-                <th className="pl-4">Access Level</th>
+                <th>Access Level</th>
                 <th>Email</th>
                 <th>Status</th>
                 <th>Requested On</th>
@@ -54,7 +54,7 @@ export default function AccessRequests({ registrationRequests }) {
                         : {}
                     }
                   >
-                    <td className="pl-4">
+                    <td>
                       <Form.Control
                         as="select"
                         size="sm"
@@ -68,7 +68,7 @@ export default function AccessRequests({ registrationRequests }) {
                     <td>{registrationRequest.email}</td>
                     <td>{registrationRequest.requestStatus}</td>
                     <td>{registrationRequest.createdAt}</td>
-                    <td className="pr-4 text-right">
+                    <td className="text-right">
                       <Button
                         onClick={() =>
                           changeRequestStatus(registrationRequest, "denied")
@@ -94,6 +94,13 @@ export default function AccessRequests({ registrationRequests }) {
                   </tr>
                 );
               })}
+              {registrationRequests.length || (
+                <tr>
+                  <td>
+                    <em>No registration requests found.</em>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
         </Card>
