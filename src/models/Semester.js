@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const semester =  new mongoose.Schema({
+const semesterSchema =  new mongoose.Schema({
     year: {
       type: Number,
       required: true,
@@ -15,4 +15,4 @@ const semester =  new mongoose.Schema({
     }
   }, {timestamps: true})
 
-  export const Semester = mongoose.model('Semester', semesterSchema)
+  export default mongoose.models.Semester || mongoose.model('Semester', semesterSchema)

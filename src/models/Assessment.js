@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const assessment = new mongoose.Schema({
+const assessmentSchema = new mongoose.Schema({
     score: {
       type: Number,
       required: true,
@@ -18,4 +18,4 @@ const assessment = new mongoose.Schema({
     }
   }, {timestamps: true})
 
-export const Assessment = mongoose.model('Assessment', assessmentSchema)
+  export default mongoose.models.Assessment || mongoose.model("Assessment", AssessmentSchema);

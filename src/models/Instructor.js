@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const instructor = new mongoose.Schema({
+const instructorSchema = new mongoose.Schema({
     name :{
         first: String,
         last: String
@@ -12,4 +12,4 @@ const instructor = new mongoose.Schema({
     }
 }, {timestamps: true})
 
-export const Instructor = mongoose.model('Instructor', instructorSchema)
+export default mongoose.models.Instructor ||  mongoose.model('Instructor', instructorSchema)

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const studentWorkProject = new mongoose.Schema({
+const studentWorkProjectSchema = new mongoose.Schema({
     name: {
       type: String,
       required: true
@@ -12,4 +12,4 @@ const studentWorkProject = new mongoose.Schema({
     }]
   }, {timestamps: true})
 
-  export const StudentWorkProject = mongoose.model('StudentWorkProject', studentWorkProjectSchema)
+  export default mongoose.models.StudentWorkProject || mongoose.model('StudentWorkProject', studentWorkProjectSchema)

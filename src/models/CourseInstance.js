@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const courseInstance = new mongoose.Schema({
+const courseInstanceSchema = new mongoose.Schema({
     instructor: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -23,4 +23,4 @@ const courseInstance = new mongoose.Schema({
     }]
   }, {timestamps: true})
 
-export const CourseInstance = mongoose.model('CourseInstance', courseInstanceSchema)
+  export default mongoose.models.CourseInstance || mongoose.model('CourseInstance', courseInstanceSchema);
