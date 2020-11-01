@@ -17,7 +17,8 @@ function capitalize(str) {
 }
 
 function createResetUrl(token) {
-  return `${passwordResetBaseUrl}?token=${token}`;
+  const queryParams = encodeURIComponent(`/?token=${token}`);
+  return passwordResetBaseUrl + queryParams;
 }
 
 async function getRootUserEmails() {
