@@ -3,6 +3,7 @@ import User from "../../models/User";
 import { createExpirationDate, createResetToken } from "../../utils/auth";
 
 const incorrectEmailMessage = "Invalid email address provided.";
+const revokedMessage = "Account access has been revoked.";
 const successMessage = "Password reset link emailed successfully.";
 
 async function handler(req, res) {
@@ -16,6 +17,9 @@ async function handler(req, res) {
 
     if (!user) {
       throw new Error(incorrectEmailMessage);
+    }
+    if (user.accessLevel === "revoked") {
+      throw new Error(revokedMessage);
     }
 
     user.passwordReset = {
