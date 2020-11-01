@@ -33,8 +33,30 @@ async function getRootUserEmails() {
   }
 }
 
-export async function sendRootUserNotification(newRequestDetails) {
+async function sendEmail(msgContents, emailType) {
   sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
+  return new Promise((resolve, reject) => {
+    try {
+      // Don't send emails in test/development
+      if (process.env.NODE_ENV !== "production") {
+        console.log(`${emailType} EMAIL: `);
+        console.log(msgContents);
+      } else {
+        sendGrid.send(msgContents);
+      }
+      resolve("Email(s) sent!");
+    } catch (err) {
+      if (err.response) {
+        reject(err.response);
+      } else {
+        reject("Uncaught error sending email(s).");
+      }
+    }
+  });
+}
+
+export async function sendRootUserNotification(newRequestDetails) {
+  const emailType = "ROOT USER NEW REGISTRATION"; // logging purposes only
   const rootEmails = await getRootUserEmails();
   const msgContent = {
     to: rootEmails,
@@ -48,28 +70,11 @@ export async function sendRootUserNotification(newRequestDetails) {
       request_access_level: capitalize(newRequestDetails.accessLevel),
     },
   };
-  return new Promise((resolve, reject) => {
-    try {
-      // Don't send emails in test/development
-      if (process.env.NODE_ENV !== "production") {
-        console.log("ROOT USER NEW REGISTRATION EMAIL:");
-        console.log(msgContent);
-      } else {
-        sendGrid.send(msgContent);
-      }
-      resolve("Emails sent!");
-    } catch (err) {
-      if (err.response) {
-        reject(err.response);
-      } else {
-        reject("Error sending new request notification to root users.");
-      }
-    }
-  });
+  return await sendEmail(msgContent, emailType);
 }
 
 export async function sendRegistrationConfirmation(sendTo) {
-  sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
+  const emailType = "REGISTRATION CONFIRMATION"; // logging purposes only
   const msgContent = {
     to: sendTo,
     from: { email: process.env.SENDGRID_SENDER, name: fromTeam },
@@ -78,29 +83,11 @@ export async function sendRegistrationConfirmation(sendTo) {
     },
     templateId: templateIds.registrationConfirmation,
   };
-
-  return new Promise((resolve, reject) => {
-    try {
-      // Don't send emails in test/development
-      if (process.env.NODE_ENV !== "production") {
-        console.log("REGISTRATION CONFIRMATION EMAIL:");
-        console.log(msgContent);
-      } else {
-        sendGrid.send(msgContent);
-      }
-      resolve("Email Sent!");
-    } catch (err) {
-      if (err.response) {
-        reject(err.response);
-      } else {
-        reject("Error sending notification email to new user.");
-      }
-    }
-  });
+  return await sendEmail(msgContent, emailType);
 }
 
 export async function sendPasswordResetEmail(sendTo, token) {
-  sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
+  const emailType = "PASSWORD RESET"; // logging purposes only
   const msgContent = {
     to: sendTo,
     from: { email: process.env.SENDGRID_SENDER, name: fromTeam },
@@ -113,21 +100,19 @@ export async function sendPasswordResetEmail(sendTo, token) {
     },
   };
 
-  return new Promise((resolve, reject) => {
-    try {
-      if (process.env.NODE_ENV !== "production") {
-        console.log("PASSWORD RESET EMAIL:");
-        console.log(msgContent);
-      } else {
-        sendGrid.send(msgContent);
-      }
-      resolve("Email sent!");
-    } catch (err) {
-      if (err.response) {
-        reject(err.response);
-      } else {
-        reject("Error sending password reset email to user.");
-      }
-    }
-  });
+  return await sendEmail(msgContent, emailType);
+}
+
+export async function sendPasswordResetConfirmation(sendTo) {
+  const emailType = "PASSWORD RESET CONFIRMATION"; // logging purposes only
+  const msgContent = {
+    to: sendTo,
+    from: { email: process.env.SENDGRID_SENDER, name: fromTeam },
+    asm: {
+      groupId: unsubscribeId,
+    },
+    templateId: templateIds.passwordResetConfirmation,
+  };
+
+  return await sendEmail(msgContent, emailType);
 }
