@@ -31,12 +31,9 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-UserSchema.methods.checkResetToken = function (token) {
+UserSchema.methods.checkResetToken = function () {
   const now = new Date();
-  if (now > this.passwordReset.expiration) {
-    return false;
-  }
-  return this.passwordReset.token === token;
+  return now <= this.passwordReset.expiration;
 };
 UserSchema.methods.checkPassword = function (password) {
   const passwordHash = this.password;

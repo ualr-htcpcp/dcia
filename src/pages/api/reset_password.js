@@ -12,7 +12,7 @@ async function handler(req, res) {
     if (!user) {
       throw new Error("Invalid credentials provided.");
     }
-    if (!user.checkResetToken(req.body.token)) {
+    if (!user.checkResetToken()) {
       throw new Error("Password reset token expired.");
     }
     user.password = req.body.password;
