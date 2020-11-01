@@ -7,7 +7,7 @@ const resetTokenLength = 40;
 const resetTokenExpiration = 3; // in days
 
 export function createResetToken() {
-  return crypto.randomBytes(48).toString("base64").substr(0, resetTokenLength);
+  return crypto.randomBytes(48).toString("hex").substr(0, resetTokenLength);
 }
 
 export function createExpirationDate(now) {
