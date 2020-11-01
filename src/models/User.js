@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 import { checkPassword, hashPassword } from "../utils/auth";
-import { sendPasswordResetEmail } from "../utils/email";
+import {
+  sendPasswordResetConfirmation,
+  sendPasswordResetEmail,
+} from "../utils/email";
 
 const UserSchema = new Schema(
   {
@@ -56,10 +59,26 @@ UserSchema.pre("save", async function (next) {
 
 // Password reset requested
 UserSchema.post("save", async function (doc, next) {
-  if (doc.passwordReset.token && doc.passwordReset.expiration) {
-    await sendPasswordResetEmail(doc.email, doc.passwordReset.token);
+  try {
+    if (doc.passwordReset.token && doc.passwordReset.expiration) {
+      await sendPasswordResetEmail(doc.email, doc.passwordReset.token);
+    }
+    next();
+  } catch (err) {
+    return next(err);
   }
-  next();
+});
+
+// Password reset successful
+UserSchema.post("save", async function (doc, next) {
+  try {
+    if (this.isModified("password")) {
+      await sendPasswordResetConfirmation(doc.email);
+    }
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
