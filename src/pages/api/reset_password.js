@@ -12,6 +12,9 @@ async function handler(req, res) {
     if (!user) {
       throw new Error("Invalid credentials provided.");
     }
+    if (!user.checkResetToken(req.body.token)) {
+      throw new Error("Password reset token expired.");
+    }
     user.password = req.body.password;
 
     await user.save();
