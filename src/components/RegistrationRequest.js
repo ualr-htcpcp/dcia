@@ -1,14 +1,13 @@
 import { useRouter } from "next/router";
-import { useRef } from "react";
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 export default function RegistrationRequest({ model }) {
   const router = useRouter();
-  const accessLevelSelect = useRef(null);
+  const [accessLevel, setAccessLevel] = useState(model.accessLevel);
   const isDenied = model.requestStatus === "denied";
 
-  const changeRequestStatus = async (event, requestStatus) => {
-    const accessLevel = accessLevelSelect.current.value;
+  const changeRequestStatus = async (requestStatus) => {
     await fetch(`/api/registration-requests/${model._id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -24,8 +23,8 @@ export default function RegistrationRequest({ model }) {
           as="select"
           size="sm"
           custom
-          defaultValue={model.accessLevel}
-          ref={accessLevelSelect}
+          defaultValue={accessLevel}
+          onChange={(event) => setAccessLevel(event.target.value)}
         >
           <option value="instructor">Instructor</option>
           <option value="admin">Administrator</option>
@@ -36,7 +35,7 @@ export default function RegistrationRequest({ model }) {
       <td>{model.createdAt}</td>
       <td className="text-right">
         <Button
-          onClick={(event) => changeRequestStatus(event, "denied")}
+          onClick={() => changeRequestStatus("denied")}
           size="sm"
           variant="danger"
           className="ml-3"
@@ -45,7 +44,7 @@ export default function RegistrationRequest({ model }) {
           Deny Request
         </Button>
         <Button
-          onClick={(event) => changeRequestStatus(event, "approved")}
+          onClick={() => changeRequestStatus("approved")}
           size="sm"
           variant="success"
           className="ml-3"

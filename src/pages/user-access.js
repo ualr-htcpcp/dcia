@@ -33,11 +33,13 @@ export async function getServerSideProps(context) {
   const excludePassword = { password: 0 };
   const registrationRequestsPromise = RegistrationRequest.find(
     { requestStatus: { $in: ["pending", "denied"] } },
-    excludePassword
+    excludePassword,
+    { sort: "createdAt _id" }
   ).lean();
   const usersPromise = User.find(
     { accessLevel: { $ne: "root" } },
-    excludePassword
+    excludePassword,
+    { sort: "accessLevel email _id" }
   ).lean();
 
   const queryResults = await Promise.all([
