@@ -63,8 +63,7 @@ export default function ForgotPassword() {
             <Teapot className="mx-auto text-secondary mb-3" />
             <h1 className="dimmed text-center">{pageTitle}</h1>
             <p className="text-center text-secondary">
-              Don&rsquo;t have an account?{" "}
-              <Link href="/register">Register</Link>
+              Have an account? <Link href="/signin">Sign In</Link>
             </p>
 
             {success && <Alert variant="success">{success}</Alert>}
