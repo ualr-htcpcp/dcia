@@ -13,8 +13,8 @@ import {
   Row,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import Teapot from "../components/Teapot";
-import LoadingSpinner from "../components/LoadingSpinner";
+import Teapot from "../components/Teapot.jsx";
+import LoadingSpinner from "../components/LoadingSpinner.jsx";
 
 const pageTitle = "Reset Password";
 
