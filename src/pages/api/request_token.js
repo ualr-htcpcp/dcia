@@ -2,7 +2,7 @@ import { connect } from "../../utils/db";
 import User from "../../models/User";
 import { createExpirationDate, createResetToken } from "../../utils/auth";
 
-const incorrectEmailMessage = "Invalid email address provided.";
+const incorrectEmailMessage = "Account not found.";
 const revokedMessage = "Account access has been revoked.";
 const successMessage = "Password reset link emailed successfully.";
 
