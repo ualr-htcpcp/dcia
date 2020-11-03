@@ -46,7 +46,7 @@ RegistrationRequestSchema.pre("save", async function (next) {
 
     return next();
   } catch (err) {
-    return next(err);
+    return next();
   }
 });
 
