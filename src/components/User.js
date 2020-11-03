@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { formatTimestamp } from "../utils/datetime";
 
 export default function User({ model }) {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function User({ model }) {
         </Form.Control>
       </td>
       <td>{model.email}</td>
-      <td>{model.createdAt}</td>
+      <td>{formatTimestamp(model.createdAt)}</td>
       <td className="text-right">
         <Button
           onClick={changeAccessLevel}

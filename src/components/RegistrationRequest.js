@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { formatTimestamp } from "../utils/datetime";
 
 export default function RegistrationRequest({ model }) {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function RegistrationRequest({ model }) {
       </td>
       <td>{model.email}</td>
       <td>{model.requestStatus}</td>
-      <td>{model.createdAt}</td>
+      <td>{formatTimestamp(model.createdAt)}</td>
       <td className="text-right">
         <Button
           onClick={() => changeRequestStatus("denied")}
