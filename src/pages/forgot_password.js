@@ -36,9 +36,7 @@ export default function ForgotPassword() {
       const response = await fetch("/api/request_token", {
         method: "post",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...data,
-        }),
+        body: JSON.stringify(data),
       });
       const msg = await response.json();
       if (response.ok) {
