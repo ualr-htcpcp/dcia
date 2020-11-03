@@ -89,6 +89,10 @@ describe("Registration", () => {
     it("does not show User Access page", () => {
       cy.signin("instructor@example.com");
       cy.get(".nav-link").should("not.contain.text", "User Access");
+
+      cy.visit("/user-access");
+      cy.get("h1").should("have.text", "Dashboard");
+      cy.location("pathname").should("eq", "/");
     });
   });
 });

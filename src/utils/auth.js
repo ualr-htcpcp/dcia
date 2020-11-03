@@ -33,7 +33,6 @@ export async function ProtectPage(context, accessLevels = null) {
   } else if (accessLevels && !accessLevels.includes(session.user.accessLevel)) {
     context.res.writeHeader(307, { Location: "/" });
     context.res.end();
-  } else {
-    return { props: { session } };
   }
+  return { props: { session } };
 }
