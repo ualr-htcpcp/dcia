@@ -12,6 +12,16 @@ const options = {
     signIn: "/signin",
     error: "/signin",
   },
+  callbacks: {
+    jwt: async (token, user) => {
+      if (user) token.user = user;
+      return Promise.resolve(token);
+    },
+    session: async (session, user) => {
+      session.user = user.user;
+      return Promise.resolve(session);
+    },
+  },
   providers: [
     Providers.Credentials({
       authorize: async ({ email, password }) => {
@@ -26,7 +36,9 @@ const options = {
               new Error("Account access has been revoked.")
             );
           } else if (await user.checkPassword(password)) {
-            const sessionUser = { id: user.id, email: user.email };
+            const { id, email, accessLevel } = user;
+            const sessionUser = { id, email, accessLevel };
+
             return Promise.resolve(sessionUser);
           } else {
             return Promise.reject(new Error(invalidCredentials));

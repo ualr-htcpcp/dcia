@@ -24,12 +24,15 @@ export async function checkPassword(password, passwordHash) {
   });
 }
 
-export async function ProtectPage(context) {
+export async function ProtectPage(context, accessLevels = null) {
   const session = await getSession(context);
 
   if (!session) {
     context.res.writeHeader(307, { Location: "/signin" });
     context.res.end();
+  } else if (accessLevels && !accessLevels.includes(session.user.accessLevel)) {
+    context.res.writeHeader(307, { Location: "/" });
+    context.res.end();
   }
-  return { props: {} };
+  return { props: { session } };
 }
