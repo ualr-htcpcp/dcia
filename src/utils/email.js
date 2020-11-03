@@ -12,6 +12,29 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+export async function getLocationData(ipAddress) {
+  const url = `${process.env.IP_API_ENDPOINT}/${ipAddress}?access_key=${process.env.IP_API_KEY}`;
+  try {
+    if (process.env.NODE_ENV !== "production") {
+      return Promise.resolve("Localhost, USA 🇺🇸");
+    }
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const json = await response.json();
+
+    return Promise.resolve(
+      `${json.city}, ${json.region_name} ${json.location.country_flag_emoji}`
+    );
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}
+
 async function getRootUserEmails() {
   try {
     const emails = await User.find(
@@ -38,6 +61,8 @@ export async function sendRootUserNotification(newRequestDetails) {
     dynamicTemplateData: {
       request_email: newRequestDetails.email,
       request_access_level: capitalize(newRequestDetails.accessLevel),
+      request_ip: newRequestDetails.ipAddress,
+      request_location: newRequestDetails.location,
     },
   };
   return new Promise((resolve, reject) => {
@@ -60,15 +85,19 @@ export async function sendRootUserNotification(newRequestDetails) {
   });
 }
 
-export async function sendRegistrationConfirmation(sendTo) {
+export async function sendRegistrationConfirmation(newRequestDetails) {
   sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
   const msgContent = {
-    to: sendTo,
+    to: newRequestDetails.email,
     from: { email: process.env.SENDGRID_SENDER, name: emailFromName },
     asm: {
       groupId: unsubscribeId,
     },
     templateId: templateIds.registrationConfirmation,
+    dynamicTemplateData: {
+      request_ip: newRequestDetails.ipAddress,
+      request_location: newRequestDetails.location,
+    },
   };
 
   return new Promise((resolve, reject) => {

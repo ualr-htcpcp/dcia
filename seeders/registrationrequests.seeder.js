@@ -7,24 +7,40 @@ const data = [
     password: "instructor",
     accessLevel: "instructor",
     requestStatus: "approved",
+    locationInformation: {
+      ipAddress: "111.111.1.1",
+      location: "Seedville, USA",
+    },
   },
   {
     email: "admin@example.com",
     password: "admin",
     accessLevel: "admin",
     requestStatus: "approved",
+    locationInformation: {
+      ipAddress: "111.111.1.1",
+      location: "Seedville, USA",
+    },
   },
   {
     email: "pending@example.com",
     password: "pending",
     accessLevel: "instructor",
     requestStatus: "pending",
+    locationInformation: {
+      ipAddress: "111.111.1.1",
+      location: "Seedville, USA",
+    },
   },
   {
     email: "denied@example.com",
     password: "denied",
     accessLevel: "instructor",
     requestStatus: "denied",
+    locationInformation: {
+      ipAddress: "111.111.1.1",
+      location: "Seedville, USA",
+    },
   },
 ];
 
