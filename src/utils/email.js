@@ -16,7 +16,7 @@ export async function getLocationData(ipAddress) {
   const url = `${process.env.IP_API_ENDPOINT}/${ipAddress}?access_key=${process.env.IP_API_KEY}`;
   try {
     if (process.env.NODE_ENV !== "production") {
-      return Promise.resolve("Localhost, USA");
+      return Promise.resolve("Localhost, USA 🇺🇸");
     }
 
     const response = await fetch(url);
@@ -96,7 +96,7 @@ export async function sendRegistrationConfirmation(newRequestDetails) {
     templateId: templateIds.registrationConfirmation,
     dynamicTemplateData: {
       request_ip: newRequestDetails.ipAddress,
-      request_location: newRequestDetails.requestLocation,
+      request_location: newRequestDetails.location,
     },
   };
 
