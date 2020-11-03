@@ -28,7 +28,7 @@ export async function getLocationData(ipAddress) {
     const json = await response.json();
 
     return Promise.resolve(
-      `${json.city}, ${json.region_name} ${json.country_flag_emoji}`
+      `${json.city}, ${json.region_name} ${json.location.country_flag_emoji}`
     );
   } catch (err) {
     return Promise.reject(err);
