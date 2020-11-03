@@ -62,7 +62,7 @@ export async function sendRootUserNotification(newRequestDetails) {
       request_email: newRequestDetails.email,
       request_access_level: capitalize(newRequestDetails.accessLevel),
       request_ip: newRequestDetails.ipAddress,
-      request_location: newRequestDetails.requestLocation,
+      request_location: newRequestDetails.location,
     },
   };
   return new Promise((resolve, reject) => {
