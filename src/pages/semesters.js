@@ -44,8 +44,9 @@ export async function getServerSideProps(context) {
 
   const currentDate = new Date();
   const nextYear = currentDate.getFullYear() + 1;
-  const earliestYear = semesters.sort((a, b) => b.year - a.year)[0]?.year;
   const defaultYear = nextYear - 9;
+  const earliestYear =
+    semesters.sort((a, b) => b.year - a.year)[0]?.year || defaultYear;
 
   // default to 10-ish years ago or older if an earlier record exists
   let currentYear = Math.min(earliestYear, defaultYear);

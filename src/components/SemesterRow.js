@@ -10,8 +10,12 @@ export default function Semester({ semester: { year, terms } }) {
   const [fall, setFall] = useState(terms.includes("fall"));
 
   const isChanged = useMemo(() => {
-    return spring || summer || fall;
-  }, [spring, summer, fall]);
+    return (
+      terms.includes("spring") !== spring ||
+      terms.includes("summer") !== summer ||
+      terms.includes("fall") !== fall
+    );
+  }, [terms, spring, summer, fall]);
 
   const saveChanges = async () => {
     await fetch(`/api/semesters`, {
