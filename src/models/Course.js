@@ -13,13 +13,6 @@ const courseSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    courseInstance: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "CourseInstance",
-      },
-    ],
     studentOutcome: [
       {
         type: mongoose.Schema.Types.ObjectId,

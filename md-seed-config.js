@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import RegistrationRequests from "./seeders/registrationrequests.seeder";
 import Users from "./seeders/users.seeder";
+import Courses from "./seeders/courses.seeder";
 
 mongoose.set("useCreateIndex", true);
 
@@ -14,6 +15,7 @@ const mongoURL = process.env.MONGO_URL || "mongodb://localhost:27017/dcia";
 export const seedersList = {
   RegistrationRequests,
   Users,
+  Courses,
 };
 
 /**
