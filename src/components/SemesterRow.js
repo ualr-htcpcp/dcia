@@ -1,14 +1,26 @@
+import { useRouter } from "next/router";
 import { useState, useMemo } from "react";
 import { Button, Form } from "react-bootstrap";
 
-export default function Semester({ year }) {
-  const [spring, setSpring] = useState(false);
-  const [summer, setSummer] = useState(false);
-  const [fall, setFall] = useState(false);
+export default function Semester({ semester: { year, terms } }) {
+  const router = useRouter();
+
+  const [spring, setSpring] = useState(terms.includes("spring"));
+  const [summer, setSummer] = useState(terms.includes("summer"));
+  const [fall, setFall] = useState(terms.includes("fall"));
 
   const isChanged = useMemo(() => {
     return spring || summer || fall;
   }, [spring, summer, fall]);
+
+  const saveChanges = async () => {
+    await fetch(`/api/semesters`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ year, terms: { spring, summer, fall } }),
+    });
+    router.replace(router.pathname); // reload data
+  };
 
   return (
     <tr>
@@ -41,6 +53,7 @@ export default function Semester({ year }) {
       </td>
       <td className="text-right" style={{ padding: "0.5rem 0.75rem" }}>
         <Button
+          onClick={saveChanges}
           size="sm"
           variant="primary"
           className="ml-3"

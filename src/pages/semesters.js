@@ -3,10 +3,11 @@ import { Card, Table } from "react-bootstrap";
 import AppLayout from "../components/AppLayout.jsx";
 import { ProtectPage } from "../utils/auth";
 import SemesterRow from "../components/SemesterRow";
+import Semester from "../models/Semester";
 
 const pageTitle = "Semesters";
 
-export default function Semesters({ years }) {
+export default function Semesters({ semesters }) {
   return (
     <>
       <Head>
@@ -25,8 +26,8 @@ export default function Semesters({ years }) {
               </tr>
             </thead>
             <tbody>
-              {years.map((year) => {
-                return <SemesterRow key={year} year={year} />;
+              {semesters.map((semester) => {
+                return <SemesterRow key={semester.year} semester={semester} />;
               })}
             </tbody>
           </Table>
@@ -39,17 +40,29 @@ export default function Semesters({ years }) {
 export async function getServerSideProps(context) {
   const { props } = await ProtectPage(context);
 
+  const semesters = await Semester.find().lean();
+
   const currentDate = new Date();
   const nextYear = currentDate.getFullYear() + 1;
+  const earliestYear = semesters.sort((a, b) => b.year - a.year)[0]?.year;
+  const defaultYear = nextYear - 9;
+
+  // default to 10-ish years ago or older if an earlier record exists
+  let currentYear = Math.min(earliestYear, defaultYear);
+
+  // build year/terms object for each year in range
   const years = [];
-
-  let currentYear = nextYear - 9; // earliest year
-
   while (currentYear <= nextYear) {
-    years.push(currentYear);
+    years.push({ year: currentYear, terms: [] });
     currentYear += 1;
   }
   years.reverse();
 
-  return { props: { ...props, years } };
+  // add semesters to corresponding year objects
+  semesters.forEach((semester) => {
+    const foundYear = years.find(({ year }) => year === semester.year);
+    foundYear.terms.push(semester.term);
+  });
+
+  return { props: { ...props, semesters: years } };
 }

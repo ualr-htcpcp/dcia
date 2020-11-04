@@ -4,15 +4,15 @@ import Semester from "../src/models/Semester";
 const data = [
   {
     year: 2020,
-    term: "Fall",
+    term: "fall",
   },
   {
     year: 2020,
-    term: "Spring",
+    term: "spring",
   },
   {
     year: 2020,
-    term: "Summer",
+    term: "summer",
   },
 ];
 class SemestersSeeder extends Seeder {
