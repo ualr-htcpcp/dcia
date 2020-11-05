@@ -148,7 +148,7 @@ export async function sendPasswordResetConfirmation(sendTo) {
   return await sendEmail(msgContent, emailType);
 }
 
-export async function sendAccessLevelChange(sendTo, changeDetails) {
+export async function sendAccessLevelChange(sendTo, newAccessLevel) {
   const emailType = "ACCESS LEVEL CHANGE"; // logging purposes only
   const msgContent = {
     to: sendTo,
@@ -157,13 +157,13 @@ export async function sendAccessLevelChange(sendTo, changeDetails) {
       groupId: unsubscribeId,
     },
     dynamicTemplateData: {
-      access_level: changeDetails.accessLevel,
+      access_level: newAccessLevel,
       access_revoked: false,
     },
     templateId: templateIds.userAccessChange,
   };
 
-  if (changeDetails.accessLevel === "revoked") {
+  if (newAccessLevel === "revoked") {
     msgContent.dynamicTemplateData.access_revoked = true;
   }
 
