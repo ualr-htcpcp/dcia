@@ -5,7 +5,12 @@ const data = [
   {
     title: "Programming1",
     courseNumber: 1500,
-    studentOutcome: [0, 1, 2],
+    studentOutcome: ["5fa3767d3c24ec15845f7563", "5fa3767d3c24ec15845f7564"],
+  },
+  {
+    title: "Capstone",
+    courseNumber: 4321,
+    studentOutcome: ["5fa3767d3c24ec15845f7564", "5fa3767d3c24ec15845f7568"],
   },
 ];
 

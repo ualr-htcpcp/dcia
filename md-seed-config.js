@@ -3,6 +3,7 @@ import RegistrationRequests from "./seeders/registrationrequests.seeder";
 import Users from "./seeders/users.seeder";
 import StudentOutcomes from "./seeders/studentOutcomes.seeder";
 import Courses from "./seeders/courses.seeder";
+import Students from "./seeders/students.seeder";
 
 mongoose.set("useCreateIndex", true);
 
@@ -18,6 +19,7 @@ export const seedersList = {
   Users,
   StudentOutcomes,
   Courses,
+  Students,
 };
 
 /**
