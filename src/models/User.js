@@ -41,6 +41,20 @@ UserSchema.methods.checkPassword = function (password) {
   return checkPassword(password, passwordHash);
 };
 
+// Access level changed
+UserSchema.pre("findOneAndUpdate", async function (doc, next) {
+  try {
+    const update = this.getUpdate();
+    const user = await this.model.findOne(this.getFilter()).lean();
+    if (update.accessLevel) {
+      await sendAccessLevelChange(user.email, update.accessLevel);
+    }
+    next();
+  } catch (err) {
+    return next(err);
+  }
+});
+
 // Reset password, clear passwordReset token/expiry
 UserSchema.pre("save", async function (next) {
   try {
@@ -72,18 +86,6 @@ UserSchema.post("save", async function (doc, next) {
   try {
     if (this.isModified("password")) {
       await sendPasswordResetConfirmation(doc.email);
-    }
-    next();
-  } catch (err) {
-    next(err);
-  }
-});
-
-// Access level changed
-UserSchema.post("save", async function (doc, next) {
-  try {
-    if (this.isModified("accessLevel")) {
-      await sendAccessLevelChange(doc.email, doc.accessLevel);
     }
     next();
   } catch (err) {
