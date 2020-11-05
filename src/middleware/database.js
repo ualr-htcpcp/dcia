@@ -4,7 +4,11 @@ const client = mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 });
+if (process.env.NODE_ENV !== "production") {
+  client.set("debug", true);
+}
 
 async function database(req, res, next) {
   if (!client) await client;
