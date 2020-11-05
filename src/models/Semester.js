@@ -7,7 +7,6 @@ const semesterSchema = new mongoose.Schema(
       required: true,
       min: 1927,
       max: 3027,
-      unique: true,
     },
     term: {
       type: String,

@@ -4,6 +4,10 @@ import Users from "./seeders/users.seeder";
 import StudentOutcomes from "./seeders/studentOutcomes.seeder";
 import Courses from "./seeders/courses.seeder";
 import Students from "./seeders/students.seeder";
+import Instructors from "./seeders/instructors.seeder";
+import Semesters from "./seeders/semesters.seeder";
+import StudentWorkProjects from "./seeders/studentWorkProjects.seeder";
+import CourseInstances from "./seeders/courseInstances.seeder";
 
 mongoose.set("useCreateIndex", true);
 
@@ -20,6 +24,10 @@ export const seedersList = {
   StudentOutcomes,
   Courses,
   Students,
+  Instructors,
+  Semesters,
+  StudentWorkProjects,
+  CourseInstances,
 };
 
 /**
