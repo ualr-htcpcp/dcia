@@ -1,5 +1,6 @@
 import { Seeder } from "mongoose-data-seed";
 import RegistrationRequest from "../src/models/RegistrationRequest";
+import { hashPassword } from "../src/utils/auth";
 
 const data = [
   {
@@ -54,7 +55,10 @@ class RegistrationrequestsSeeder extends Seeder {
   async run() {
     return Promise.all(
       data.map(async (registrationRequest) => {
-        return RegistrationRequest.collection.insertOne(registrationRequest);
+        return RegistrationRequest.collection.insertOne({
+          ...registrationRequest,
+          password: await hashPassword(registrationRequest.password),
+        });
       })
     );
   }
