@@ -4,6 +4,7 @@ import { hashPassword } from "../utils/auth";
 import {
   getLocationData,
   sendRegistrationConfirmation,
+  sendRegistrationRequestUpdate,
   sendRootUserNotification,
 } from "../utils/email";
 
@@ -37,6 +38,20 @@ const RegistrationRequestSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// Send email when requestStatus is updated
+RegistrationRequestSchema.pre("findOneAndUpdate", async function (doc, next) {
+  try {
+    const update = this.getUpdate();
+    const request = await this.model.findOne(this.getFilter()).lean();
+    if (update.requestStatus) {
+      await sendRegistrationRequestUpdate(request.email, update.requestStatus);
+    }
+    next();
+  } catch (err) {
+    return next(err);
+  }
+});
 
 // Add location data to request for security
 RegistrationRequestSchema.pre("save", async function (next) {
