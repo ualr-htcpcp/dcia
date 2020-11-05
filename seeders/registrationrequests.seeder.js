@@ -54,7 +54,7 @@ class RegistrationrequestsSeeder extends Seeder {
   async run() {
     return Promise.all(
       data.map(async (registrationRequest) => {
-        return RegistrationRequest.create(registrationRequest);
+        return RegistrationRequest.collection.insertOne(registrationRequest);
       })
     );
   }
