@@ -9,6 +9,7 @@ const templateIds = {
   notifyRootUser: "d-d0831e054c9c433896a36b2430ebb580",
   passwordReset: "d-3cedb1dc419944c2bb960e8782a17681",
   passwordResetConfirmation: "d-a011458f2d274526a23236091daa7372",
+  userAccessChange: "d-9ec83ef57e52483187663999580ae97a",
 };
 const passwordResetBaseUrl = "http://localhost:3000/reset_password";
 
