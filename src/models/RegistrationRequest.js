@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 import { hashPassword } from "../utils/auth";
 import {
+  getLocationData,
   sendRegistrationConfirmation,
   sendRootUserNotification,
 } from "../utils/email";
@@ -29,9 +30,25 @@ const RegistrationRequestSchema = new Schema(
       default: "pending",
       required: true,
     },
+    locationInformation: {
+      ipAddress: String,
+      location: String,
+    },
   },
   { timestamps: true }
 );
+
+// Add location data to request for security
+RegistrationRequestSchema.pre("save", async function (next) {
+  try {
+    const location = await getLocationData(this.locationInformation.ipAddress);
+    this.locationInformation.location = location;
+
+    return next();
+  } catch (err) {
+    return next();
+  }
+});
 
 // Hash password when password changes
 RegistrationRequestSchema.pre("save", async function (next) {
@@ -52,14 +69,18 @@ RegistrationRequestSchema.pre("save", function (next) {
 
 RegistrationRequestSchema.post("save", async function () {
   if (this.wasNew) {
-    // Send success email to user
+    // Send success email to user, notify root users of new registration request
     try {
-      await sendRegistrationConfirmation(this.email);
-      await sendRootUserNotification({
+      const requestDetails = {
         email: this.email,
         accessLevel: this.accessLevel,
-      });
+        ipAddress: this.locationInformation.ipAddress,
+        location: this.locationInformation.location,
+      };
+      await sendRegistrationConfirmation(requestDetails);
+      await sendRootUserNotification(requestDetails);
     } catch (err) {
+      //TODO: is there better error handling we can do here?
       console.log(err);
     }
   }

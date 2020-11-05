@@ -27,11 +27,16 @@ handler.post(async (req, res) => {
         throw existingRequestError;
       }
     }
+    const forwardedArr = req.headers["x-forwarded-for"];
+    const ipAddress = forwardedArr
+      ? forwardedArr.split(",")[forwardedArr.length - 1]
+      : req.connection.remoteAddress;
 
     const newRequest = new RegistrationRequest({
       email: req.body.email,
       password: req.body.password,
       accessLevel: req.body.accessLevel,
+      locationInformation: { ipAddress: ipAddress },
     });
 
     await newRequest.save();

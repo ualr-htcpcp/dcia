@@ -46,7 +46,7 @@ export default function Signin() {
         setBaseError(errorMessage);
         setIsProcessing(false);
       } else {
-        router.push(url);
+        router.push("/");
       }
     } catch (error) {
       setBaseError("Unable to sign in. Please try again later.");
