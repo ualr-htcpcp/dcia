@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 import { checkPassword, hashPassword } from "../utils/auth";
 import {
+  sendAccessLevelChange,
   sendPasswordResetConfirmation,
   sendPasswordResetEmail,
 } from "../utils/email";
@@ -71,6 +72,18 @@ UserSchema.post("save", async function (doc, next) {
   try {
     if (this.isModified("password")) {
       await sendPasswordResetConfirmation(doc.email);
+    }
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Access level changed
+UserSchema.post("save", async function (doc, next) {
+  try {
+    if (this.isModified("accessLevel")) {
+      await sendAccessLevelChange(doc.email, doc.accessLevel);
     }
     next();
   } catch (err) {
