@@ -31,12 +31,14 @@ export default function Navigation({ session }) {
         <RiBriefcase2Fill className="mr-2" />
         Department
       </Nav.Link>
-      <Link href="/semesters" passHref={true}>
-        <Nav.Link>
-          <RiCalendarEventFill className="mr-2" />
-          Semesters
-        </Nav.Link>
-      </Link>
+      {["admin", "root"].includes(session?.user.accessLevel) && (
+        <Link href="/semesters" passHref={true}>
+          <Nav.Link>
+            <RiCalendarEventFill className="mr-2" />
+            Semesters
+          </Nav.Link>
+        </Link>
+      )}
       <Nav.Link href="#courses">
         <RiBook2Fill className="mr-2" />
         Courses

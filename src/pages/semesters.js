@@ -39,7 +39,7 @@ export default function Semesters({ semesters }) {
 }
 
 export async function getServerSideProps(context) {
-  const { props } = await ProtectPage(context);
+  const { props } = await ProtectPage(context, ["admin", "root"]);
 
   const semesters = await Semester.find().lean();
   const lockedSemesterIds = await CourseInstance.distinct("semester");

@@ -13,7 +13,7 @@ handler.post(async (req, res) => {
     body: { year, terms },
   } = req;
 
-  if (!session) {
+  if (!session || !["admin", "root"].includes(session.user.accessLevel)) {
     return res.status(403).json({ error: true, message: "Forbidden" });
   }
 
