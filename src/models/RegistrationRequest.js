@@ -40,16 +40,19 @@ const RegistrationRequestSchema = new Schema(
 );
 
 // Send email when requestStatus is updated
-RegistrationRequestSchema.pre("findOneAndUpdate", async function (doc, next) {
-  try {
-    const update = this.getUpdate();
-    const request = await this.model.findOne(this.getFilter()).lean();
-    if (update.requestStatus) {
-      await sendRegistrationRequestUpdate(request.email, update.requestStatus);
-    }
-    next();
-  } catch (err) {
-    return next(err);
+RegistrationRequestSchema.post("findOneAndUpdate", async function () {
+  const update = this.getUpdate();
+  const query = this.getFilter();
+
+  if (update["$set"].requestStatus) {
+    const updatedRequest = await RegistrationRequest.findOne({
+      _id: query._id,
+    });
+
+    await sendRegistrationRequestUpdate(
+      updatedRequest.email,
+      update["$set"].requestStatus
+    );
   }
 });
 
