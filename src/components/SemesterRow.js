@@ -5,15 +5,15 @@ import { Button, Form } from "react-bootstrap";
 export default function Semester({ semester: { year, terms } }) {
   const router = useRouter();
 
-  const [spring, setSpring] = useState(terms.includes("spring"));
-  const [summer, setSummer] = useState(terms.includes("summer"));
-  const [fall, setFall] = useState(terms.includes("fall"));
+  const [spring, setSpring] = useState(!!terms.spring);
+  const [summer, setSummer] = useState(!!terms.summer);
+  const [fall, setFall] = useState(!!terms.fall);
 
   const isChanged = useMemo(() => {
     return (
-      terms.includes("spring") !== spring ||
-      terms.includes("summer") !== summer ||
-      terms.includes("fall") !== fall
+      !!terms.spring !== spring ||
+      !!terms.summer !== summer ||
+      !!terms.fall !== fall
     );
   }, [terms, spring, summer, fall]);
 
@@ -36,6 +36,7 @@ export default function Semester({ semester: { year, terms } }) {
           label="Spring"
           id={`${year}-spring`}
           defaultChecked={spring}
+          disabled={terms.spring?.isLocked}
           onChange={(event) => setSpring(event.target.checked)}
         />
         <Form.Check
@@ -44,6 +45,7 @@ export default function Semester({ semester: { year, terms } }) {
           label="Summer"
           id={`${year}-summer`}
           defaultChecked={summer}
+          disabled={terms.summer?.isLocked}
           onChange={(event) => setSummer(event.target.checked)}
         />
         <Form.Check
@@ -52,6 +54,7 @@ export default function Semester({ semester: { year, terms } }) {
           label="Fall"
           id={`${year}-fall`}
           defaultChecked={fall}
+          disabled={terms.fall?.isLocked}
           onChange={(event) => setFall(event.target.checked)}
         />
       </td>

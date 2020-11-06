@@ -2,6 +2,7 @@ import nextConnect from "next-connect";
 import middleware from "../../middleware";
 import Semester from "../../models/Semester";
 import { getSession } from "next-auth/client";
+import CourseInstance from "../../models/CourseInstance";
 
 const handler = nextConnect();
 handler.use(middleware);
@@ -23,7 +24,10 @@ handler.post(async (req, res) => {
         const isTermEnabled = terms[term];
 
         if (semester && !isTermEnabled) {
-          await Semester.findByIdAndRemove(semester._id);
+          const isLocked = await CourseInstance.exists({ semester: semester });
+          if (!isLocked) {
+            await Semester.findByIdAndRemove(semester._id);
+          }
         } else if (!semester && isTermEnabled) {
           await Semester.create({ year, term });
         }
