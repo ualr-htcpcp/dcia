@@ -158,7 +158,7 @@ export async function sendAccessLevelChange(sendTo, newAccessLevel) {
       groupId: unsubscribeId,
     },
     dynamicTemplateData: {
-      access_level: newAccessLevel,
+      access_level: capitalize(newAccessLevel),
       access_revoked: false,
     },
     templateId: templateIds.userAccessChange,
@@ -180,7 +180,7 @@ export async function sendRegistrationRequestUpdate(sendTo, requestStatus) {
       groupId: unsubscribeId,
     },
     dynamicTemplateData: {
-      request_status: requestStatus,
+      request_status: capitalize(requestStatus),
       request_denied: false,
     },
     templateId: templateIds.registrationRequestUpdate,
