@@ -41,17 +41,24 @@ UserSchema.methods.checkPassword = function (password) {
   return checkPassword(password, passwordHash);
 };
 
-// Access level changed
-UserSchema.pre("findOneAndUpdate", async function (doc, next) {
+// Send email when access level changes
+UserSchema.post("findOneAndUpdate", async function () {
   try {
     const update = this.getUpdate();
-    const user = await this.model.findOne(this.getFilter()).lean();
-    if (update.accessLevel) {
-      await sendAccessLevelChange(user.email, update.accessLevel);
+    const query = this.getFilter();
+
+    if (update["$set"].accessLevel) {
+      const updatedUser = await User.findOne({
+        _id: query._id,
+      });
+
+      await sendAccessLevelChange(
+        updatedUser.email,
+        update["$set"].accessLevel
+      );
     }
-    next();
   } catch (err) {
-    return next(err);
+    console.log(err);
   }
 });
 
@@ -93,4 +100,5 @@ UserSchema.post("save", async function (doc, next) {
   }
 });
 
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
+export default User;
