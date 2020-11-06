@@ -5,7 +5,7 @@ import { Nav } from "react-bootstrap";
 import {
   RiBook2Fill,
   RiBriefcase2Fill,
-  RiCalendarFill,
+  RiCalendarEventFill,
   RiGitRepositoryPrivateFill,
   RiGroupFill,
   RiLineChartFill,
@@ -31,10 +31,14 @@ export default function Navigation({ session }) {
         <RiBriefcase2Fill className="mr-2" />
         Department
       </Nav.Link>
-      <Nav.Link href="#terms">
-        <RiCalendarFill className="mr-2" />
-        Terms
-      </Nav.Link>
+      {["admin", "root"].includes(session?.user.accessLevel) && (
+        <Link href="/semesters" passHref={true}>
+          <Nav.Link>
+            <RiCalendarEventFill className="mr-2" />
+            Semesters
+          </Nav.Link>
+        </Link>
+      )}
       <Nav.Link href="#courses">
         <RiBook2Fill className="mr-2" />
         Courses
