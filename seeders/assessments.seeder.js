@@ -7,58 +7,102 @@ const data = async () => {
   const billyMaddison = await Student.findOne({ tNumber: 12345670 });
   const johnyWalker = await Student.findOne({ tNumber: 62589261 });
   const someGuy = await Student.findOne({ tNumber: 9787775 });
-  const assignment1 = await StudentWorkProject.findOne({
-    name: "Assignment 1",
-  });
-  const assignment2 = await StudentWorkProject.findOne({
-    name: "Assignment 2",
-  });
-  const quiz1 = await StudentWorkProject.findOne({ name: "Quiz 1" });
+  const prog1Assignment1 = await StudentWorkProject.findOne({ name: "Prog1 Assignment 1" });
+  const prog1Assignment2 = await StudentWorkProject.findOne({ name: "Prog1 Assignment 2" });
+  const prog1Quiz1 = await StudentWorkProject.findOne({ name: "Prog1 Quiz 1" });
+  const capAssignment1 = await StudentWorkProject.findOne({ name: "Cap Assignment 1" });
+  const capAssignment2 = await StudentWorkProject.findOne({ name: "Cap Assignment 2" });
+  const capQuiz1 = await StudentWorkProject.findOne({ name: "Cap Quiz 1" });
   return [
     {
       score: 3,
       student: someGuy,
-      studentWorkProject: assignment1,
+      studentWorkProject: prog1Assignment1,
     },
     {
       score: 2,
       student: johnyWalker,
-      studentWorkProject: assignment1,
+      studentWorkProject: prog1Assignment1,
     },
     {
       score: 4,
       student: billyMaddison,
-      studentWorkProject: assignment1,
+      studentWorkProject: prog1Assignment1,
     },
     {
       score: 0,
       student: someGuy,
-      studentWorkProject: assignment2,
+      studentWorkProject: prog1Assignment2,
     },
     {
       score: 4,
       student: johnyWalker,
-      studentWorkProject: assignment2,
+      studentWorkProject: prog1Assignment2,
     },
     {
       score: 3,
       student: billyMaddison,
-      studentWorkProject: assignment2,
+      studentWorkProject: prog1Assignment2,
     },
     {
       score: 2,
       student: someGuy,
-      studentWorkProject: quiz1,
+      studentWorkProject: prog1Quiz1,
     },
     {
       score: 0,
       student: johnyWalker,
-      studentWorkProject: quiz1,
+      studentWorkProject: prog1Quiz1,
     },
     {
       score: 1,
       student: billyMaddison,
-      studentWorkProject: quiz1,
+      studentWorkProject: prog1Quiz1,
+    },
+        {
+      score: 3,
+      student: someGuy,
+      studentWorkProject: capAssignment1,
+    },
+    {
+      score: 2,
+      student: johnyWalker,
+      studentWorkProject: capAssignment1,
+    },
+    {
+      score: 4,
+      student: billyMaddison,
+      studentWorkProject: capAssignment1,
+    },
+    {
+      score: 0,
+      student: someGuy,
+      studentWorkProject: capAssignment2,
+    },
+    {
+      score: 4,
+      student: johnyWalker,
+      studentWorkProject: capAssignment2,
+    },
+    {
+      score: 3,
+      student: billyMaddison,
+      studentWorkProject: capAssignment2,
+    },
+    {
+      score: 2,
+      student: someGuy,
+      studentWorkProject: capQuiz1,
+    },
+    {
+      score: 0,
+      student: johnyWalker,
+      studentWorkProject: capQuiz1,
+    },
+    {
+      score: 1,
+      student: billyMaddison,
+      studentWorkProject: capQuiz1,
     },
   ];
 };

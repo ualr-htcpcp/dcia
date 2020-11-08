@@ -13,9 +13,12 @@ const data = async () => {
   const someGuy = await Student.findOne({ tNumber: 9787775 });
   const programming1 = await Course.findOne({ courseNumber: 1500 });
   const capstone = await Course.findOne({ courseNumber: 4321 });
-  const assignment1 = await StudentWorkProject.findOne({ name: "Assignment 1" });
-  const assignment2 = await StudentWorkProject.findOne({ name: "Assignment 2" });
-  const quiz1 = await StudentWorkProject.findOne({ name: "Quiz 1" });
+  const prog1Assignment1 = await StudentWorkProject.findOne({ name: "Prog1 Assignment 1" });
+  const prog1Assignment2 = await StudentWorkProject.findOne({ name: "Prog1 Assignment 2" });
+  const prog1Quiz1 = await StudentWorkProject.findOne({ name: "Prog1 Quiz 1" });
+  const capAssignment1 = await StudentWorkProject.findOne({ name: "Cap Assignment 1" });
+  const capAssignment2 = await StudentWorkProject.findOne({ name: "Cap Assignment 2" });
+  const capQuiz1 = await StudentWorkProject.findOne({ name: "Cap Quiz 1" });
   const spring2020 = await Semester.findOne({ year: 2020, term: "Spring" });
   const fall2020 = await Semester.findOne({ year: 2020, term: "Fall" });
   return [
@@ -24,14 +27,14 @@ const data = async () => {
       students: [billyMaddison, johnyWalker, someGuy],
       semester: spring2020,
       course: programming1,
-      studentWorkProject: [assignment1, assignment2, quiz1],
+      studentWorkProject: [prog1Assignment1, prog1Assignment2, prog1Quiz1],
     },
     {
       instructor: albertBaker,
       students: [billyMaddison, johnyWalker, someGuy],
       semester: fall2020,
       course: capstone,
-      studentWorkProject: [assignment1, assignment2, quiz1],
+      studentWorkProject: [capAssignment1, capAssignment2, capQuiz1],
     },
   ];
 };

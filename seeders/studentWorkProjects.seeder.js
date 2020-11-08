@@ -11,15 +11,27 @@ const data = async () => {
   const so6 = await StudentOutcome.findOne({ studentOutcomeNumber: 6 });
   return [
     {
-      name: "Assignment 1",
+      name: "Prog1 Assignment 1",
       studentOutcome: [so1, so2],
     },
     {
-      name: "Assignment 2",
+      name: "Prog1 Assignment 2",
       studentOutcome: [so3, so4],
     },
     {
-      name: "Quiz 1",
+      name: "Prog1 Quiz 1",
+      studentOutcome: [so5, so6],
+    },
+    {
+      name: "Cap Assignment 1",
+      studentOutcome: [so1, so2],
+    },
+    {
+      name: "Cap Assignment 2",
+      studentOutcome: [so3, so4],
+    },
+    {
+      name: "Cap Quiz 1",
       studentOutcome: [so5, so6],
     },
   ];
