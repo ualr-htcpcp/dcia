@@ -1,4 +1,4 @@
-import mongooseDataSeed, { Seeder } from "mongoose-data-seed";
+import { Seeder } from "mongoose-data-seed";
 import Course from "../src/models/Course";
 import StudentOutcome from "../src/models/StudentOutcome";
 
