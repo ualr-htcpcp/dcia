@@ -1,20 +1,29 @@
 import { Seeder } from "mongoose-data-seed";
+import StudentOutcome from "../src/models/StudentOutcome";
 import StudentWorkProject from "../src/models/StudentWorkProject";
 
-const data = [
-  {
-    name: "Assignment 1",
-    studentOutcome: ["5fa3767d3c24ec15845f7567", "5fa3767d3c24ec15845f7568"],
-  },
-  {
-    name: "Assignment 2",
-    studentOutcome: ["5fa3767d3c24ec15845f7568", "5fa3767d3c24ec15845f7564"],
-  },
-  {
-    name: "Quiz 1",
-    studentOutcome: ["5fa3767d3c24ec15845f7564", "5fa3767d3c24ec15845f7568"],
-  },
-];
+const data = async () => {
+  const so1 = await StudentOutcome.findOne({ studentOutcomeNumber: 1 });
+  const so2 = await StudentOutcome.findOne({ studentOutcomeNumber: 2 });
+  const so3 = await StudentOutcome.findOne({ studentOutcomeNumber: 3 });
+  const so4 = await StudentOutcome.findOne({ studentOutcomeNumber: 4 });
+  const so5 = await StudentOutcome.findOne({ studentOutcomeNumber: 5 });
+  const so6 = await StudentOutcome.findOne({ studentOutcomeNumber: 6 });
+  return [
+    {
+      name: "Assignment 1",
+      studentOutcome: [so1, so2],
+    },
+    {
+      name: "Assignment 2",
+      studentOutcome: [so3, so4],
+    },
+    {
+      name: "Quiz 1",
+      studentOutcome: [so5, so6],
+    },
+  ];
+};
 class StudentWorkProjectsSeeder extends Seeder {
   async shouldRun() {
     return StudentWorkProject.countDocuments()
@@ -23,8 +32,10 @@ class StudentWorkProjectsSeeder extends Seeder {
   }
 
   async run() {
+    const studentWorkProjects = await data();
+
     return Promise.all(
-      data.map(async (studentWorkProject) => {
+      studentWorkProjects.map(async (studentWorkProject) => {
         return StudentWorkProject.create(studentWorkProject);
       })
     );
