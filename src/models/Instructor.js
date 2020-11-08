@@ -6,11 +6,6 @@ const instructorSchema = new mongoose.Schema(
       first: String,
       last: String,
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
   },
   { timestamps: true }
 );

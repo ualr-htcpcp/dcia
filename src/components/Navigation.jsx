@@ -1,11 +1,11 @@
-import React from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 import { Nav } from "react-bootstrap";
 import {
   RiBook2Fill,
-  RiBriefcase2Fill,
   RiCalendarEventFill,
+  RiFlag2Fill,
   RiGitRepositoryPrivateFill,
   RiGroupFill,
   RiLineChartFill,
@@ -27,26 +27,34 @@ export default function Navigation({ session }) {
           Dashboard
         </Nav.Link>
       </Link>
-      <Nav.Link href="#department">
-        <RiBriefcase2Fill className="mr-2" />
-        Department
-      </Nav.Link>
-      {["admin", "root"].includes(session?.user.accessLevel) && (
-        <Link href="/semesters" passHref={true}>
-          <Nav.Link>
-            <RiCalendarEventFill className="mr-2" />
-            Semesters
-          </Nav.Link>
-        </Link>
-      )}
       <Nav.Link href="#courses">
         <RiBook2Fill className="mr-2" />
         Courses
       </Nav.Link>
-      <Nav.Link href="#instructors">
-        <RiGroupFill className="mr-2" />
-        Instructors
-      </Nav.Link>
+
+      {["admin", "root"].includes(session?.user.accessLevel) && (
+        <>
+          <Link href="/objectives" passHref={true}>
+            <Nav.Link>
+              <RiFlag2Fill className="mr-2" />
+              Objectives
+            </Nav.Link>
+          </Link>
+          <Link href="/semesters" passHref={true}>
+            <Nav.Link>
+              <RiCalendarEventFill className="mr-2" />
+              Semesters
+            </Nav.Link>
+          </Link>
+          <Link href="/instructors" passHref={true}>
+            <Nav.Link>
+              <RiGroupFill className="mr-2" />
+              Instructors
+            </Nav.Link>
+          </Link>
+        </>
+      )}
+
       {session?.user.accessLevel === "root" && (
         <Link href="/user-access" passHref={true}>
           <Nav.Link>
