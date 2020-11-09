@@ -10,5 +10,7 @@ const instructorSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+instructorSchema.index({ name: 1 }, { unique: true });
+
 export default mongoose.models.Instructor ||
   mongoose.model("Instructor", instructorSchema);

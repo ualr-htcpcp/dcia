@@ -1,5 +1,6 @@
 import EmptyRow from "components/EmptyRow.jsx";
-import { Card, Table } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Card, Table } from "react-bootstrap";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 
@@ -27,16 +28,27 @@ function InstructorRows() {
   if (error) return <EmptyRow message="Failed to load." />;
   if (!data) return <EmptyRow message={<em>Loading...</em>} />;
 
-  return data.map((instructor) => {
-    const { _id, name } = instructor;
+  return data.map((instructor) => (
+    <InstructorRow key={instructor._id} instructor={instructor} />
+  ));
+}
 
-    return (
-      <tr key={_id}>
-        <td>
-          {name.first} {name.last}
-        </td>
-        <td></td>
-      </tr>
-    );
-  });
+function InstructorRow({ instructor: { name } }) {
+  const [, setIsEditing] = useState(false);
+  const fullName = `${name.first} ${name.last}`;
+
+  return (
+    <tr>
+      <td>{fullName}</td>
+      <td className="text-right pt-2 pb-0">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => setIsEditing(true)}
+        >
+          Edit
+        </Button>
+      </td>
+    </tr>
+  );
 }
