@@ -1,8 +1,9 @@
 import EmptyRow from "components/EmptyRow.jsx";
 import { useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import fetcher from "utils/fetcher";
+import InstructorFormModal from "components/InstructorFormModal.jsx";
 
 export default function InstructorsCard() {
   return (
@@ -33,9 +34,9 @@ function InstructorRows() {
   ));
 }
 
-function InstructorRow({ instructor: { name } }) {
-  const [, setIsEditing] = useState(false);
-  const fullName = `${name.first} ${name.last}`;
+function InstructorRow({ instructor }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const fullName = `${instructor.name.first} ${instructor.name.last}`;
 
   return (
     <tr>
@@ -48,6 +49,13 @@ function InstructorRow({ instructor: { name } }) {
         >
           Edit
         </Button>
+
+        <InstructorFormModal
+          instructor={instructor}
+          show={isEditing}
+          onHide={() => setIsEditing(false)}
+          instructorsChanged={() => mutate("/api/instructors")}
+        />
       </td>
     </tr>
   );

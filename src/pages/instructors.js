@@ -1,4 +1,4 @@
-import AddInstructorModal from "components/AddInstructorModal.jsx";
+import InstructorFormModal from "components/InstructorFormModal.jsx";
 import AppLayout from "components/AppLayout.jsx";
 import InstructorsCard from "components/InstructorsCard.jsx";
 import Head from "next/head";
@@ -30,7 +30,7 @@ export default function Instructors() {
               Add Instructor
             </Button>
 
-            <AddInstructorModal
+            <InstructorFormModal
               show={showModal}
               onHide={() => setShowModal(false)}
               instructorsChanged={() => setVersion(version + 1)}

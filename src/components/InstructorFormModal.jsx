@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
-export default function AddInstructorModal({
+export default function InstructorFormModal({
   show,
   onHide,
   instructorsChanged,
+  instructor = null,
 }) {
   const { register, handleSubmit, errors, clearErrors, setError } = useForm();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -14,9 +15,13 @@ export default function AddInstructorModal({
     setIsProcessing(true);
     clearErrors();
 
+    const [method, url] = instructor
+      ? ["put", `/api/instructors/${instructor._id}`]
+      : ["post", "/api/instructors"];
+
     try {
-      await fetch("/api/instructors", {
-        method: "post",
+      await fetch(url, {
+        method: method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
@@ -32,7 +37,7 @@ export default function AddInstructorModal({
     <Modal {...{ show, onHide }} centered>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Instructor</Modal.Title>
+          <Modal.Title>{instructor ? "Edit" : "Add"} Instructor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {errors.base && <Alert variant="danger">{errors.base.message}</Alert>}
@@ -42,6 +47,7 @@ export default function AddInstructorModal({
             <Form.Control
               type="text"
               name="name[first]"
+              defaultValue={instructor?.name?.first}
               isInvalid={errors?.name?.first}
               ref={register({ required: true })}
             />
@@ -51,6 +57,7 @@ export default function AddInstructorModal({
             <Form.Control
               type="text"
               name="name[last]"
+              defaultValue={instructor?.name?.last}
               isInvalid={errors?.name?.last}
               ref={register({ required: true })}
             />
