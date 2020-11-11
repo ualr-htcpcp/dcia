@@ -10,19 +10,13 @@ const templateIds = {
   passwordReset: "d-3cedb1dc419944c2bb960e8782a17681",
   passwordResetConfirmation: "d-a011458f2d274526a23236091daa7372",
 };
-const passwordResetBaseUrl = "https://dcia.herokuapp.com/reset_password";
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 function createResetUrl(token) {
-  const localPasswordResetUrl = "http://localhost:3000/reset_password";
-  if (process.env.NODE_ENV === "production") {
-    return encodeURI(passwordResetBaseUrl + "/?token=" + token);
-  } else {
-    return encodeURI(localPasswordResetUrl + "/?token=" + token);
-  }
+  return encodeURI(`${process.env.APP_URL}/reset_password?token=${token}`);
 }
 
 export async function getLocationData(ipAddress) {
