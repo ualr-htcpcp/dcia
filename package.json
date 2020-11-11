@@ -13,7 +13,8 @@
     "e2e": "start-test dev 3000 cy:open",
     "cy:open": "cypress open",
     "db:seed": "md-seed run",
-    "db:reseed": "md-seed run --dropdb"
+    "db:reseed": "md-seed run --dropdb",
+    "reset": "md-seed run --dropdb && next dev"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.3.0",

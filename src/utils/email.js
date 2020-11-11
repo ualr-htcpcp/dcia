@@ -9,6 +9,8 @@ const templateIds = {
   notifyRootUser: "d-d0831e054c9c433896a36b2430ebb580",
   passwordReset: "d-3cedb1dc419944c2bb960e8782a17681",
   passwordResetConfirmation: "d-a011458f2d274526a23236091daa7372",
+  userAccessChange: "d-9ec83ef57e52483187663999580ae97a",
+  registrationRequestUpdate: "d-dcad74638f37429e951ee7d1e92c284d",
 };
 const passwordResetBaseUrl = "http://localhost:3000/reset_password";
 
@@ -143,6 +145,49 @@ export async function sendPasswordResetConfirmation(sendTo) {
     },
     templateId: templateIds.passwordResetConfirmation,
   };
+
+  return await sendEmail(msgContent, emailType);
+}
+
+export async function sendAccessLevelChange(sendTo, newAccessLevel) {
+  const emailType = "ACCESS LEVEL CHANGE"; // logging purposes only
+  const msgContent = {
+    to: sendTo,
+    from: { email: process.env.SENDGRID_SENDER, name: fromTeam },
+    asm: {
+      groupId: unsubscribeId,
+    },
+    dynamicTemplateData: {
+      access_level: capitalize(newAccessLevel),
+      access_revoked: false,
+    },
+    templateId: templateIds.userAccessChange,
+  };
+
+  if (newAccessLevel === "revoked") {
+    msgContent.dynamicTemplateData.access_revoked = true;
+  }
+
+  return await sendEmail(msgContent, emailType);
+}
+
+export async function sendRegistrationRequestUpdate(sendTo, requestStatus) {
+  const emailType = "REGISTRATION REQUEST UPDATED"; // logging purposes only
+  const msgContent = {
+    to: sendTo,
+    from: { email: process.env.SENDGRID_SENDER, name: fromTeam },
+    asm: {
+      groupId: unsubscribeId,
+    },
+    dynamicTemplateData: {
+      request_status: capitalize(requestStatus),
+      request_denied: false,
+    },
+    templateId: templateIds.registrationRequestUpdate,
+  };
+  if (requestStatus === "denied") {
+    msgContent.dynamicTemplateData.request_denied = true;
+  }
 
   return await sendEmail(msgContent, emailType);
 }

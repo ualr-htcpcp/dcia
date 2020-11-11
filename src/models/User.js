@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 import { checkPassword, hashPassword } from "../utils/auth";
 import {
+  sendAccessLevelChange,
   sendPasswordResetConfirmation,
   sendPasswordResetEmail,
 } from "../utils/email";
@@ -39,6 +40,27 @@ UserSchema.methods.checkPassword = function (password) {
   const passwordHash = this.password;
   return checkPassword(password, passwordHash);
 };
+
+// Send email when access level changes
+UserSchema.post("findOneAndUpdate", async function () {
+  try {
+    const update = this.getUpdate();
+    const query = this.getFilter();
+
+    if (update["$set"].accessLevel) {
+      const updatedUser = await User.findOne({
+        _id: query._id,
+      });
+
+      await sendAccessLevelChange(
+        updatedUser.email,
+        update["$set"].accessLevel
+      );
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 // Reset password, clear passwordReset token/expiry
 UserSchema.pre("save", async function (next) {
@@ -78,4 +100,5 @@ UserSchema.post("save", async function (doc, next) {
   }
 });
 
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
+export default User;
