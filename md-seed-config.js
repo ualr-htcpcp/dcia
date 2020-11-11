@@ -2,12 +2,13 @@ import mongoose from "mongoose";
 import RegistrationRequests from "./seeders/registrationrequests.seeder";
 import Users from "./seeders/users.seeder";
 import StudentOutcomes from "./seeders/studentOutcomes.seeder";
-import Courses from "./seeders/courses.seeder";
 import Students from "./seeders/students.seeder";
-import Instructors from "./seeders/instructors.seeder";
-import Semesters from "./seeders/semesters.seeder";
 import StudentWorkProjects from "./seeders/studentWorkProjects.seeder";
+import Semesters from "./seeders/semesters.seeder";
+import Instructors from "./seeders/instructors.seeder";
+import Courses from "./seeders/courses.seeder";
 import CourseInstances from "./seeders/courseInstances.seeder";
+import Assessments from "./seeders/assessments.seeder";
 
 mongoose.set("useCreateIndex", true);
 
@@ -22,12 +23,13 @@ export const seedersList = {
   RegistrationRequests,
   Users,
   StudentOutcomes,
-  Courses,
   Students,
-  Instructors,
-  Semesters,
   StudentWorkProjects,
+  Semesters,
+  Instructors,
+  Courses,
   CourseInstances,
+  Assessments,
 };
 
 /**

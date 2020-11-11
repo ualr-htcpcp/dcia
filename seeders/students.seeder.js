@@ -7,7 +7,7 @@ const data = [
     tNumber: 12345670,
   },
   {
-    name: { first: "Johnny", last: "Walker" },
+    name: { first: "Johny", last: "Walker" },
     tNumber: 62589261,
   },
   {
