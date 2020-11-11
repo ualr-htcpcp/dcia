@@ -1,10 +1,9 @@
 import { Seeder } from "mongoose-data-seed";
-import Semester from "../src/models/Semester";
+import Course from "../src/models/Course";
 import CourseInstance from "../src/models/CourseInstance";
 import Instructor from "../src/models/Instructor";
-import Student from "../src/models/Student";
 import Semester from "../src/models/Semester";
-import Course from "../src/models/Course";
+import Student from "../src/models/Student";
 import StudentWorkProject from "../src/models/StudentWorkProject";
 
 const data = async () => {
