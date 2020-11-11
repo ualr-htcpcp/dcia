@@ -9,13 +9,13 @@ export default function InstructorFormModal({
   instructor = null,
 }) {
   const { register, handleSubmit, errors, clearErrors, setError } = useForm();
-  const [baseError, setBaseError] = useState(null)
+  const [baseError, setBaseError] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const onSubmit = async (data) => {
     setIsProcessing(true);
     clearErrors();
-    setBaseError(null)
+    setBaseError(null);
 
     const [method, url] = instructor
       ? ["put", `/api/instructors/${instructor._id}`]
@@ -31,12 +31,12 @@ export default function InstructorFormModal({
         instructorsChanged();
         onHide();
       } else {
-        setBaseError("Instructor name must be unique.")
+        setBaseError("Instructor name must be unique.");
         setError("name.first", { message: "invalid" });
         setError("name.last", { message: "invalid" });
       }
     } catch {
-      setBaseError("There was a problem saving instructor.")
+      setBaseError("There was a problem saving instructor.");
     }
     setIsProcessing(false);
   };

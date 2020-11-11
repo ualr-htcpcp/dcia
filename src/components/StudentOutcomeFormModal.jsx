@@ -9,7 +9,7 @@ export default function StudentOutcomeFormModal({
   studentOutcome = null,
 }) {
   const { register, handleSubmit, errors, clearErrors, setError } = useForm();
-  const [baseError, setBaseError] = useState(null)
+  const [baseError, setBaseError] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const onSubmit = async (data) => {
@@ -32,11 +32,11 @@ export default function StudentOutcomeFormModal({
         onHide();
       } else if (response.status === 422) {
         const { error: errors } = await response.json();
-        errors.forEach(error => {
+        errors.forEach((error) => {
           setError(error.key, { message: error.message });
         });
       } else {
-        throw("SaveError");
+        throw "SaveError";
       }
     } catch {
       setBaseError("There was a problem saving student objective.");
