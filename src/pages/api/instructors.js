@@ -8,7 +8,7 @@ const handler = nextConnect();
 handler.use(middleware);
 
 handler.post(async (req, res) => {
-  forbiddenUnlessAdmin(req, res);
+  await forbiddenUnlessAdmin(req, res);
   const {
     body: {
       name: { first, last },
@@ -24,7 +24,7 @@ handler.post(async (req, res) => {
 });
 
 handler.get(async (req, res) => {
-  forbiddenUnlessAdmin(req, res);
+  await forbiddenUnlessAdmin(req, res);
   const [instructors, assignedToCourses] = await Promise.all([
     Instructor.find().sort("name.last name.first").lean(),
     CourseInstance.distinct("instructor"),

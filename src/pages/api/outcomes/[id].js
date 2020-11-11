@@ -8,7 +8,7 @@ const handler = nextConnect();
 handler.use(middleware);
 
 handler.put(async (req, res) => {
-  forbiddenUnlessAdmin(req, res);
+  await forbiddenUnlessAdmin(req, res);
   const {
     query: { id: _id },
     body: { number, definition },
@@ -33,7 +33,7 @@ handler.put(async (req, res) => {
 });
 
 handler.delete(async (req, res) => {
-  forbiddenUnlessAdmin(req, res);
+  await forbiddenUnlessAdmin(req, res);
   const {
     query: { id: _id },
   } = req;

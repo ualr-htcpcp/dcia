@@ -4,6 +4,7 @@ import StudentOutcomesCard from "components/StudentOutcomesCard.jsx";
 import Head from "next/head";
 import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
+import { ProtectPage } from "../utils/auth";
 
 const pageTitle = "Student Outcomes (SOs)";
 
@@ -42,4 +43,8 @@ export default function Outcomes() {
       </AppLayout>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  return ProtectPage(context, ["admin", "root"]);
 }

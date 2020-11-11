@@ -8,7 +8,7 @@ const handler = nextConnect();
 handler.use(middleware);
 
 handler.post(async (req, res) => {
-  forbiddenUnlessAdmin(req, res);
+  await forbiddenUnlessAdmin(req, res);
   const {
     body: { number, definition },
   } = req;
@@ -28,7 +28,7 @@ handler.post(async (req, res) => {
 });
 
 handler.get(async (req, res) => {
-  forbiddenUnlessAdmin(req, res);
+  await forbiddenUnlessAdmin(req, res);
   const [studentOutcomes, assignedToCourses] = await Promise.all([
     StudentOutcome.find().sort("number").lean(),
     Course.distinct("studentOutcome"),

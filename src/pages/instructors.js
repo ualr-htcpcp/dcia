@@ -1,9 +1,10 @@
-import InstructorFormModal from "components/InstructorFormModal.jsx";
 import AppLayout from "components/AppLayout.jsx";
+import InstructorFormModal from "components/InstructorFormModal.jsx";
 import InstructorsCard from "components/InstructorsCard.jsx";
 import Head from "next/head";
 import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
+import { ProtectPage } from "../utils/auth";
 
 const pageTitle = "Instructors";
 
@@ -42,4 +43,8 @@ export default function Instructors() {
       </AppLayout>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  return ProtectPage(context, ["admin", "root"]);
 }
