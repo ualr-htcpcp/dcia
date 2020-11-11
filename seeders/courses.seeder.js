@@ -3,12 +3,12 @@ import Course from "../src/models/Course";
 import StudentOutcome from "../src/models/StudentOutcome";
 
 const data = async () => {
-  const so1 = await StudentOutcome.findOne({ studentOutcomeNumber: 1 });
-  const so2 = await StudentOutcome.findOne({ studentOutcomeNumber: 2 });
-  const so3 = await StudentOutcome.findOne({ studentOutcomeNumber: 3 });
-  const so4 = await StudentOutcome.findOne({ studentOutcomeNumber: 4 });
-  const so5 = await StudentOutcome.findOne({ studentOutcomeNumber: 5 });
-  const so6 = await StudentOutcome.findOne({ studentOutcomeNumber: 6 });
+  const so1 = await StudentOutcome.findOne({ number: 1 });
+  const so2 = await StudentOutcome.findOne({ number: 2 });
+  const so3 = await StudentOutcome.findOne({ number: 3 });
+  const so4 = await StudentOutcome.findOne({ number: 4 });
+  const so5 = await StudentOutcome.findOne({ number: 5 });
+  const so6 = await StudentOutcome.findOne({ number: 6 });
   return [
     {
       title: "Programming1",
