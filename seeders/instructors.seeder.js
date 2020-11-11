@@ -4,7 +4,6 @@ import Instructor from "../src/models/Instructor";
 const data = [
   {
     name: { first: "Albert", last: "Baker" },
-    user: "5fa3767d3c24ec15845f7562",
   },
 ];
 

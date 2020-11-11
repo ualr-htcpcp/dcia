@@ -1,13 +1,15 @@
 import { Seeder } from "mongoose-data-seed";
-import Semester from "../src/models/Semester";
 import CourseInstance from "../src/models/CourseInstance";
+import Instructor from "../src/models/Instructor";
+import Semester from "../src/models/Semester";
 
 const data = async () => {
   const spring2020 = await Semester.findOne({ year: 2020, term: "spring" });
+  const instructor = await Instructor.findOne();
 
   return [
     {
-      instructor: "5fa38a3a3c781a5d10ca2cf2",
+      instructor,
       students: [
         "5fa381fafd82c8531cc5ba98",
         "5fa381fafd82c8531cc5ba99",

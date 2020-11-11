@@ -1,4 +1,5 @@
 import middleware from "middleware";
+import CourseInstance from "models/CourseInstance";
 import Instructor from "models/Instructor";
 import nextConnect from "next-connect";
 
@@ -17,7 +18,17 @@ handler.post(async (req, res) => {
 });
 
 handler.get(async (req, res) => {
-  const instructors = await Instructor.find().sort("name.last name.first");
+  const [instructors, assignedToCourses] = await Promise.all([
+    Instructor.find().sort("name.last name.first").lean(),
+    CourseInstance.distinct("instructor"),
+  ]);
+
+  instructors.forEach((instructor) => {
+    instructor.isLocked = assignedToCourses.some((instructorId) =>
+      instructorId.equals(instructor._id)
+    );
+  });
+
   res.json(instructors);
 });
 
