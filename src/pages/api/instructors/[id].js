@@ -2,11 +2,13 @@ import middleware from "middleware";
 import CourseInstance from "models/CourseInstance";
 import Instructor from "models/Instructor";
 import nextConnect from "next-connect";
+import { forbiddenUnlessAdmin } from "utils/auth";
 
 const handler = nextConnect();
 handler.use(middleware);
 
 handler.put(async (req, res) => {
+  forbiddenUnlessAdmin(req, res);
   const {
     query: { id: _id },
     body: {
@@ -23,6 +25,7 @@ handler.put(async (req, res) => {
 });
 
 handler.delete(async (req, res) => {
+  forbiddenUnlessAdmin(req, res);
   const {
     query: { id: _id },
   } = req;
@@ -31,7 +34,7 @@ handler.delete(async (req, res) => {
   const isLocked = await CourseInstance.exists({ instructor });
 
   if (isLocked) {
-    res.status(403).json({ error: "Forbidden" });
+    res.status(403).json({ error: true, message: "Forbidden" });
   } else {
     await Instructor.findByIdAndDelete(_id);
     res.json(instructor);

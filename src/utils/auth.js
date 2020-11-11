@@ -49,3 +49,10 @@ export async function ProtectPage(context, accessLevels = null) {
   }
   return { props: { session } };
 }
+
+export async function forbiddenUnlessAdmin(req, res) {
+  const session = await getSession({ req });
+  if (!session || !["admin", "root"].includes(session.user.accessLevel)) {
+    return res.status(403).json({ error: true, message: "Forbidden" });
+  }
+}
