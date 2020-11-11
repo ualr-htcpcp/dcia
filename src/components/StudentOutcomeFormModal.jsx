@@ -9,11 +9,13 @@ export default function StudentOutcomeFormModal({
   studentOutcome = null,
 }) {
   const { register, handleSubmit, errors, clearErrors, setError } = useForm();
+  const [baseError, setBaseError] = useState(null)
   const [isProcessing, setIsProcessing] = useState(false);
 
   const onSubmit = async (data) => {
     setIsProcessing(true);
     clearErrors();
+    setBaseError(null);
 
     const [method, url] = studentOutcome
       ? ["put", `/api/outcomes/${studentOutcome._id}`]
@@ -37,9 +39,7 @@ export default function StudentOutcomeFormModal({
         throw("SaveError");
       }
     } catch {
-      setError("base", {
-        message: "There was a problem saving student objective.",
-      });
+      setBaseError("There was a problem saving student objective.");
     }
     setIsProcessing(false);
   };
@@ -53,7 +53,7 @@ export default function StudentOutcomeFormModal({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {errors.base && <Alert variant="danger">{errors.base.message}</Alert>}
+          {baseError && <Alert variant="danger">{baseError}</Alert>}
 
           <Form.Group>
             <Form.Label>Number</Form.Label>

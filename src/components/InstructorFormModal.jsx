@@ -9,26 +9,34 @@ export default function InstructorFormModal({
   instructor = null,
 }) {
   const { register, handleSubmit, errors, clearErrors, setError } = useForm();
+  const [baseError, setBaseError] = useState(null)
   const [isProcessing, setIsProcessing] = useState(false);
 
   const onSubmit = async (data) => {
     setIsProcessing(true);
     clearErrors();
+    setBaseError(null)
 
     const [method, url] = instructor
       ? ["put", `/api/instructors/${instructor._id}`]
       : ["post", "/api/instructors"];
 
     try {
-      await fetch(url, {
+      const response = await fetch(url, {
         method: method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      instructorsChanged();
-      onHide();
+      if (response.ok) {
+        instructorsChanged();
+        onHide();
+      } else {
+        setBaseError("Instructor name must be unique.")
+        setError("name.first", { message: "invalid" });
+        setError("name.last", { message: "invalid" });
+      }
     } catch {
-      setError("base", { message: "There was a problem saving instructor." });
+      setBaseError("There was a problem saving instructor.")
     }
     setIsProcessing(false);
   };
@@ -40,7 +48,7 @@ export default function InstructorFormModal({
           <Modal.Title>{instructor ? "Edit" : "Add"} Instructor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {errors.base && <Alert variant="danger">{errors.base.message}</Alert>}
+          {baseError && <Alert variant="danger">{baseError}</Alert>}
 
           <Form.Group>
             <Form.Label>First Name</Form.Label>

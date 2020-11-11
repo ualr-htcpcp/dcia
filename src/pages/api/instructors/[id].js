@@ -16,12 +16,16 @@ handler.put(async (req, res) => {
     },
   } = req;
 
-  const instructor = await Instructor.findOneAndUpdate(
-    { _id },
-    { name: { first, last } },
-    { new: true }
-  );
-  res.json(instructor);
+  try {
+    const instructor = await Instructor.findOneAndUpdate(
+      { _id },
+      { name: { first, last } },
+      { new: true }
+    );
+    res.json(instructor);
+  } catch {
+    res.status(422).json({ error: true });
+  }
 });
 
 handler.delete(async (req, res) => {

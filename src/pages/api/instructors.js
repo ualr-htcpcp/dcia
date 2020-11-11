@@ -15,8 +15,12 @@ handler.post(async (req, res) => {
     },
   } = req;
 
-  const query = await Instructor.create({ name: { first, last } });
-  res.json(query);
+  try {
+    const query = await Instructor.create({ name: { first, last } });
+    res.json(query);
+  } catch {
+    res.status(422).json({ error: true });
+  }
 });
 
 handler.get(async (req, res) => {
