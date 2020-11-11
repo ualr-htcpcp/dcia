@@ -1,4 +1,5 @@
 import { Seeder } from "mongoose-data-seed";
+import Semester from "../src/models/Semester";
 import CourseInstance from "../src/models/CourseInstance";
 import Instructor from "../src/models/Instructor";
 import Student from "../src/models/Student";
@@ -19,8 +20,8 @@ const data = async () => {
   const capAssignment1 = await StudentWorkProject.findOne({ name: "Cap Assignment 1" });
   const capAssignment2 = await StudentWorkProject.findOne({ name: "Cap Assignment 2" });
   const capQuiz1 = await StudentWorkProject.findOne({ name: "Cap Quiz 1" });
-  const spring2020 = await Semester.findOne({ year: 2020, term: "Spring" });
-  const fall2020 = await Semester.findOne({ year: 2020, term: "Fall" });
+  const spring2020 = await Semester.findOne({ year: 2020, term: "spring" });
+  const fall2020 = await Semester.findOne({ year: 2020, term: "fall" });
   return [
     {
       instructor: albertBaker,

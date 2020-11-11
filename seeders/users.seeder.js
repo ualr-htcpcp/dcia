@@ -1,6 +1,6 @@
 import { Seeder } from "mongoose-data-seed";
 import User from "../src/models/User";
-import { hashPassword } from "../src/utils/auth";
+import { hashPassword, createExpirationDate } from "../src/utils/auth";
 
 const data = [
   {
@@ -18,6 +18,29 @@ const data = [
     password: "revoked",
     accessLevel: "revoked",
   },
+  {
+    email: "root@example.com",
+    password: "root1",
+    accessLevel: "root",
+  },
+  {
+    email: "resetme@example.com",
+    password: "forgot",
+    accessLevel: "admin",
+    passwordReset: {
+      token: "abcdefg",
+      expiration: createExpirationDate(new Date()),
+    },
+  },
+  {
+    email: "expired@example.com",
+    password: "forgot",
+    accessLevel: "instructor",
+    passwordReset: {
+      token: "abcdefg1234",
+      expiration: new Date("01-01-2020"),
+    },
+  },
 ];
 
 class UsersSeeder extends Seeder {
@@ -30,7 +53,7 @@ class UsersSeeder extends Seeder {
   async run() {
     return Promise.all(
       data.map(async (user) => {
-        return User.create({
+        return User.collection.insertOne({
           ...user,
           password: await hashPassword(user.password),
         });
