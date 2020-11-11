@@ -34,10 +34,10 @@ export default function Navigation({ session }) {
 
       {["admin", "root"].includes(session?.user.accessLevel) && (
         <>
-          <Link href="/objectives" passHref={true}>
+          <Link href="/outcomes" passHref={true}>
             <Nav.Link>
               <RiFlag2Fill className="mr-2" />
-              Objectives
+              Outcomes
             </Nav.Link>
           </Link>
           <Link href="/semesters" passHref={true}>

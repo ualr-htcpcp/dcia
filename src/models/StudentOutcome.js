@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const studentOutcomeSchema = new mongoose.Schema(
   {
-    studentOutcomeNumber: {
+    number: {
       type: Number,
       required: true,
+      unique: true,
     },
     definition: {
       type: String,
