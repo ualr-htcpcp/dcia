@@ -12,14 +12,13 @@ const templateIds = {
   userAccessChange: "d-9ec83ef57e52483187663999580ae97a",
   registrationRequestUpdate: "d-dcad74638f37429e951ee7d1e92c284d",
 };
-const passwordResetBaseUrl = "http://localhost:3000/reset_password";
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 function createResetUrl(token) {
-  return encodeURI(passwordResetBaseUrl + "/?token=" + token);
+  return encodeURI(`${process.env.APP_URL}/reset_password?token=${token}`);
 }
 
 export async function getLocationData(ipAddress) {
