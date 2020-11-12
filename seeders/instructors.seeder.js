@@ -1,13 +1,10 @@
 import { Seeder } from "mongoose-data-seed";
 import Instructor from "../src/models/Instructor";
-import User from "../src/models/User";
 
 const data = async () => {
-  const albertBaker = await User.findOne({ email: "instructor@example.com", accessLevel: "instructor" });
   return [
     {
       name: { first: "Albert", last: "Baker" },
-      user: albertBaker,
     },
   ];
 };
