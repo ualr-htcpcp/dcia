@@ -62,7 +62,7 @@ export default function StudentOutcomeFormModal({
               name="number"
               defaultValue={studentOutcome?.number}
               isInvalid={errors.number}
-              ref={register({ required: true })}
+              ref={register({ required: "SO Number is required" })}
             />
             {errors.number && (
               <Form.Control.Feedback type="invalid">
@@ -79,8 +79,13 @@ export default function StudentOutcomeFormModal({
               rows={3}
               defaultValue={studentOutcome?.definition}
               isInvalid={errors.definition}
-              ref={register({ required: true })}
+              ref={register({ required: "SO Definition is required" })}
             />
+            {errors.definition && (
+              <Form.Control.Feedback type="invalid">
+                {errors.definition.message}
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>

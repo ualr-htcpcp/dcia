@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { NAME_REGEX } from "utils/validation";
+import { NAME_REGEX } from "../utils/validation";
 
 const nameOptions = {
   type: String,
