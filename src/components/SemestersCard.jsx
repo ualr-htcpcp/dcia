@@ -1,10 +1,42 @@
-import { useRouter } from "next/router";
-import { useState, useMemo } from "react";
-import { Button, Form } from "react-bootstrap";
+import EmptyRow from "components/EmptyRow.jsx";
+import { useMemo, useState } from "react";
+import { Button, Card, Form, Table } from "react-bootstrap";
+import useSWR, { mutate } from "swr";
+import fetcher from "utils/fetcher";
 
-export default function Semester({ semester: { year, terms } }) {
-  const router = useRouter();
+const SEMESTERS_PATH = "/api/semesters";
 
+export default function SemestersCard(props) {
+  return (
+    <Card {...props}>
+      <Table responsive className="mb-0">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Terms</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <SemesterRows />
+        </tbody>
+      </Table>
+    </Card>
+  );
+}
+
+function SemesterRows() {
+  const { data, error } = useSWR(SEMESTERS_PATH, fetcher);
+
+  if (error) return <EmptyRow message="Failed to load." />;
+  if (!data) return <EmptyRow message={<em>Loading...</em>} />;
+
+  return data.map((semester) => {
+    return <SemesterRow key={semester.year} semester={semester} />;
+  });
+}
+
+function SemesterRow({ semester: { year, terms } }) {
   const [spring, setSpring] = useState(!!terms.spring);
   const [summer, setSummer] = useState(!!terms.summer);
   const [fall, setFall] = useState(!!terms.fall);
@@ -18,12 +50,12 @@ export default function Semester({ semester: { year, terms } }) {
   }, [terms, spring, summer, fall]);
 
   const saveChanges = async () => {
-    await fetch(`/api/semesters`, {
+    await fetch(SEMESTERS_PATH, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ year, terms: { spring, summer, fall } }),
     });
-    router.replace(router.pathname); // reload data
+    mutate(SEMESTERS_PATH);
   };
 
   return (
