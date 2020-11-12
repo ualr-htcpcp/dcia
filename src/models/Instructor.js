@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
+import { NAME_REGEX } from "utils/validation";
 
 const nameOptions = {
   type: String,
   required: true,
   trim: true,
-  match: /^[a-zA-Z\s]+$/,
+  match: NAME_REGEX,
 };
 
 const instructorSchema = new mongoose.Schema(

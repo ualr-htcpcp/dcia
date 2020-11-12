@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { NAME_REGEX } from "utils/validation";
 
 export default function InstructorFormModal({
   show,
@@ -32,8 +33,8 @@ export default function InstructorFormModal({
         onHide();
       } else {
         setBaseError("Instructor name must be unique.");
-        setError("name.first", { message: "invalid" });
-        setError("name.last", { message: "invalid" });
+        setError("name.first", { message: "" });
+        setError("name.last", { message: "" });
       }
     } catch {
       setBaseError("There was a problem saving instructor.");
@@ -56,9 +57,20 @@ export default function InstructorFormModal({
               type="text"
               name="name[first]"
               defaultValue={instructor?.name?.first}
-              isInvalid={errors?.name?.first}
-              ref={register({ required: true })}
+              isInvalid={errors.name?.first}
+              ref={register({
+                required: "First Name is required",
+                pattern: {
+                  value: NAME_REGEX,
+                  message: "First Name must include only letters and spaces",
+                },
+              })}
             />
+            {errors.name?.first && (
+              <Form.Control.Feedback type="invalid">
+                {errors.name.first.message}
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Last Name</Form.Label>
@@ -66,9 +78,20 @@ export default function InstructorFormModal({
               type="text"
               name="name[last]"
               defaultValue={instructor?.name?.last}
-              isInvalid={errors?.name?.last}
-              ref={register({ required: true })}
+              isInvalid={errors.name?.last}
+              ref={register({
+                required: "Last Name is required",
+                pattern: {
+                  value: NAME_REGEX,
+                  message: "Last Name must include only letters and spaces",
+                },
+              })}
             />
+            {errors.name?.last && (
+              <Form.Control.Feedback type="invalid">
+                {errors.name.last.message}
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
