@@ -13,6 +13,10 @@ const semesterSchema = new mongoose.Schema(
       required: true,
       enum: ["Fall", "Spring", "Summer"],
     },
+    isCurrent: {
+      boolean: false,
+      required: true,
+    },
   },
   { timestamps: true }
 );
