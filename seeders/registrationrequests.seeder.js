@@ -26,6 +26,42 @@ const data = [
     accessLevel: "instructor",
     requestStatus: "denied",
   },
+  {
+    email: "cxchiang@ualr.edu",
+    password: "instructor",
+    accessLevel: "instructor",
+    requestStatus: "approved",
+  },
+  {
+    email: "pdhuff@ualr.edu",
+    password: "instructor",
+    accessLevel: "instructor",
+    requestStatus: "approved",
+  },
+  {
+    email: "mgmilanova@ualr.edu",
+    password: "instructor",
+    accessLevel: "instructor",
+    requestStatus: "approved",
+  },
+  {
+    email: "smorme@ualr.edu",
+    password: "instructor",
+    accessLevel: "instructor",
+    requestStatus: "approved",
+  },
+  {
+    email: "jpspringer@ualr.edu",
+    password: "instructor",
+    accessLevel: "instructor",
+    requestStatus: "approved",
+  },
+  {
+    email: "bwkeltch@ualr.edu",
+    password: "instructor",
+    accessLevel: "instructor",
+    requestStatus: "approved",
+  },
 ];
 
 class RegistrationrequestsSeeder extends Seeder {

@@ -14,7 +14,8 @@ const semesterSchema = new mongoose.Schema(
       enum: ["Fall", "Spring", "Summer"],
     },
     isCurrent: {
-      boolean: false,
+      type: Boolean,
+      default: false,
       required: true,
     },
   },
