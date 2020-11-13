@@ -17,6 +17,11 @@ const data = [
     term: "Summer",
     isCurrent: false,
   },
+  {
+    year: 2019,
+    term: "Fall",
+    isCurrent: false,
+  },
 ];
 class SemestersSeeder extends Seeder {
   async shouldRun() {

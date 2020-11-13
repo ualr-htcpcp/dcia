@@ -5,6 +5,7 @@ const instructorSchema = new mongoose.Schema(
     name: {
       first: String,
       last: String,
+      postNominalInititals: String,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

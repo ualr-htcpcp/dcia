@@ -18,6 +18,36 @@ const data = [
     password: "revoked",
     accessLevel: "revoked",
   },
+  {
+    email: "cxchiang@ualr.edu",
+    password: "password",
+    accessLevel: "instructor",
+  },
+  {
+    email: "pdhuff@ualr.edu",
+    password: "password",
+    accessLevel: "instructor",
+  },
+  {
+    email: "mgmilanova@ualr.edu",
+    password: "password",
+    accessLevel: "instructor",
+  },
+  {
+    email: "smorme@ualr.edu",
+    password: "password",
+    accessLevel: "instructor",
+  },
+  {
+    email: "jpspringer@ualr.edu",
+    password: "password",
+    accessLevel: "instructor",
+  },
+  {
+    email: "bwkeltch@ualr.edu",
+    password: "password",
+    accessLevel: "instructor",
+  },
 ];
 
 class UsersSeeder extends Seeder {
