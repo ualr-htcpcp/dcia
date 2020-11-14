@@ -1,16 +1,19 @@
-import StudentOutcomeFormModal from "components/StudentOutcomeFormModal.jsx";
 import AppLayout from "components/AppLayout.jsx";
+import StudentOutcomeFormModal from "components/StudentOutcomeFormModal.jsx";
 import StudentOutcomesCard from "components/StudentOutcomesCard.jsx";
 import Head from "next/head";
 import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { ProtectPage } from "../utils/auth";
+import { useProtectPage } from "utils/auth";
 
 const pageTitle = "Student Outcomes (SOs)";
 
 export default function Outcomes() {
+  const session = useProtectPage();
   const [showModal, setShowModal] = useState(false);
   const [version, setVersion] = useState(0);
+
+  if (!session) return null;
 
   return (
     <>
@@ -43,8 +46,4 @@ export default function Outcomes() {
       </AppLayout>
     </>
   );
-}
-
-export async function getServerSideProps(context) {
-  return ProtectPage(context, ["admin", "root"]);
 }

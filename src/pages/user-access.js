@@ -1,14 +1,18 @@
+import AppLayout from "components/AppLayout.jsx";
+import RegistrationRequestsCard from "components/RegistrationRequestsCard";
+import UsersCard from "components/UsersCard";
+import RegistrationRequest from "models/RegistrationRequest";
+import User from "models/User";
 import Head from "next/head";
-import AppLayout from "../components/AppLayout.jsx";
-import RegistrationRequest from "../models/RegistrationRequest";
-import User from "../models/User";
-import { ProtectPage } from "../utils/auth";
-import RegistrationRequestsCard from "../components/RegistrationRequestsCard";
-import UsersCard from "../components/UsersCard";
+import { useProtectPage } from "utils/auth";
 
 const pageTitle = "User Access";
 
 export default function AccessRequests({ registrationRequests, users }) {
+  const session = useProtectPage();
+
+  if (!session) return null;
+
   return (
     <>
       <Head>
@@ -27,9 +31,7 @@ export default function AccessRequests({ registrationRequests, users }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const { props } = await ProtectPage(context, ["root"]);
-
+export async function getServerSideProps() {
   const excludePassword = { password: 0 };
   const registrationRequestsPromise = RegistrationRequest.find(
     { requestStatus: { $in: ["pending", "denied"] } },
@@ -51,5 +53,5 @@ export async function getServerSideProps(context) {
     JSON.stringify(queryResults)
   );
 
-  return { props: { ...props, registrationRequests, users } };
+  return { props: { registrationRequests, users } };
 }

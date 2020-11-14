@@ -1,11 +1,15 @@
 import AppLayout from "components/AppLayout.jsx";
 import SemestersCard from "components/SemestersCard.jsx";
 import Head from "next/head";
-import { ProtectPage } from "utils/auth";
+import { useProtectPage } from "utils/auth";
 
 const pageTitle = "Semesters";
 
 export default function Semesters() {
+  const session = useProtectPage();
+
+  if (!session) return null;
+
   return (
     <>
       <Head>
@@ -18,8 +22,4 @@ export default function Semesters() {
       </AppLayout>
     </>
   );
-}
-
-export async function getServerSideProps(context) {
-  return ProtectPage(context, ["admin", "root"]);
 }
