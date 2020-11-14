@@ -66,6 +66,17 @@ export function useProtectPage({ adminOnly = false, rootOnly = false } = {}) {
 export async function forbiddenUnlessAdmin(req, res) {
   const session = await getSession({ req });
   if (!session || !["admin", "root"].includes(session.user.accessLevel)) {
-    return res.status(403).json({ error: true, message: "Forbidden" });
+    return res
+      .status(403)
+      .json({ error: true, message: "Forbidden: must be an admin" });
+  }
+}
+
+export async function forbiddenUnlessRoot(req, res) {
+  const session = await getSession({ req });
+  if (!session || session.user.accessLevel !== "root") {
+    return res
+      .status(403)
+      .json({ error: true, message: "Forbidden: must be a root user" });
   }
 }
