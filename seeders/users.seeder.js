@@ -19,32 +19,32 @@ const data = [
     accessLevel: "revoked",
   },
   {
-    email: "cxchiang@ualr.edu",
+    email: "cxchiang@school.edu",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "pdhuff@ualr.edu",
+    email: "pdhuff@school.edu",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "mgmilanova@ualr.edu",
+    email: "mgmilanova@school.edu",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "smorme@ualr.edu",
+    email: "smorme@school.edu",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "jpspringer@ualr.edu",
+    email: "jpspringer@school.edu",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "bwkeltch@ualr.edu",
+    email: "bwkeltch@school.edu",
     password: "password",
     accessLevel: "instructor",
   },
