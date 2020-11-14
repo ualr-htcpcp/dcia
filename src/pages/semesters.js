@@ -6,7 +6,7 @@ import { useProtectPage } from "utils/auth";
 const pageTitle = "Semesters";
 
 export default function Semesters() {
-  const session = useProtectPage();
+  const session = useProtectPage({ adminOnly: true });
 
   if (!session) return null;
 

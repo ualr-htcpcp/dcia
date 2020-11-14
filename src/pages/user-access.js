@@ -9,7 +9,7 @@ import { useProtectPage } from "utils/auth";
 const pageTitle = "User Access";
 
 export default function AccessRequests({ registrationRequests, users }) {
-  const session = useProtectPage();
+  const session = useProtectPage({ rootOnly: true });
 
   if (!session) return null;
 

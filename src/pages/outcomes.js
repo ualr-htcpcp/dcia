@@ -9,7 +9,7 @@ import { useProtectPage } from "utils/auth";
 const pageTitle = "Student Outcomes (SOs)";
 
 export default function Outcomes() {
-  const session = useProtectPage();
+  const session = useProtectPage({ adminOnly: true });
   const [showModal, setShowModal] = useState(false);
   const [version, setVersion] = useState(0);
 

@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { getSession, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const saltRounds = 10;
 const resetTokenLength = 40;
@@ -39,19 +39,28 @@ export async function checkPassword(password, passwordHash) {
   });
 }
 
-export function useProtectPage(accessLevels = ["instructor", "admin", "root"]) {
+export function useProtectPage({ adminOnly = false, rootOnly = false } = {}) {
   const router = useRouter();
   const [session, loading] = useSession();
+  const [hasAccess, setHasAccess] = useState(false);
 
   useEffect(() => {
     if (!loading && !session) {
       router.push("/signin");
-    } else if (session && !accessLevels.includes(session.user.accessLevel)) {
-      router.push("/");
+    } else if (session) {
+      const accessLevel = session.user.accessLevel;
+      if (
+        (adminOnly && !["admin", "root"].includes(accessLevel)) ||
+        (rootOnly && accessLevel !== "root")
+      ) {
+        router.push("/");
+      } else {
+        setHasAccess(true);
+      }
     }
-  }, [session, loading, router, accessLevels]);
+  }, [session, loading, router, adminOnly, rootOnly]);
 
-  return session;
+  return hasAccess && session;
 }
 
 export async function forbiddenUnlessAdmin(req, res) {
