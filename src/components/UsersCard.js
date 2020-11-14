@@ -5,6 +5,8 @@ import useSWR, { mutate } from "swr";
 import fetcher from "utils/fetcher";
 import { formatTimestamp } from "../utils/datetime";
 
+const USERS_PATH = "/api/users";
+
 export default function UsersCard() {
   return (
     <Card className="mt-3">
@@ -27,7 +29,7 @@ export default function UsersCard() {
 }
 
 function UserRows() {
-  const { data, error } = useSWR("/api/users", fetcher);
+  const { data, error } = useSWR(USERS_PATH, fetcher);
 
   if (error) return <EmptyRow message="Failed to load." />;
   if (!data) return <EmptyRow message={<em>Loading...</em>} />;
@@ -43,12 +45,12 @@ function UserRow({ model }) {
   const isRevoked = model.accessLevel === "revoked";
 
   const changeAccessLevel = async () => {
-    await fetch(`/api/users/${model._id}`, {
+    await fetch(`${USERS_PATH}/${model._id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ accessLevel }),
     });
-    mutate("/api/users");
+    mutate(USERS_PATH);
   };
 
   return (

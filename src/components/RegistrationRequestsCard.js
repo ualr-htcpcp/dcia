@@ -5,6 +5,9 @@ import useSWR, { mutate } from "swr";
 import fetcher from "utils/fetcher";
 import EmptyRow from "components/EmptyRow.jsx";
 
+const REGISTRATION_REQUESTS_PATH = "/api/registration-requests";
+const USERS_PATH = "/api/users";
+
 export default function RegistrationRequestsCard() {
   return (
     <Card className="mt-3">
@@ -28,7 +31,7 @@ export default function RegistrationRequestsCard() {
 }
 
 function RegistrationRequestRows() {
-  const { data, error } = useSWR("/api/registration-requests", fetcher);
+  const { data, error } = useSWR(REGISTRATION_REQUESTS_PATH, fetcher);
 
   if (error) return <EmptyRow message="Failed to load." />;
   if (!data) return <EmptyRow message={<em>Loading...</em>} />;
@@ -49,13 +52,13 @@ function RegistrationRequestRow({ model }) {
   const isDenied = model.requestStatus === "denied";
 
   const changeRequestStatus = async (requestStatus) => {
-    await fetch(`/api/registration-requests/${model._id}`, {
+    await fetch(`${REGISTRATION_REQUESTS_PATH}/${model._id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ accessLevel, requestStatus }),
     });
-    mutate("/api/registration-requests");
-    if (requestStatus === "approved") mutate("/api/users");
+    mutate(REGISTRATION_REQUESTS_PATH);
+    if (requestStatus === "approved") mutate(USERS_PATH);
   };
 
   return (
