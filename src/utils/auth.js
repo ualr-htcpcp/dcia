@@ -1,6 +1,8 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import { getSession } from "next-auth/client";
+import { getSession, useSession } from "next-auth/client";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const saltRounds = 10;
 const resetTokenLength = 40;
@@ -37,22 +39,44 @@ export async function checkPassword(password, passwordHash) {
   });
 }
 
-export async function ProtectPage(context, accessLevels = null) {
-  const session = await getSession(context);
+export function useProtectPage({ adminOnly = false, rootOnly = false } = {}) {
+  const router = useRouter();
+  const [session, loading] = useSession();
+  const [hasAccess, setHasAccess] = useState(false);
 
-  if (!session) {
-    context.res.writeHeader(307, { Location: "/signin" });
-    context.res.end();
-  } else if (accessLevels && !accessLevels.includes(session.user.accessLevel)) {
-    context.res.writeHeader(307, { Location: "/" });
-    context.res.end();
-  }
-  return { props: { session } };
+  useEffect(() => {
+    if (!loading && !session) {
+      router.push("/signin");
+    } else if (session) {
+      const accessLevel = session.user.accessLevel;
+      if (
+        (adminOnly && !["admin", "root"].includes(accessLevel)) ||
+        (rootOnly && accessLevel !== "root")
+      ) {
+        router.push("/");
+      } else {
+        setHasAccess(true);
+      }
+    }
+  }, [session, loading, router, adminOnly, rootOnly]);
+
+  return hasAccess && session;
 }
 
 export async function forbiddenUnlessAdmin(req, res) {
   const session = await getSession({ req });
   if (!session || !["admin", "root"].includes(session.user.accessLevel)) {
-    return res.status(403).json({ error: true, message: "Forbidden" });
+    return res
+      .status(403)
+      .json({ error: true, message: "Forbidden: must be an admin" });
+  }
+}
+
+export async function forbiddenUnlessRoot(req, res) {
+  const session = await getSession({ req });
+  if (!session || session.user.accessLevel !== "root") {
+    return res
+      .status(403)
+      .json({ error: true, message: "Forbidden: must be a root user" });
   }
 }

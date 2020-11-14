@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -11,8 +12,9 @@ import {
   RiLineChartFill,
 } from "react-icons/ri";
 
-export default function Navigation({ session }) {
+export default function Navigation() {
   const router = useRouter();
+  const [session] = useSession();
 
   return (
     <Nav

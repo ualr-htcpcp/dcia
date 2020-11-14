@@ -12,7 +12,6 @@ import {
 } from "react-bootstrap";
 import { getCsrfToken } from "next-auth/client";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
 const pageTitle = "Sign in to DCIA";
@@ -20,7 +19,6 @@ const pageTitle = "Sign in to DCIA";
 export default function Signin() {
   const [baseError, setBaseError] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const router = useRouter();
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = async (data) => {
@@ -46,7 +44,7 @@ export default function Signin() {
         setBaseError(errorMessage);
         setIsProcessing(false);
       } else {
-        router.push("/");
+        window.location = "/";
       }
     } catch (error) {
       setBaseError("Unable to sign in. Please try again later.");

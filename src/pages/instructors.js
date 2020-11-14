@@ -4,13 +4,16 @@ import InstructorsCard from "components/InstructorsCard.jsx";
 import Head from "next/head";
 import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { ProtectPage } from "../utils/auth";
+import { useProtectPage } from "utils/auth";
 
 const pageTitle = "Instructors";
 
 export default function Instructors() {
+  const session = useProtectPage({ adminOnly: true });
   const [showModal, setShowModal] = useState(false);
   const [version, setVersion] = useState(0);
+
+  if (!session) return null;
 
   return (
     <>
@@ -43,8 +46,4 @@ export default function Instructors() {
       </AppLayout>
     </>
   );
-}
-
-export async function getServerSideProps(context) {
-  return ProtectPage(context, ["admin", "root"]);
 }

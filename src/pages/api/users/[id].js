@@ -1,21 +1,19 @@
 import nextConnect from "next-connect";
 import middleware from "../../../middleware";
 import User from "../../../models/User";
-import { getSession } from "next-auth/client";
+import { forbiddenUnlessRoot } from "utils/auth";
 
 const handler = nextConnect();
 handler.use(middleware);
 
 handler.patch(async (req, res) => {
-  const session = await getSession({ req });
+  await forbiddenUnlessRoot(req, res);
+
   const {
     query: { id },
     body: { accessLevel },
   } = req;
 
-  if (!session.user.accessLevel === "root") {
-    return res.status(403).json({ error: true, message: "must be root user" });
-  }
   if (!["instructor", "admin", "revoked"].includes(accessLevel)) {
     return res.status(422).json({
       error: true,

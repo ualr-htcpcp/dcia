@@ -1,21 +1,52 @@
 import nextConnect from "next-connect";
+import { forbiddenUnlessAdmin } from "utils/auth";
 import middleware from "../../middleware";
-import Semester from "../../models/Semester";
-import { getSession } from "next-auth/client";
 import CourseInstance from "../../models/CourseInstance";
+import Semester from "../../models/Semester";
 
 const handler = nextConnect();
 handler.use(middleware);
 
+handler.get(async (req, res) => {
+  await forbiddenUnlessAdmin(req, res);
+
+  const semesters = await Semester.find().lean();
+  const lockedSemesterIds = await CourseInstance.distinct("semester");
+
+  const currentDate = new Date();
+  const nextYear = currentDate.getFullYear() + 1;
+  const defaultYear = nextYear - 9;
+  const earliestYear =
+    semesters.sort((a, b) => b.year - a.year)[0]?.year || defaultYear;
+
+  // default to 10-ish years ago or older if an earlier record exists
+  let currentYear = Math.min(earliestYear, defaultYear);
+
+  // build year/terms object for each year in range
+  const years = [];
+  while (currentYear <= nextYear) {
+    years.push({ year: currentYear, terms: {} });
+    currentYear += 1;
+  }
+  years.reverse();
+
+  // add semesters to corresponding year objects
+  semesters.forEach((semester) => {
+    const year = years.find(({ year }) => year === semester.year);
+    const isLocked = lockedSemesterIds.some((semesterId) =>
+      semesterId.equals(semester._id)
+    );
+    year.terms[semester.term] = { isLocked };
+  });
+
+  return res.json(years);
+});
+
 handler.post(async (req, res) => {
-  const session = await getSession({ req });
+  await forbiddenUnlessAdmin(req, res);
   const {
     body: { year, terms },
   } = req;
-
-  if (!session || !["admin", "root"].includes(session.user.accessLevel)) {
-    return res.status(403).json({ error: true, message: "Forbidden" });
-  }
 
   try {
     await Promise.all(
