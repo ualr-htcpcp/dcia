@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { getSession, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
