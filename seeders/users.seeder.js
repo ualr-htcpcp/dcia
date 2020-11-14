@@ -19,32 +19,32 @@ const data = [
     accessLevel: "revoked",
   },
   {
-    email: "cxchiang@school.edu",
+    email: "cxchiang@example.com",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "pdhuff@school.edu",
+    email: "pdhuff@example.com",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "mgmilanova@school.edu",
+    email: "mgmilanova@example.com",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "smorme@school.edu",
+    email: "smorme@example.com",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "jpspringer@school.edu",
+    email: "jpspringer@example.com",
     password: "password",
     accessLevel: "instructor",
   },
   {
-    email: "bwkeltch@school.edu",
+    email: "bwkeltch@example.com",
     password: "password",
     accessLevel: "instructor",
   },
