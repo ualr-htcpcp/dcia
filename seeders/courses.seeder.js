@@ -12,12 +12,12 @@ const data = async () => {
   return [
     {
       title: "Programming1",
-      courseNumber: 1500,
+      number: 1500,
       studentOutcome: [so1, so2, so3],
     },
     {
       title: "Capstone",
-      courseNumber: 4321,
+      number: 4321,
       studentOutcome: [so4, so5, so6],
     },
   ];
