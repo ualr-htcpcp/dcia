@@ -1,15 +1,15 @@
+import middleware from "middleware";
+import RegistrationRequest from "models/RegistrationRequest";
+import User from "models/User";
 import nextConnect from "next-connect";
-import middleware from "../../../middleware";
-import RegistrationRequest from "../../../models/RegistrationRequest";
-import User from "../../../models/User";
-import { forbiddenUnlessRoot } from "utils/auth";
+import { authenticate, forbiddenUnlessRoot } from "utils/auth";
 
 const handler = nextConnect();
 handler.use(middleware);
+handler.use(authenticate);
+handler.use(forbiddenUnlessRoot);
 
 handler.patch(async (req, res) => {
-  await forbiddenUnlessRoot(req, res);
-
   const {
     query: { id },
     body: { accessLevel, requestStatus },
