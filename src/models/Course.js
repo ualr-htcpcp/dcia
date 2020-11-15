@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import StudentOutcome from "./StudentOutcome";
 
 const courseSchema = new mongoose.Schema(
   {
@@ -14,7 +15,7 @@ const courseSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    studentOutcome: [
+    studentOutcomes: [
       {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

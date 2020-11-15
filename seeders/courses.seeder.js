@@ -13,12 +13,12 @@ const data = async () => {
     {
       title: "Programming1",
       number: 1500,
-      studentOutcome: [so1, so2, so3],
+      studentOutcomes: [so1, so2, so3],
     },
     {
       title: "Capstone",
       number: 4321,
-      studentOutcome: [so4, so5, so6],
+      studentOutcomes: [so4, so5, so6],
     },
   ];
 };
