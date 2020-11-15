@@ -4,27 +4,27 @@ import User from "../src/models/User";
 
 const data = async () => {
   const chiaChuChiang = await User.findOne({
-    email: "cxchiang@ualr.edu",
+    email: "cxchiang@example.com",
     accessLevel: "instructor",
   });
   const philipHuff = await User.findOne({
-    email: "pdhuff@ualr.edu",
+    email: "pdhuff@example.com",
     accessLevel: "instructor",
   });
   const mariofannaMilanova = await User.findOne({
-    email: "mgmilanova@ualr.edu",
+    email: "mgmilanova@example.com",
     accessLevel: "instructor",
   });
   const seanOrme = await User.findOne({
-    email: "smorme@ualr.edu",
+    email: "smorme@example.com",
     accessLevel: "instructor",
   });
   const janSpringer = await User.findOne({
-    email: "jpspringer@ualr.edu",
+    email: "jpspringer@example.com",
     accessLevel: "instructor",
   });
   const brianKeltch = await User.findOne({
-    email: "bwkeltch@ualr.edu",
+    email: "bwkeltch@example.com",
     accessLevel: "instructor",
   });
   return [
