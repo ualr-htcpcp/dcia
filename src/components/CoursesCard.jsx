@@ -15,7 +15,7 @@ export default function CoursesCard() {
         <thead>
           <tr>
             <th>Number</th>
-            <th className="w-50">Title</th>
+            <th>Title</th>
             <th>SO&rsquo;s</th>
             <th></th>
           </tr>
@@ -43,7 +43,7 @@ function CourseRow({ course }) {
     <tr>
       <td>{course.number}</td>
       <td>{course.title}</td>
-      <td>
+      <td className="pb-0">
         <StudentOutcomes studentOutcomes={course.studentOutcomes} />
       </td>
       <td className="text-right pt-2 pb-0" style={{ whiteSpace: "nowrap" }}>
@@ -65,14 +65,17 @@ function StudentOutcomes({ studentOutcomes }) {
 function StudentOutcome({ studentOutcome }) {
   const definitionTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      {studentOutcome.definition}
+      <small className="d-block text-left">{studentOutcome.definition}</small>
     </Tooltip>
   );
 
   return (
     <OverlayTrigger placement="bottom" overlay={definitionTooltip}>
-      <button className="btn btn-link p-0" style={{ cursor: "help" }}>
-        {studentOutcome.number}
+      <button
+        className="btn btn-link text-decoration-none p-0"
+        style={{ cursor: "help" }}
+      >
+        SO{studentOutcome.number}
       </button>
     </OverlayTrigger>
   );

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import useSWR from "swr";
+import fetcher from "utils/fetcher";
 
 const COURSE_PATH = "/api/courses";
 
@@ -24,10 +26,17 @@ export default function CourseFormModal({
       : ["post", COURSE_PATH];
 
     try {
+      const studentOutcomeIds = Object.entries(data.studentOutcomes).reduce(
+        (ids, [id, isChecked]) => {
+          isChecked && ids.push(id);
+          return ids;
+        },
+        []
+      );
       const response = await fetch(url, {
         method: method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, studentOutcomes: studentOutcomeIds }),
       });
       if (response.ok) {
         coursesChanged();
@@ -94,6 +103,8 @@ export default function CourseFormModal({
                 {errors.title.message}
               </Form.Control.Feedback>
             )}
+            <p className="mt-4 mb-1">Student Outcomes</p>
+            <StudentOutcomes course={course} register={register} />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
@@ -103,5 +114,41 @@ export default function CourseFormModal({
         </Modal.Footer>
       </Form>
     </Modal>
+  );
+}
+
+function StudentOutcomes({ course, register }) {
+  const { data } = useSWR("/api/outcomes", fetcher);
+
+  if (!data) return null;
+
+  return data.map((so) => (
+    <StudentOutcomeCheckbox
+      key={so._id}
+      course={course}
+      studentOutcome={so}
+      register={register}
+    />
+  ));
+}
+
+function StudentOutcomeCheckbox({ course, studentOutcome: so, register }) {
+  const defaultChecked = course?.studentOutcomes.some(
+    (courseSO) => courseSO._id === so._id
+  );
+
+  return (
+    <Form.Check custom type="checkbox" id={`so_${so._id}`} className="mt-2">
+      <Form.Check.Input
+        type="checkbox"
+        name={`studentOutcomes[${so._id}]`}
+        ref={register()}
+        defaultChecked={defaultChecked}
+      />
+      <Form.Check.Label className="d-flex">
+        <div className="mr-2">SO{so.number}</div>
+        <small className="d-block text-muted">{so.definition}</small>
+      </Form.Check.Label>
+    </Form.Check>
   );
 }

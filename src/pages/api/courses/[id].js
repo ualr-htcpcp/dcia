@@ -12,13 +12,13 @@ handler.use(forbiddenUnlessAdmin);
 handler.put(async (req, res) => {
   const {
     query: { id: _id },
-    body: { number, title },
+    body: { number, title, studentOutcomes },
   } = req;
 
   try {
     const course = await Course.findOneAndUpdate(
       { _id },
-      { number, title },
+      { number, title, studentOutcomes },
       { new: true }
     );
     res.json(course);

@@ -11,11 +11,11 @@ handler.use(authenticate);
 handler.post(async (req, res) => {
   await forbiddenUnlessAdmin(req, res);
   const {
-    body: { number, title },
+    body: { number, title, studentOutcomes },
   } = req;
 
   try {
-    const course = await Course.create({ number, title });
+    const course = await Course.create({ number, title, studentOutcomes });
     res.json(course);
   } catch (error) {
     if (error.name === "MongoError" && error.code === 11000) {

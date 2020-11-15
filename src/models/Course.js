@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import StudentOutcome from "./StudentOutcome";
 
 const courseSchema = new mongoose.Schema(
   {
