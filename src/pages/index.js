@@ -2,7 +2,7 @@ import AppLayout from "components/AppLayout.jsx";
 import ScoresByLevelChart from "components/ScoresByLevelChart.jsx";
 import ScoresByTermChart from "components/ScoresByTermChart.jsx";
 import ScoreSummaryCard from "components/ScoreSummaryCard.jsx";
-import TermSelector from "components/TermSelector.jsx";
+import TermSelector from "components/TermSelector";
 import Head from "next/head";
 import { Col, Row } from "react-bootstrap";
 import { useProtectPage } from "utils/auth";
