@@ -96,7 +96,16 @@ export default function CourseFormModal({
               name="title"
               defaultValue={course?.title}
               isInvalid={errors.title}
-              ref={register({ required: "Course Title is required" })}
+              ref={register({
+                required: "Course Title is required",
+                validate: (value) => {
+                  return !!value.trim() || "Course Title cannot be blank";
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9 ]+$/,
+                  message: "Course Title must contain only letters and numbers",
+                },
+              })}
             />
             {errors.title && (
               <Form.Control.Feedback type="invalid">
