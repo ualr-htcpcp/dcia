@@ -18,6 +18,13 @@ jobs:
         with:
           mongodb-version: "4.4"
 
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache
+            ~/.npm
+          key: v1-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
       - run: npm ci
 
       - name: Seed the Database
