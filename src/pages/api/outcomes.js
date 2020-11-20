@@ -2,13 +2,14 @@ import middleware from "middleware";
 import Course from "models/Course";
 import StudentOutcome from "models/StudentOutcome";
 import nextConnect from "next-connect";
-import { forbiddenUnlessAdmin } from "utils/auth";
+import { authenticate, forbiddenUnlessAdmin } from "utils/auth";
 
 const handler = nextConnect();
 handler.use(middleware);
+handler.use(authenticate);
+handler.use(forbiddenUnlessAdmin);
 
 handler.post(async (req, res) => {
-  await forbiddenUnlessAdmin(req, res);
   const {
     body: { number, definition },
   } = req;
@@ -28,7 +29,6 @@ handler.post(async (req, res) => {
 });
 
 handler.get(async (req, res) => {
-  await forbiddenUnlessAdmin(req, res);
   const [studentOutcomes, assignedToCourses] = await Promise.all([
     StudentOutcome.find().sort("number").lean(),
     Course.distinct("studentOutcome"),

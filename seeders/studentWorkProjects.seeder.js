@@ -12,27 +12,27 @@ const data = async () => {
   return [
     {
       name: "Prog1 Assignment 1",
-      studentOutcome: [so1, so2],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Prog1 Assignment 2",
-      studentOutcome: [so3, so4],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Prog1 Quiz 1",
-      studentOutcome: [so5, so6],
+      studentOutcomes: [so5, so6],
     },
     {
       name: "Cap Assignment 1",
-      studentOutcome: [so1, so2],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Cap Assignment 2",
-      studentOutcome: [so3, so4],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Cap Quiz 1",
-      studentOutcome: [so5, so6],
+      studentOutcomes: [so5, so6],
     },
   ];
 };

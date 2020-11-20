@@ -1,14 +1,14 @@
-import nextConnect from "next-connect";
-import { forbiddenUnlessRoot } from "utils/auth";
-import middleware from "../../middleware";
+import middleware from "middleware";
 import RegistrationRequest from "models/RegistrationRequest";
+import nextConnect from "next-connect";
+import { authenticate, forbiddenUnlessRoot } from "utils/auth";
 
 const handler = nextConnect();
 handler.use(middleware);
+handler.use(authenticate);
+handler.use(forbiddenUnlessRoot);
 
 handler.get(async (req, res) => {
-  await forbiddenUnlessRoot(req, res);
-
   const registrationRequests = await RegistrationRequest.find(
     { requestStatus: { $in: ["pending", "denied"] } },
     { password: 0 },

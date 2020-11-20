@@ -11,8 +11,8 @@ const data = async () => {
   const billyMaddison = await Student.findOne({ tNumber: 12345670 });
   const johnyWalker = await Student.findOne({ tNumber: 62589261 });
   const someGuy = await Student.findOne({ tNumber: 9787775 });
-  const programming1 = await Course.findOne({ courseNumber: 1500 });
-  const capstone = await Course.findOne({ courseNumber: 4321 });
+  const programming1 = await Course.findOne({ number: 1500 });
+  const capstone = await Course.findOne({ number: 4321 });
   const prog1Assignment1 = await StudentWorkProject.findOne({ name: "Prog1 Assignment 1" });
   const prog1Assignment2 = await StudentWorkProject.findOne({ name: "Prog1 Assignment 2" });
   const prog1Quiz1 = await StudentWorkProject.findOne({ name: "Prog1 Quiz 1" });

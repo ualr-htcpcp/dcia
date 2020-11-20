@@ -29,10 +29,12 @@ export default function Navigation() {
           Dashboard
         </Nav.Link>
       </Link>
-      <Nav.Link href="#courses">
-        <RiBook2Fill className="mr-2" />
-        Courses
-      </Nav.Link>
+      <Link href="/courses" passHref={true}>
+        <Nav.Link>
+          <RiBook2Fill className="mr-2" />
+          Courses
+        </Nav.Link>
+      </Link>
 
       {["admin", "root"].includes(session?.user.accessLevel) && (
         <>
