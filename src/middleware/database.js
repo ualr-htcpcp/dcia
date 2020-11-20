@@ -6,7 +6,7 @@ const client = mongoose.connect(process.env.MONGO_URL, {
   useCreateIndex: true,
   useFindAndModify: false,
 });
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV === "development") {
   mongoose.set("debug", true);
 }
 
