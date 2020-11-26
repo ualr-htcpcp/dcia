@@ -13,6 +13,11 @@ const studentWorkProjectSchema = new mongoose.Schema(
         ref: "StudentOutcome",
       },
     ],
+    course: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Course",
+    },
   },
   { timestamps: true }
 );
