@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 import RegistrationRequests from "./seeders/registrationrequests.seeder";
+import Instructors from "./seeders/instructors.seeder";
+import Students from "./seeders/students.seeder";
+import Semesters from "./seeders/semesters.seeder";
 import Users from "./seeders/users.seeder";
 import StudentOutcomes from "./seeders/studentOutcomes.seeder";
-import Students from "./seeders/students.seeder";
-import StudentWorkProjects from "./seeders/studentWorkProjects.seeder";
-import Semesters from "./seeders/semesters.seeder";
-import Instructors from "./seeders/instructors.seeder";
 import Courses from "./seeders/courses.seeder";
+import StudentWorkProjects from "./seeders/studentWorkProjects.seeder";
 import CourseInstances from "./seeders/courseInstances.seeder";
 import Assessments from "./seeders/assessments.seeder";
 
@@ -21,13 +21,13 @@ const mongoURL = process.env.MONGO_URL || "mongodb://localhost:27017/dcia";
  */
 export const seedersList = {
   RegistrationRequests,
-  Users,
-  StudentOutcomes,
-  Students,
-  StudentWorkProjects,
-  Semesters,
   Instructors,
+  Students,
+  Semesters,
+  StudentOutcomes,
   Courses,
+  StudentWorkProjects,
+  Users,
   CourseInstances,
   Assessments,
 };

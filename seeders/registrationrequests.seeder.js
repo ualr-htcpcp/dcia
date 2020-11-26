@@ -20,48 +20,6 @@ const data = [
     accessLevel: "instructor",
     requestStatus: "pending",
   },
-  {
-    email: "denied@example.com",
-    password: "denied",
-    accessLevel: "instructor",
-    requestStatus: "denied",
-  },
-  {
-    email: "cxchiang@example.com",
-    password: "instructor",
-    accessLevel: "instructor",
-    requestStatus: "approved",
-  },
-  {
-    email: "pdhuff@example.com",
-    password: "instructor",
-    accessLevel: "instructor",
-    requestStatus: "approved",
-  },
-  {
-    email: "mgmilanova@example.com",
-    password: "instructor",
-    accessLevel: "instructor",
-    requestStatus: "approved",
-  },
-  {
-    email: "smorme@example.com",
-    password: "instructor",
-    accessLevel: "instructor",
-    requestStatus: "approved",
-  },
-  {
-    email: "jpspringer@example.com",
-    password: "instructor",
-    accessLevel: "instructor",
-    requestStatus: "approved",
-  },
-  {
-    email: "bwkeltch@example.com",
-    password: "instructor",
-    accessLevel: "instructor",
-    requestStatus: "approved",
-  },
 ];
 
 class RegistrationrequestsSeeder extends Seeder {

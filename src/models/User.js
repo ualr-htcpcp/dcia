@@ -19,6 +19,10 @@ const UserSchema = new Schema(
       enum: ["instructor", "admin", "revoked"],
       required: [true, "Access Level is required"],
     },
+    instructor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Instructor",
+    },
   },
   { timestamps: true }
 );

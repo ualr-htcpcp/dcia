@@ -1,6 +1,7 @@
 import { Seeder } from "mongoose-data-seed";
 import StudentOutcome from "../src/models/StudentOutcome";
 import StudentWorkProject from "../src/models/StudentWorkProject";
+import Course from "../src/models/Course";
 
 const data = async () => {
   const so1 = await StudentOutcome.findOne({ studentOutcomeNumber: 1 });
@@ -9,150 +10,204 @@ const data = async () => {
   const so4 = await StudentOutcome.findOne({ studentOutcomeNumber: 4 });
   const so5 = await StudentOutcome.findOne({ studentOutcomeNumber: 5 });
   const so6 = await StudentOutcome.findOne({ studentOutcomeNumber: 6 });
+  const programming_I = await Course.findOne({ title: "Programming I" });
+  const capstone_project = await Course.findOne({ title: "Capstone Project" });
+  const first_year = await Course.findOne({
+    title: "First Year Experience for Computing Majors",
+  });
+  const algorithms = await Course.findOne({ title: "Algorithms" });
+  const computer_organization = await Course.findOne({
+    title: "Computer Organization",
+  });
+  const operating_systems = await Course.findOne({
+    title: "Operating Systems",
+  });
+  const programming_languages = await Course.findOne({
+    title: "Programming Languages",
+  });
+  const software_engineering = await Course.findOne({
+    title: "Software Engineering",
+  });
   return [
     {
-      name: "Prog1 Assignment 1",
+      name: "Programming I Assignment 1",
       studentOutcome: [so1, so2],
+      course: programming_I,
     },
     {
-      name: "Prog1 Assignment 2",
+      name: "Programming I Assignment 2",
       studentOutcome: [so1, so2],
+      course: programming_I,
     },
     {
-      name: "Prog1 Quiz 1",
+      name: "Programming I Quiz 1",
       studentOutcome: [so1, so2],
+      course: programming_I,
     },
     {
-      name: "Prog1 Assignment 3",
+      name: "Programming I Assignment 3",
       studentOutcome: [so1, so2],
+      course: programming_I,
     },
     {
       name: "Capstone Project",
       studentOutcome: [so5, so6],
+      course: capstone_project,
     },
     {
-      name: "RFP",
+      name: "Request For Proposal",
       studentOutcome: [so5, so6],
+      course: capstone_project,
     },
     {
       name: "Skills Survey",
       studentOutcome: [so5, so6],
+      course: capstone_project,
     },
     {
-      name: "FYE Assignment 1",
+      name: "First Year Experience for Computing Majors Assignment 1",
       studentOutcome: [so1, so3],
+      course: first_year,
     },
     {
-      name: "FYE Assignment 2",
+      name: "First Year Experience for Computing Majors Assignment 2",
       studentOutcome: [so1, so3],
+      course: first_year,
     },
     {
-      name: "FYE Quiz 1",
+      name: "First Year Experience for Computing Majors Quiz 1",
       studentOutcome: [so1, so3],
+      course: first_year,
     },
     {
-      name: "FYE Quiz 2",
+      name: "First Year Experience for Computing Majors Quiz 2",
       studentOutcome: [so1, so3],
+      course: first_year,
     },
     {
-      name: "FYE Assignment 3",
+      name: "First Year Experience for Computing Majors Assignment 3",
       studentOutcome: [so1, so3],
+      course: first_year,
     },
     {
       name: "Algorithms Quiz 1",
       studentOutcome: [so1, so2],
+      course: algorithms,
     },
     {
       name: "Algorithms Quiz 2",
       studentOutcome: [so1, so2],
+      course: algorithms,
     },
     {
       name: "Algorithms Quiz 3",
       studentOutcome: [so1, so2],
+      course: algorithms,
     },
     {
       name: "Algorithms Quiz 4",
       studentOutcome: [so1, so2],
+      course: algorithms,
     },
     {
-      name: "CompOrg Exercise 1",
+      name: "Computer Organization Exercise 1",
       studentOutcome: [so1, so4],
+      course: computer_organization,
     },
     {
-      name: "CompOrg Exercise 2",
+      name: "Computer Organization Exercise 2",
       studentOutcome: [so1, so4],
+      course: computer_organization,
     },
     {
-      name: "CompOrg Exercise 3",
+      name: "Computer Organization Exercise 3",
       studentOutcome: [so1, so4],
+      course: computer_organization,
     },
     {
-      name: "CompOrg Exercise 4",
+      name: "Computer Organization Exercise 4",
       studentOutcome: [so1, so4],
+      course: computer_organization,
     },
     {
-      name: "CompOrg Final",
+      name: "Computer Organization Final",
       studentOutcome: [so1, so4],
+      course: computer_organization,
     },
     {
-      name: "OpSys Assignment 1",
+      name: "Operating Systems Assignment 1",
       studentOutcome: [so3, so4],
+      course: operating_systems,
     },
     {
-      name: "OpSys Assignment 2",
+      name: "Operating Systems Assignment 2",
       studentOutcome: [so3, so4],
+      course: operating_systems,
     },
     {
-      name: "OpSys Assignment 3",
+      name: "Operating Systems Assignment 3",
       studentOutcome: [so3, so4],
+      course: operating_systems,
     },
     {
-      name: "OpSys Quiz 1",
+      name: "Operating Systems Quiz 1",
       studentOutcome: [so3, so4],
+      course: operating_systems,
     },
     {
-      name: "OpSys Assignment 4",
+      name: "Operating Systems Assignment 4",
       studentOutcome: [so3, so4],
+      course: operating_systems,
     },
     {
-      name: "ProgLan Assignment 1",
+      name: "Programming Languages Assignment 1",
       studentOutcome: [so4, so6],
+      course: programming_languages,
     },
     {
-      name: "ProgLan Assignment 2",
+      name: "Programming Languages Assignment 2",
       studentOutcome: [so4, so6],
+      course: programming_languages,
     },
     {
-      name: "ProgLan Assignment 3",
+      name: "Programming Languages Assignment 3",
       studentOutcome: [so4, so6],
+      course: programming_languages,
     },
     {
-      name: "ProgLan Assignment 4",
+      name: "Programming Languages Assignment 4",
       studentOutcome: [so4, so6],
+      course: programming_languages,
     },
     {
-      name: "ProgLan Project",
+      name: "Programming Languages Project",
       studentOutcome: [so4, so6],
+      course: programming_languages,
     },
     {
-      name: "SWE Exercise 1",
+      name: "Software Engineering Exercise 1",
       studentOutcome: [so3, so5],
+      course: software_engineering,
     },
     {
-      name: "SWE Exercise 2",
+      name: "Software Engineering Exercise 2",
       studentOutcome: [so3, so5],
+      course: software_engineering,
     },
     {
-      name: "SWE Quiz 1",
+      name: "Software Engineering Quiz 1",
       studentOutcome: [so3, so5],
+      course: software_engineering,
     },
     {
-      name: "SWE Exercise 3",
+      name: "Software Engineering Exercise 3",
       studentOutcome: [so3, so5],
+      course: software_engineering,
     },
     {
-      name: "SWE Final",
+      name: "Software Engineering Final",
       studentOutcome: [so3, so5],
+      course: software_engineering,
     },
   ];
 };

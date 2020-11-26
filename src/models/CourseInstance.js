@@ -7,7 +7,7 @@ const courseInstanceSchema = new mongoose.Schema(
       required: true,
       ref: "Instructor",
     },
-    students: [
+    student: [
       {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

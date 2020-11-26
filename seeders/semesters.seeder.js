@@ -13,11 +13,6 @@ const data = [
     isCurrent: false,
   },
   {
-    year: 2020,
-    term: "Summer",
-    isCurrent: false,
-  },
-  {
     year: 2019,
     term: "Fall",
     isCurrent: false,
