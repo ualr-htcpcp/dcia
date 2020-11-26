@@ -31,7 +31,7 @@ handler.post(async (req, res) => {
 handler.get(async (req, res) => {
   const [studentOutcomes, assignedToCourses] = await Promise.all([
     StudentOutcome.find().sort("number").lean(),
-    Course.distinct("studentOutcome"),
+    Course.distinct("studentOutcomes"),
   ]);
 
   studentOutcomes.forEach((studentOutcome) => {
