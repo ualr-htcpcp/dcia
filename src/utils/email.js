@@ -1,4 +1,5 @@
 import * as sendGrid from "@sendgrid/mail";
+import { capitalize } from "./string";
 import User from "../models/User";
 
 const unsubscribeId = 14692;
@@ -12,10 +13,6 @@ const templateIds = {
   userAccessChange: "d-9ec83ef57e52483187663999580ae97a",
   registrationRequestUpdate: "d-dcad74638f37429e951ee7d1e92c284d",
 };
-
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 function createResetUrl(token) {
   return encodeURI(`${process.env.APP_URL}/reset_password?token=${token}`);
