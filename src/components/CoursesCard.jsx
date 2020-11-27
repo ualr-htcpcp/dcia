@@ -1,10 +1,11 @@
-import EmptyRow from "components/EmptyRow.jsx";
 import CourseFormModal from "components/CourseFormModal.jsx";
+import EmptyRow from "components/EmptyRow.jsx";
+import { useSession } from "next-auth/client";
+import Link from "next/link";
 import { useState } from "react";
 import { Button, Card, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import useSWR, { mutate } from "swr";
 import fetcher from "utils/fetcher";
-import { useSession } from "next-auth/client";
 
 const COURSES_PATH = "/api/courses";
 
@@ -41,8 +42,10 @@ function CourseRow({ course }) {
   const [session] = useSession();
   return (
     <tr>
-      <td>{course.number}</td>
-      <td>{course.title}</td>
+      <td>CPSC {course.number}</td>
+      <td>
+        <Link href={`/courses/${course._id}`}>{course.title}</Link>
+      </td>
       <td className="pb-0">
         <StudentOutcomes studentOutcomes={course.studentOutcomes} />
       </td>

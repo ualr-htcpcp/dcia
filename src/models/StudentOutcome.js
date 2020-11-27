@@ -17,5 +17,5 @@ const studentOutcomeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.StudentOutcome ||
+export default mongoose.models?.StudentOutcome ||
   mongoose.model("StudentOutcome", studentOutcomeSchema);
