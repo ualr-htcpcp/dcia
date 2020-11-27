@@ -1,4 +1,5 @@
 import * as sendGrid from "@sendgrid/mail";
+import { capitalize } from "./string";
 import User from "../models/User";
 
 const unsubscribeId = 14692;
@@ -13,18 +14,19 @@ const templateIds = {
   registrationRequestUpdate: "d-dcad74638f37429e951ee7d1e92c284d",
 };
 
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
 function createResetUrl(token) {
   return encodeURI(`${process.env.APP_URL}/reset_password?token=${token}`);
+}
+
+function isEmailEnabled() {
+  const enabledServices = process.env.ENABLED_SERVICES || "";
+  return enabledServices.split(",").includes("email");
 }
 
 export async function getLocationData(ipAddress) {
   const url = `${process.env.IP_API_ENDPOINT}/${ipAddress}?access_key=${process.env.IP_API_KEY}`;
   try {
-    if (process.env.NODE_ENV !== "production") {
+    if (!isEmailEnabled()) {
       return Promise.resolve("Localhost, USA 🇺🇸");
     }
 
@@ -62,11 +64,11 @@ async function sendEmail(msgContents, emailType) {
   return new Promise((resolve, reject) => {
     try {
       // Don't send emails in test/development
-      if (process.env.NODE_ENV !== "production") {
+      if (isEmailEnabled()) {
+        sendGrid.send(msgContents);
+      } else {
         console.log(`${emailType} EMAIL: `);
         console.log(msgContents);
-      } else {
-        sendGrid.send(msgContents);
       }
       resolve("Email(s) sent!");
     } catch (err) {

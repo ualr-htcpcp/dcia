@@ -1,15 +1,15 @@
+import middleware from "middleware";
+import CourseInstance from "models/CourseInstance";
+import Semester from "models/Semester";
 import nextConnect from "next-connect";
-import { forbiddenUnlessAdmin } from "utils/auth";
-import middleware from "../../middleware";
-import CourseInstance from "../../models/CourseInstance";
-import Semester from "../../models/Semester";
+import { authenticate, forbiddenUnlessAdmin } from "utils/auth";
 
 const handler = nextConnect();
 handler.use(middleware);
+handler.use(authenticate);
+handler.use(forbiddenUnlessAdmin);
 
 handler.get(async (req, res) => {
-  await forbiddenUnlessAdmin(req, res);
-
   const semesters = await Semester.find().lean();
   const lockedSemesterIds = await CourseInstance.distinct("semester");
 
@@ -43,7 +43,6 @@ handler.get(async (req, res) => {
 });
 
 handler.post(async (req, res) => {
-  await forbiddenUnlessAdmin(req, res);
   const {
     body: { year, terms },
   } = req;
