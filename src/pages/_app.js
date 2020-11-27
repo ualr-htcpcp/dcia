@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import "styles/bootstrap.scss";
 import { Provider } from "next-auth/client";
 import Router from "next/router";
 import NProgress from "nprogress";
