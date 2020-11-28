@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button, Card, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 
 const COURSES_PATH = "/api/courses";
 

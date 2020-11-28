@@ -2,7 +2,7 @@ import EmptyItem from "components/EmptyItem.jsx";
 import Link from "next/link";
 import { Card, ListGroup } from "react-bootstrap";
 import useSWR from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 import { capitalize } from "utils/string";
 
 export default function CourseInstanceCard({ course }) {
