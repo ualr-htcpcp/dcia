@@ -1,18 +1,27 @@
 import { Card } from "react-bootstrap";
 import LineGraph from "./LineGraph.jsx";
-import { springData } from "../graphData";
+import useSWR from "swr";
+import fetcher from "utils/fetcher.js";
 
-const xLabel = "Course Level";
 const xKey = "level";
+const xLabel = "Course Level";
 const yLabel = "Score";
 
-export default function ScoresByLevelChart({ className }) {
-  return (
+const GRAPH_DATA_PATH = "/api/analysis/scores_by/level?term=";
+
+//TODO: Trying to figure out how to better component-ize the chart
+// Since it will be used across the platform, need a way to dynamically create the lines from data
+export default function ScoresByLevelChart({ className, term }) {
+  const { data: graphData, error } = useSWR(GRAPH_DATA_PATH + term, fetcher);
+
+  return !graphData ? (
+    "Loading"
+  ) : (
     <Card className={className}>
       <Card.Header className="bg-white">SO Scores by LEVEL</Card.Header>
       <Card.Body>
         <LineGraph
-          data={springData}
+          graphData={graphData}
           xAxisLabel={xLabel}
           xAxisKey={xKey}
           yAxisLabel={yLabel}

@@ -1,8 +1,12 @@
 import { useEffect, useReducer, useState } from "react";
 import { Pagination } from "react-bootstrap";
 
+function getSelectedIndex(terms) {
+  return terms.findIndex((term) => term.isCurrent);
+}
+
 function termReducer(terms, action) {
-  let currentTerm = terms.findIndex((term) => term.isCurrent);
+  let currentTerm = getSelectedIndex(terms);
 
   switch (action.type) {
     case "prev": {
@@ -37,28 +41,34 @@ export default function TermSelector({
     isLast: false,
   });
 
-  // Set intial term selection
+  const checkPagination = (terms, index) => {
+    if (index === 0) {
+      setPaginationBounds({ isFirst: true, isLast: false });
+    }
+    if (index === terms.length - 1) {
+      setPaginationBounds({ isFirst: false, isLast: true });
+    }
+  };
+
+  // Set selected term from parent
   useEffect(() => {
     if (terms) {
-      isLoading ? setIsLoading(false) : "";
+      setIsLoading(false);
+      const selected = getSelectedIndex(terms);
+      handleTermChange(terms[selected]);
 
-      const selected = termsList.findIndex((term) => term.isCurrent);
-      handleTermChange(termsList[selected].name);
+      checkPagination(terms, selected);
     }
-  }, [terms, termsList, isLoading, handleTermChange]);
+  }, [terms, handleTermChange]);
 
-  //Set selected term from pagination interaction
+  // Set selected term from user interaction
   useEffect(() => {
-    if (!isLoading) {
-      const selected = termsList.findIndex((term) => term.isCurrent);
-      if (selected === 0) {
-        setPaginationBounds({ isFirst: true, isLast: false });
-      }
-      if (selected === termsList.length - 1) {
-        setPaginationBounds({ isFirst: false, isLast: true });
-      }
+    if (termsList) {
+      const selected = getSelectedIndex(termsList);
+      handleTermChange(termsList[selected]);
+      checkPagination(termsList, selected);
     }
-  }, [termsList, selectedTerm, handleTermChange, isLoading]);
+  }, [termsList, handleTermChange]);
 
   return (
     <Pagination className={className}>
@@ -70,7 +80,7 @@ export default function TermSelector({
       </Pagination.Item>
 
       <Pagination.Item className="w-100 text-center disabled">
-        {selectedTerm}
+        {`${selectedTerm.term} ${selectedTerm.year}`}
       </Pagination.Item>
 
       <Pagination.Item
