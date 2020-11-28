@@ -1,6 +1,6 @@
 import AppLayout from "components/AppLayout.jsx";
 import CourseInstancesCard from "components/CourseInstancesCard.jsx";
-import ScoresByTermChart from "components/ScoresByTermChart.jsx";
+import ScoresByTermChart from "components/graphs/ScoresByTermChart.jsx";
 import Course from "models/Course";
 import "models/StudentOutcome";
 import { getSession } from "next-auth/client";
