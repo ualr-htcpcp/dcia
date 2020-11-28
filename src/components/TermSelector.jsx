@@ -44,9 +44,10 @@ export default function TermSelector({
   const checkPagination = (terms, index) => {
     if (index === 0) {
       setPaginationBounds({ isFirst: true, isLast: false });
-    }
-    if (index === terms.length - 1) {
+    } else if (index === terms.length - 1) {
       setPaginationBounds({ isFirst: false, isLast: true });
+    } else {
+      setPaginationBounds({ isFirst: false, isLast: false });
     }
   };
 
@@ -80,7 +81,7 @@ export default function TermSelector({
       </Pagination.Item>
 
       <Pagination.Item className="w-100 text-center disabled">
-        {`${selectedTerm.term} ${selectedTerm.year}`}
+        {selectedTerm && `${selectedTerm.term} ${selectedTerm.year}`}
       </Pagination.Item>
 
       <Pagination.Item
