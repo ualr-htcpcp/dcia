@@ -20,6 +20,12 @@ const data = [
     accessLevel: "instructor",
     requestStatus: "pending",
   },
+  {
+    email: "denied@example.com",
+    password: "denied",
+    accessLevel: "instructor",
+    requestStatus: "denied",
+  },
 ];
 
 class RegistrationrequestsSeeder extends Seeder {
