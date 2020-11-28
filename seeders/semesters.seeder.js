@@ -3,7 +3,7 @@ import Semester from "../src/models/Semester";
 
 const data = [
   {
-    year: 2020,
+    year: 2019,
     term: "Fall",
     isCurrent: true,
   },
@@ -13,7 +13,7 @@ const data = [
     isCurrent: false,
   },
   {
-    year: 2019,
+    year: 2020,
     term: "Fall",
     isCurrent: false,
   },
