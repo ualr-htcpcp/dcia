@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 import LineGraph from "./LineGraph.jsx";
 import useSWR from "swr";
 import { fetchWithYearAndTerm } from "utils/fetch";
-import { blankScoresByLevel, dataKeysForSOs } from "utils/graph";
+import { dataKeysForSOs } from "utils/graph";
 
 const xKey = "level";
 const xLabel = "Course Level";
@@ -20,13 +20,17 @@ export default function ScoresByLevelChart({ className, term }) {
     <Card className={className}>
       <Card.Header className="bg-white">SO Scores by LEVEL</Card.Header>
       <Card.Body>
-        <LineGraph
-          data={graphData ? graphData : blankScoresByLevel}
-          dataKeys={dataKeysForSOs}
-          xAxisLabel={xLabel}
-          xAxisKey={xKey}
-          yAxisLabel={yLabel}
-        />
+        {!graphData ? (
+          "Loading..."
+        ) : (
+          <LineGraph
+            data={graphData}
+            dataKeys={dataKeysForSOs}
+            xAxisLabel={xLabel}
+            xAxisKey={xKey}
+            yAxisLabel={yLabel}
+          />
+        )}
       </Card.Body>
     </Card>
   );
