@@ -5,7 +5,7 @@ const data = [
   {
     year: 2019,
     term: "Fall",
-    isCurrent: true,
+    isCurrent: false,
   },
   {
     year: 2020,
@@ -15,7 +15,7 @@ const data = [
   {
     year: 2020,
     term: "Fall",
-    isCurrent: false,
+    isCurrent: true,
   },
 ];
 class SemestersSeeder extends Seeder {
