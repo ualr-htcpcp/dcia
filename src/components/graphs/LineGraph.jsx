@@ -36,7 +36,7 @@ export default function LineGraph({
       >
         <CartesianGrid stroke="#a6a6a6" strokeDasharray="5 5" />
         <XAxis dataKey={xAxisKey}>
-          <Label value={xAxisLabel} position="insideBottom" offset={-2} />
+          <Label value={xAxisLabel} position="insideBottom" offset={-5} />
         </XAxis>
         <YAxis>
           <Label value={yAxisLabel} position="insideLeft" offset={-10} />
