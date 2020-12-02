@@ -3,6 +3,7 @@ import LineGraph from "./LineGraph.jsx";
 import useSWR from "swr";
 import { fetchWithYearAndTerm } from "utils/fetch";
 import { dataKeysForSOs } from "utils/graph";
+import { blankLevelsData } from "fakeDashboardData.js";
 
 const xKey = "level";
 const xLabel = "Course Level";
@@ -20,17 +21,13 @@ export default function ScoresByLevelChart({ className, term }) {
     <Card className={className}>
       <Card.Header className="bg-white">SO Scores by LEVEL</Card.Header>
       <Card.Body>
-        {!graphData ? (
-          "Loading..."
-        ) : (
-          <LineGraph
-            data={graphData}
-            dataKeys={dataKeysForSOs}
-            xAxisLabel={xLabel}
-            xAxisKey={xKey}
-            yAxisLabel={yLabel}
-          />
-        )}
+        <LineGraph
+          data={graphData ? graphData : blankLevelsData}
+          dataKeys={dataKeysForSOs}
+          xAxisLabel={xLabel}
+          xAxisKey={xKey}
+          yAxisLabel={yLabel}
+        />
       </Card.Body>
     </Card>
   );
