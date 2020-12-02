@@ -10,7 +10,7 @@ import {
   fallInstructorData,
 } from "fakeDashboardData";
 import middleware from "middleware";
-
+import Semester from "models/Semester";
 import nextConnect from "next-connect";
 import { forbiddenUnlessAdmin } from "utils/auth";
 
@@ -76,7 +76,86 @@ async function getScoresByLevel(term, year) {
 // /api/scores_by/term?term=2020&so=ALL&instructor=ALL -- return all data for 2020
 // /api/scores_by/term?term=2020Fall&so=SO1&instructor=JoeSmith -- return Joe Smith's SO1 score from 2020 Fall
 async function getScoresByTerm(term, year, so, instructor) {
-  return;
+  /*
+    Data format:
+    [
+      selectOptions: {
+        sos: [
+          so1,
+          so2,
+          so3
+        ],
+        terms: [
+          2020 all,
+          2020 spring,
+          ...
+        ],
+        instructors: [
+          joe bob,
+          ...
+        ]
+      }
+      graphData: [
+        {
+          so1: 1,
+          so2:
+        }
+      ]
+    ]
+  */
+  const fakeResults = {
+    selectOptions: {
+      sos: [
+        { name: "SO1", value: "SO1" },
+        { name: "SO2", value: "SO2" },
+        { name: "SO3", value: "SO3" },
+        { name: "SO4", value: "SO4" },
+        { name: "SO5", value: "SO5" },
+        { name: "SO6", value: "SO6" },
+      ],
+      terms: [
+        { name: "2020 Spring", value: { year: "2020", term: "spring" } },
+        { name: "2020 Fall", value: { year: "2020", term: "fall" } },
+      ],
+      instructors: [
+        { name: "Joe Bob", value: { firstName: "Joe", lastName: "Bob" } },
+        {
+          name: "Frank Scott",
+          value: { firstName: "Frank", lastName: "Scott" },
+        },
+      ],
+    },
+    graphData: [
+      {
+        term: "2020 Fall",
+        SO1: 2,
+        SO2: 3,
+        SO3: 2,
+        SO4: 1,
+        SO5: 2,
+        SO6: 4,
+      },
+      {
+        term: "2020 Summer",
+        SO1: 3,
+        SO2: 1,
+        SO3: 2,
+        SO4: 3,
+        SO5: 4,
+        SO6: 4,
+      },
+      {
+        term: "2020 Fall",
+        SO1: 1,
+        SO2: 2,
+        SO3: 3,
+        SO4: 2,
+        SO5: 1,
+        SO6: 3,
+      },
+    ],
+  };
+  return fakeResults;
 }
 
 function noValidFilters(filter) {
@@ -88,18 +167,12 @@ handler.get(async (req, res) => {
   const { filter } = req.query;
 
   try {
-    if (noValidFilters(filter)) {
-      throw new Error(`Invalid filter: ${filter}`);
-    }
+    if (noValidFilters(filter)) throw new Error(`Invalid filter: ${filter}`);
 
     const { term, year, amount } = req.query;
 
-    if (!term) {
-      throw new Error("No term param provided");
-    }
-    if (!year) {
-      throw new Error("No year param provided");
-    }
+    if (!term) throw new Error("No term param provided");
+    if (!year) throw new Error("No year param provided");
 
     if (filter === "instructor") {
       const results = await getScoresByInstructor(term, year, amount);
@@ -118,6 +191,9 @@ handler.get(async (req, res) => {
 
     if (filter === "term") {
       const { so, instructor } = req.query;
+      if (!so) throw new Error("No SOs param provided");
+      if (!instructor) throw new Error("No instructors param provided");
+
       const results = await getScoresByTerm(term, year, so, instructor);
       res.json(results);
     }
