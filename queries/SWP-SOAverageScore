@@ -1,9 +1,9 @@
-// Returns all students overall scores for all SOs combined by specified semester
+// Returns studentWorkProject Mean SO scores
 
 [
   {
     '$match': {
-      'semester': new ObjectId('5fc2e25ba981b28decd9c4a5')     // Semester ObjectId
+      'semester': new ObjectId('5fc2e25ba981b28decd9c4a5')
     }
   }, {
     '$unwind': {
@@ -56,45 +56,43 @@
       'path': '$soAndScore.studentOutcome'
     }
   }, {
-    '$group': {
-      '_id': {
-        'student': '$student'
-      }, 
-      'averageScore': {
-        '$avg': '$soAndScore.score'
-      }
-    }
-  }, {
     '$lookup': {
-      'from': 'students', 
+      'from': 'studentoutcomes', 
       'let': {
-        'student': '$_id.student'
+        'so': '$soAndScore.studentOutcome'
       }, 
       'pipeline': [
         {
           '$match': {
             '$expr': {
               '$eq': [
-                '$_id', '$$student'
+                '$_id', '$$so'
               ]
             }
           }
         }, {
           '$project': {
             '_id': 0, 
-            'name': 1
+            'studentOutcomeNumber': 1
           }
         }
       ], 
-      'as': 'student'
+      'as': 'so'
+    }
+  }, {
+    '$match': {
+      'studentWorkProject': new ObjectId('5fc2e25ba981b28decd9c4b4')   // studentWorkProject ObjectId
     }
   }, {
     '$unwind': {
-      'path': '$student'
+      'path': '$so'
     }
   }, {
-    '$project': {
-      '_id': 0
+    '$group': {
+      '_id': '$so.studentOutcomeNumber',                                // _id is the SO number
+      'averageScore': {
+        '$avg': '$soAndScore.score'
+      }
     }
   }
 ]

@@ -89,7 +89,7 @@
     }
   }, {
     '$group': {
-      '_id': '$soAndScore.score', 
+      '_id': '$soAndScore.score',       // _id is the SO score
       'count': {
         '$sum': 1
       }
