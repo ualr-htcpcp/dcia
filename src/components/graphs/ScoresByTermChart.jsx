@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card, Col, Form, Row } from "react-bootstrap";
 import useSWR from "swr";
 import { fetchWithYearTermOutcomeAndInstructor } from "utils/fetch";
-import { dataKeysForSOs } from "utils/graph";
+import { blankScoresByTerm, dataKeysForSOs } from "utils/graph";
 import LineGraph from "./LineGraph";
 
 const xKey = "term";
@@ -117,17 +117,13 @@ export default function ScoresByTermChart({ className, isAdminOrRoot }) {
         </Row>
       </Card.Header>
       <Card.Body>
-        {!graphData ? (
-          "Loading"
-        ) : (
-          <LineGraph
-            data={graphData.graphData}
-            dataKeys={dataKeysForSOs}
-            xAxisKey={xKey}
-            xAxisLabel={xLabel}
-            yAxisLabel={yLabel}
-          />
-        )}
+        <LineGraph
+          data={graphData ? graphData.graphData : blankScoresByTerm}
+          dataKeys={dataKeysForSOs}
+          xAxisKey={xKey}
+          xAxisLabel={xLabel}
+          yAxisLabel={yLabel}
+        />
       </Card.Body>
     </Card>
   );
