@@ -1,9 +1,9 @@
-// Returns studentWorkProject Mean SO scores
+// Returns all students overall scores for all SOs combined by specified semester
 
-dcia.courseinstances.aggregate([
+[
   {
     '$match': {
-      'semester': new ObjectId('5fc2e25ba981b28decd9c4a5')
+      'semester': new ObjectId('5fc2e25ba981b28decd9c4a5')     // Semester ObjectId
     }
   }, {
     '$unwind': {
@@ -56,43 +56,45 @@ dcia.courseinstances.aggregate([
       'path': '$soAndScore.studentOutcome'
     }
   }, {
+    '$group': {
+      '_id': {
+        'student': '$student'
+      }, 
+      'averageScore': {
+        '$avg': '$soAndScore.score'
+      }
+    }
+  }, {
     '$lookup': {
-      'from': 'studentoutcomes', 
+      'from': 'students', 
       'let': {
-        'so': '$soAndScore.studentOutcome'
+        'student': '$_id.student'
       }, 
       'pipeline': [
         {
           '$match': {
             '$expr': {
               '$eq': [
-                '$_id', '$$so'
+                '$_id', '$$student'
               ]
             }
           }
         }, {
           '$project': {
             '_id': 0, 
-            'studentOutcomeNumber': 1
+            'name': 1
           }
         }
       ], 
-      'as': 'so'
-    }
-  }, {
-    '$match': {
-      'studentWorkProject': new ObjectId('5fc2e25ba981b28decd9c4b4')   // studentWorkProject ObjectId
+      'as': 'student'
     }
   }, {
     '$unwind': {
-      'path': '$so'
+      'path': '$student'
     }
   }, {
-    '$group': {
-      '_id': '$so.studentOutcomeNumber',                                // _id is the SO number
-      'averageScore': {
-        '$avg': '$soAndScore.score'
-      }
+    '$project': {
+      '_id': 0
     }
   }
-])
+]

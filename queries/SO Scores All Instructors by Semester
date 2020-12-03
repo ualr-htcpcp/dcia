@@ -1,6 +1,6 @@
-// Returns mean overall SO scores for each course by specified term
+// Returns mean overall SO scores for each instructor by specified term
 
-dcia.courseinstances.aggregate([
+[
   {
     '$match': {
       'semester': new ObjectId('5fc2e25ba981b28decd9c4a4')  // semester ObjectId
@@ -10,7 +10,7 @@ dcia.courseinstances.aggregate([
       '_id': 0, 
       'student': 1, 
       'studentWorkProject': 1, 
-      'course': 1
+      'instructor': 1
     }
   }, {
     '$unwind': {
@@ -52,29 +52,29 @@ dcia.courseinstances.aggregate([
           }
         }
       ], 
-      'as': 'SO and Score'
+      'as': 'so+score'
     }
   }, {
     '$unwind': {
-      'path': '$SO and Score'
+      'path': '$so+score'
     }
   }, {
     '$unwind': {
-      'path': '$SO and Score.studentOutcome'
+      'path': '$so+score.studentOutcome'
     }
   }, {
     '$group': {
-      '_id': '$course', 
+      '_id': '$instructor', 
       'averageScore': {
-        '$avg': '$SO and Score.score'
+        '$avg': '$so+score.score'
       }, 
       'so': {
-        '$addToSet': '$SO and Score.studentOutcome'
+        '$addToSet': '$so+score.studentOutcome'
       }
     }
   }, {
     '$lookup': {
-      'from': 'courses', 
+      'from': 'instructors', 
       'let': {
         'id': '$_id'
       }, 
@@ -90,11 +90,11 @@ dcia.courseinstances.aggregate([
         }, {
           '$project': {
             '_id': 0, 
-            'title': 1
+            'name': 1
           }
         }
       ], 
-      'as': 'course'
+      'as': 'instructor'
     }
   }, {
     '$unwind': {
@@ -126,7 +126,7 @@ dcia.courseinstances.aggregate([
     }
   }, {
     '$unwind': {
-      'path': '$course'
+      'path': '$instructor'
     }
   }, {
     '$unwind': {
@@ -136,8 +136,8 @@ dcia.courseinstances.aggregate([
     '$project': {
       '_id': 0, 
       'averageScore': 1, 
-      'course.title': 1, 
+      'instructor.name': 1, 
       'so.studentOutcomeNumber': 1
     }
   }
-])
+]

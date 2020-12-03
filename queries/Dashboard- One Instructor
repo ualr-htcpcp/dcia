@@ -1,27 +1,10 @@
-// Every instructor, current term, average score for each SO
+// Returns SO Scores for all Semesters for One Istructor   ****Dashboard****
 
-dcia.courseinstances.aggregate([
+
+[
   {
-    '$lookup': {
-      'from': 'semesters', 
-      'localField': 'semester', 
-      'foreignField': '_id', 
-      'as': 'check'
-    }
-  }, {
-    '$unwind': {
-      'path': '$check'
-    }
-  }, {
     '$match': {
-      'check.isCurrent': true
-    }
-  }, {
-    '$project': {
-      '_id': 0, 
-      'student': 1, 
-      'studentWorkProject': 1, 
-      'instructor': 1
+      'instructor': new ObjectId('5fc2e25ba981b28decd9c473')
     }
   }, {
     '$unwind': {
@@ -63,31 +46,21 @@ dcia.courseinstances.aggregate([
           }
         }
       ], 
-      'as': 'so+score'
+      'as': 'soAndScore'
     }
   }, {
     '$unwind': {
-      'path': '$so+score'
+      'path': '$soAndScore'
     }
   }, {
     '$unwind': {
-      'path': '$so+score.studentOutcome'
-    }
-  }, {
-    '$group': {
-      '_id': {
-        'instructor': '$instructor', 
-        'so': '$so+score.studentOutcome'
-      }, 
-      'averageScore': {
-        '$avg': '$so+score.score'
-      }
+      'path': '$soAndScore.studentOutcome'
     }
   }, {
     '$lookup': {
       'from': 'studentoutcomes', 
       'let': {
-        'id': '$_id.so'
+        'id': '$soAndScore.studentOutcome'
       }, 
       'pipeline': [
         {
@@ -108,40 +81,48 @@ dcia.courseinstances.aggregate([
       'as': 'so#'
     }
   }, {
-    '$unwind': {
-      'path': '$so#'
-    }
-  }, {
     '$lookup': {
-      'from': 'instructors', 
+      'from': 'semesters', 
       'let': {
-        'id': '$_id.instructor'
+        'semester': '$semester'
       }, 
       'pipeline': [
         {
           '$match': {
             '$expr': {
               '$eq': [
-                '$_id', '$$id'
+                '$_id', '$$semester'
               ]
             }
           }
         }, {
           '$project': {
             '_id': 0, 
-            'name': 1
+            'year': 1, 
+            'term': 1
           }
         }
       ], 
-      'as': 'instructor'
+      'as': 'semesters'
     }
   }, {
     '$unwind': {
-      'path': '$instructor'
+      'path': '$semesters'
     }
   }, {
-    '$project': {
-      '_id': 0
+    '$unwind': {
+      'path': '$so#'
+    }
+  }, {
+    '$group': {
+      '_id': {
+        'studentOutcome': '$so#.studentOutcomeNumber', 
+        'year': '$semesters.year', 
+        'term': '$semesters.term'
+      }, 
+      'averageScore': {
+        '$avg': '$soAndScore.score'
+      }
     }
   }
-])
+]

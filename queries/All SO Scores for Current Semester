@@ -1,9 +1,20 @@
-// Returns mean overall SO scores for each instructor by specified term
+// Every instructor, current term, average score for each SO
 
-dcia.courseinstances.aggregate([
+[
   {
+    '$lookup': {
+      'from': 'semesters', 
+      'localField': 'semester', 
+      'foreignField': '_id', 
+      'as': 'check'
+    }
+  }, {
+    '$unwind': {
+      'path': '$check'
+    }
+  }, {
     '$match': {
-      'semester': new ObjectId('5fc2e25ba981b28decd9c4a4')  // semester ObjectId
+      'check.isCurrent': true
     }
   }, {
     '$project': {
@@ -64,19 +75,47 @@ dcia.courseinstances.aggregate([
     }
   }, {
     '$group': {
-      '_id': '$instructor', 
+      '_id': {
+        'instructor': '$instructor', 
+        'so': '$so+score.studentOutcome'
+      }, 
       'averageScore': {
         '$avg': '$so+score.score'
-      }, 
-      'so': {
-        '$addToSet': '$so+score.studentOutcome'
       }
+    }
+  }, {
+    '$lookup': {
+      'from': 'studentoutcomes', 
+      'let': {
+        'id': '$_id.so'
+      }, 
+      'pipeline': [
+        {
+          '$match': {
+            '$expr': {
+              '$eq': [
+                '$_id', '$$id'
+              ]
+            }
+          }
+        }, {
+          '$project': {
+            '_id': 0, 
+            'studentOutcomeNumber': 1
+          }
+        }
+      ], 
+      'as': 'so#'
+    }
+  }, {
+    '$unwind': {
+      'path': '$so#'
     }
   }, {
     '$lookup': {
       'from': 'instructors', 
       'let': {
-        'id': '$_id'
+        'id': '$_id.instructor'
       }, 
       'pipeline': [
         {
@@ -98,46 +137,11 @@ dcia.courseinstances.aggregate([
     }
   }, {
     '$unwind': {
-      'path': '$so'
-    }
-  }, {
-    '$lookup': {
-      'from': 'studentoutcomes', 
-      'let': {
-        'so': '$so'
-      }, 
-      'pipeline': [
-        {
-          '$match': {
-            '$expr': {
-              '$eq': [
-                '$_id', '$$so'
-              ]
-            }
-          }
-        }, {
-          '$project': {
-            '_id': 0, 
-            'studentOutcomeNumber': 1
-          }
-        }
-      ], 
-      'as': 'so'
-    }
-  }, {
-    '$unwind': {
       'path': '$instructor'
     }
   }, {
-    '$unwind': {
-      'path': '$so'
-    }
-  }, {
     '$project': {
-      '_id': 0, 
-      'averageScore': 1, 
-      'instructor.name': 1, 
-      'so.studentOutcomeNumber': 1
+      '_id': 0
     }
   }
-])
+]

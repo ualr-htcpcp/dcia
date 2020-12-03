@@ -1,6 +1,6 @@
 // Returns mean SO score by course level for specified term
 
-dcia.courseinstances.aggregate([
+[
   {
     '$match': {
       'semester': new ObjectId('5fc2e25ba981b28decd9c4a5')    // semester ObjectId
@@ -203,4 +203,4 @@ dcia.courseinstances.aggregate([
       'so#': 1
     }
   }
-])
+]
