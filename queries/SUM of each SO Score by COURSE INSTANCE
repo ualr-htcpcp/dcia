@@ -87,10 +87,6 @@
       'as': 'so'
     }
   }, {
-    '$match': {
-      'soAndScore.studentOutcome': new ObjectId('5fc2e25ba981b28decd9c4a6')
-    }
-  }, {
     '$unwind': {
       'path': '$so'
     }
