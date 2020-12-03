@@ -1,34 +1,48 @@
 import { Seeder } from "mongoose-data-seed";
 import User from "../src/models/User";
-import Instructor from "../src/models/Instructor";
-import { hashPassword } from "../src/utils/auth";
+import { hashPassword, createExpirationDate } from "../src/utils/auth";
 
-const data = async () => {
-  const instructors = await Instructor.find({});
-  return [
-    {
-      email: "instructor@example.com",
-      password: "instructor",
-      accessLevel: "instructor",
+const data = [
+  {
+    email: "instructor@example.com",
+    password: "instructor",
+    accessLevel: "instructor",
+  },
+  {
+    email: "admin@example.com",
+    password: "admin",
+    accessLevel: "admin",
+  },
+  {
+    email: "revoked@example.com",
+    password: "revoked",
+    accessLevel: "revoked",
+  },
+  {
+    email: "root@example.com",
+    password: "root1",
+    accessLevel: "root",
+  },
+  {
+    email: "resetme@example.com",
+    password: "forgot",
+    accessLevel: "admin",
+    passwordReset: {
+      token: "abcdefg",
+      expiration: createExpirationDate(new Date()),
     },
-    {
-      email: "admin@example.com",
-      password: "admin",
-      accessLevel: "admin",
+  },
+  {
+    email: "expired@example.com",
+    password: "forgot",
+    accessLevel: "instructor",
+    passwordReset: {
+      token: "abcdefg1234",
+      expiration: new Date("01-01-2020"),
     },
-    {
-      email: "revoked@example.com",
-      password: "revoked",
-      accessLevel: "revoked",
-    },
-    {
-      email: "test@example.com",
-      password: "password",
-      accessLevel: "instructor",
-      instructor: instructors[1],
-    },
-  ];
-};
+  },
+];
+
 class UsersSeeder extends Seeder {
   async shouldRun() {
     return User.countDocuments()
@@ -37,11 +51,9 @@ class UsersSeeder extends Seeder {
   }
 
   async run() {
-    const users = await data();
-
     return Promise.all(
-      users.map(async (user) => {
-        return User.create({
+      data.map(async (user) => {
+        return User.collection.insertOne({
           ...user,
           password: await hashPassword(user.password),
         });
