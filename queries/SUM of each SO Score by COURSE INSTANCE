@@ -94,7 +94,7 @@
     '$group': {
       '_id': {
         'score': '$soAndScore.score', 
-        'studentWorkProject': '$so.studentOutcomeNumber'
+        'studentOutcome': '$so.studentOutcomeNumber'
       }, 
       'count': {
         '$sum': 1
