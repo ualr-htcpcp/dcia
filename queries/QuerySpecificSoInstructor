@@ -1,6 +1,6 @@
 // Returns SO# and mean score for specific instructor and specific term
 
-[
+dcia.courseinstances.aggregate([
   {
     '$match': {
       'instructor': new ObjectId('5fc2e25ba981b28decd9c474'), // instructor ObjectId
@@ -108,4 +108,4 @@
       'so#': 1
     }
   }
-]
+])

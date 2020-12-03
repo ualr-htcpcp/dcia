@@ -1,6 +1,6 @@
 // Every instructor, current term, average score for each SO
 
-[
+dcia.courseinstances.aggregate([
   {
     '$lookup': {
       'from': 'semesters', 
@@ -144,4 +144,4 @@
       '_id': 0
     }
   }
-]
+])

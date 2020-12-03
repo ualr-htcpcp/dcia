@@ -1,6 +1,6 @@
 // Returns studentWorkProject Mean SO scores
 
-[
+dcia.courseinstances.aggregate([
   {
     '$match': {
       'semester': new ObjectId('5fc2e25ba981b28decd9c4a5')
@@ -95,4 +95,4 @@
       }
     }
   }
-]
+])

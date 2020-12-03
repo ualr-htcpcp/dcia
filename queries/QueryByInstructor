@@ -1,6 +1,6 @@
 // Returns mean overall SO scores for each instructor by specified term
 
-[
+dcia.courseinstances.aggregate([
   {
     '$match': {
       'semester': new ObjectId('5fc2e25ba981b28decd9c4a4')  // semester ObjectId
@@ -140,4 +140,4 @@
       'so.studentOutcomeNumber': 1
     }
   }
-]
+])

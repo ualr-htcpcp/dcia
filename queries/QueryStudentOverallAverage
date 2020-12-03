@@ -1,6 +1,6 @@
 // Returns all students overall scores for all SOs combined by specified semester
 
-[
+dcia.courseinstances.aggregate([
   {
     '$match': {
       'semester': new ObjectId('5fc2e25ba981b28decd9c4a5')     // Semester ObjectId
@@ -97,4 +97,4 @@
       '_id': 0
     }
   }
-]
+])
