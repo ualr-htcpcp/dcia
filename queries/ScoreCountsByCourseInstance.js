@@ -99,7 +99,8 @@ export function ScoreCountsByCourseInstance(courseInstance) {
     {
       $group: {
         _id: {
-          studentOutcome: "$soAndScore.score",
+          score: "$soAndScore.score",
+          studentOutcome: "$so.studentOutcomeNumber",
         },
         count: {
           $sum: 1,
