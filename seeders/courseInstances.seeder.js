@@ -8,7 +8,7 @@ import StudentWorkProject from "../src/models/StudentWorkProject";
 
 const data = async () => {
   const instructors = await Instructor.find({});
-  const students = await Student.find({});
+  const student = await Student.find({});
   const fall2020 = await Semester.findOne({ year: 2020, term: "Fall" });
   const spring2020 = await Semester.findOne({ year: 2020, term: "Spring" });
   const fall2019 = await Semester.findOne({ year: 2019, term: "Fall" });
@@ -142,19 +142,19 @@ const data = async () => {
   return [
     {
       instructor: instructors[0],
-      student: [
-        students[0],
-        students[1],
-        students[2],
-        students[3],
-        students[4],
-        students[5],
-        students[6],
-        students[7],
+      students: [
+        student[0],
+        student[1],
+        student[2],
+        student[3],
+        student[4],
+        student[5],
+        student[6],
+        student[7],
       ],
       semester: fall2020,
       course: programming1,
-      studentWorkProject: [
+      studentWorkProjects: [
         programming_I_assignment_1,
         programming_I_assignment_2,
         programming_I_quiz_1,
@@ -163,19 +163,19 @@ const data = async () => {
     },
     {
       instructor: instructors[0],
-      student: [
-        students[8],
-        students[9],
-        students[10],
-        students[11],
-        students[12],
-        students[13],
-        students[14],
-        students[15],
+      students: [
+        student[8],
+        student[9],
+        student[10],
+        student[11],
+        student[12],
+        student[13],
+        student[14],
+        student[15],
       ],
       semester: spring2020,
       course: programming1,
-      studentWorkProject: [
+      studentWorkProjects: [
         programming_I_assignment_1,
         programming_I_assignment_2,
         programming_I_quiz_1,
@@ -184,19 +184,19 @@ const data = async () => {
     },
     {
       instructor: instructors[1],
-      student: [
-        students[16],
-        students[17],
-        students[18],
-        students[19],
-        students[20],
-        students[21],
-        students[22],
-        students[23],
+      students: [
+        student[16],
+        student[17],
+        student[18],
+        student[19],
+        student[20],
+        student[21],
+        student[22],
+        student[23],
       ],
       semester: fall2019,
       course: programming1,
-      studentWorkProject: [
+      studentWorkProjects: [
         programming_I_assignment_1,
         programming_I_assignment_2,
         programming_I_quiz_1,
@@ -205,19 +205,19 @@ const data = async () => {
     },
     {
       instructor: instructors[0],
-      student: [
-        students[8],
-        students[9],
-        students[10],
-        students[11],
-        students[12],
-        students[13],
-        students[14],
-        students[15],
+      students: [
+        student[8],
+        student[9],
+        student[10],
+        student[11],
+        student[12],
+        student[13],
+        student[14],
+        student[15],
       ],
       semester: fall2020,
       course: capstone,
-      studentWorkProject: [
+      studentWorkProjects: [
         capstone_skill_survey,
         capstone_request_for_proposal,
         capstone_project,
@@ -225,19 +225,19 @@ const data = async () => {
     },
     {
       instructor: instructors[0],
-      student: [
-        students[16],
-        students[17],
-        students[18],
-        students[19],
-        students[20],
-        students[21],
-        students[22],
-        students[23],
+      students: [
+        student[16],
+        student[17],
+        student[18],
+        student[19],
+        student[20],
+        student[21],
+        student[22],
+        student[23],
       ],
       semester: spring2020,
       course: capstone,
-      studentWorkProject: [
+      studentWorkProjects: [
         capstone_skill_survey,
         capstone_request_for_proposal,
         capstone_project,
@@ -245,19 +245,19 @@ const data = async () => {
     },
     {
       instructor: instructors[2],
-      student: [
-        students[24],
-        students[25],
-        students[26],
-        students[27],
-        students[28],
-        students[29],
-        students[30],
-        students[31],
+      students: [
+        student[24],
+        student[25],
+        student[26],
+        student[27],
+        student[28],
+        student[29],
+        student[30],
+        student[31],
       ],
       semester: fall2019,
       course: capstone,
-      studentWorkProject: [
+      studentWorkProjects: [
         capstone_skill_survey,
         capstone_request_for_proposal,
         capstone_project,
@@ -265,19 +265,19 @@ const data = async () => {
     },
     {
       instructor: instructors[3],
-      student: [
-        students[0],
-        students[1],
-        students[2],
-        students[3],
-        students[4],
-        students[5],
-        students[6],
-        students[7],
+      students: [
+        student[0],
+        student[1],
+        student[2],
+        student[3],
+        student[4],
+        student[5],
+        student[6],
+        student[7],
       ],
       semester: fall2020,
       course: firstYear,
-      studentWorkProject: [
+      studentWorkProjects: [
         first_year_experience_assignment_1,
         first_year_experience_assignment_2,
         first_year_experience_quiz_1,
@@ -287,19 +287,19 @@ const data = async () => {
     },
     {
       instructor: instructors[3],
-      student: [
-        students[8],
-        students[9],
-        students[10],
-        students[11],
-        students[12],
-        students[13],
-        students[14],
-        students[15],
+      students: [
+        student[8],
+        student[9],
+        student[10],
+        student[11],
+        student[12],
+        student[13],
+        student[14],
+        student[15],
       ],
       semester: spring2020,
       course: firstYear,
-      studentWorkProject: [
+      studentWorkProjects: [
         first_year_experience_assignment_1,
         first_year_experience_assignment_2,
         first_year_experience_quiz_1,
@@ -309,19 +309,19 @@ const data = async () => {
     },
     {
       instructor: instructors[3],
-      student: [
-        students[16],
-        students[17],
-        students[18],
-        students[19],
-        students[20],
-        students[21],
-        students[22],
-        students[23],
+      students: [
+        student[16],
+        student[17],
+        student[18],
+        student[19],
+        student[20],
+        student[21],
+        student[22],
+        student[23],
       ],
       semester: fall2019,
       course: firstYear,
-      studentWorkProject: [
+      studentWorkProjects: [
         first_year_experience_assignment_1,
         first_year_experience_assignment_2,
         first_year_experience_quiz_1,
@@ -331,19 +331,19 @@ const data = async () => {
     },
     {
       instructor: instructors[1],
-      student: [
-        students[0],
-        students[1],
-        students[2],
-        students[3],
-        students[4],
-        students[5],
-        students[6],
-        students[7],
+      students: [
+        student[0],
+        student[1],
+        student[2],
+        student[3],
+        student[4],
+        student[5],
+        student[6],
+        student[7],
       ],
       semester: fall2020,
       course: computerOrganization,
-      studentWorkProject: [
+      studentWorkProjects: [
         computer_organization_exercise_1,
         computer_organization_exercise_2,
         computer_organization_exercise_3,
@@ -353,19 +353,19 @@ const data = async () => {
     },
     {
       instructor: instructors[1],
-      student: [
-        students[8],
-        students[9],
-        students[10],
-        students[11],
-        students[12],
-        students[13],
-        students[14],
-        students[15],
+      students: [
+        student[8],
+        student[9],
+        student[10],
+        student[11],
+        student[12],
+        student[13],
+        student[14],
+        student[15],
       ],
       semester: spring2020,
       course: computerOrganization,
-      studentWorkProject: [
+      studentWorkProjects: [
         computer_organization_exercise_1,
         computer_organization_exercise_2,
         computer_organization_exercise_3,
@@ -375,19 +375,19 @@ const data = async () => {
     },
     {
       instructor: instructors[4],
-      student: [
-        students[16],
-        students[17],
-        students[18],
-        students[19],
-        students[20],
-        students[21],
-        students[22],
-        students[23],
+      students: [
+        student[16],
+        student[17],
+        student[18],
+        student[19],
+        student[20],
+        student[21],
+        student[22],
+        student[23],
       ],
       semester: spring2020,
       course: operatingSystems,
-      studentWorkProject: [
+      studentWorkProjects: [
         operating_systems_assignment_1,
         operating_systems_assignment_2,
         operating_systems_assignment_3,
@@ -397,19 +397,19 @@ const data = async () => {
     },
     {
       instructor: instructors[4],
-      student: [
-        students[24],
-        students[25],
-        students[26],
-        students[27],
-        students[28],
-        students[29],
-        students[30],
-        students[31],
+      students: [
+        student[24],
+        student[25],
+        student[26],
+        student[27],
+        student[28],
+        student[29],
+        student[30],
+        student[31],
       ],
       semester: fall2019,
       course: operatingSystems,
-      studentWorkProject: [
+      studentWorkProjects: [
         operating_systems_assignment_1,
         operating_systems_assignment_2,
         operating_systems_assignment_3,
@@ -419,19 +419,19 @@ const data = async () => {
     },
     {
       instructor: instructors[3],
-      student: [
-        students[8],
-        students[9],
-        students[10],
-        students[11],
-        students[12],
-        students[13],
-        students[14],
-        students[15],
+      students: [
+        student[8],
+        student[9],
+        student[10],
+        student[11],
+        student[12],
+        student[13],
+        student[14],
+        student[15],
       ],
       semester: fall2020,
       course: programmingLanguages,
-      studentWorkProject: [
+      studentWorkProjects: [
         programming_languages_assignment_1,
         programming_languages_assignment_2,
         programming_languages_assignment_3,
@@ -441,19 +441,19 @@ const data = async () => {
     },
     {
       instructor: instructors[0],
-      student: [
-        students[24],
-        students[25],
-        students[26],
-        students[27],
-        students[28],
-        students[29],
-        students[30],
-        students[31],
+      students: [
+        student[24],
+        student[25],
+        student[26],
+        student[27],
+        student[28],
+        student[29],
+        student[30],
+        student[31],
       ],
       semester: fall2019,
       course: programmingLanguages,
-      studentWorkProject: [
+      studentWorkProjects: [
         programming_languages_assignment_1,
         programming_languages_assignment_2,
         programming_languages_assignment_3,
@@ -463,19 +463,19 @@ const data = async () => {
     },
     {
       instructor: instructors[2],
-      student: [
-        students[8],
-        students[9],
-        students[10],
-        students[11],
-        students[12],
-        students[13],
-        students[14],
-        students[15],
+      students: [
+        student[8],
+        student[9],
+        student[10],
+        student[11],
+        student[12],
+        student[13],
+        student[14],
+        student[15],
       ],
       semester: fall2020,
       course: softwareEngineering,
-      studentWorkProject: [
+      studentWorkProjects: [
         software_engineering_exercise_1,
         software_engineering_exercise_2,
         software_engineering_quiz_1,
@@ -485,19 +485,19 @@ const data = async () => {
     },
     {
       instructor: instructors[2],
-      student: [
-        students[16],
-        students[17],
-        students[18],
-        students[19],
-        students[20],
-        students[21],
-        students[22],
-        students[23],
+      students: [
+        student[16],
+        student[17],
+        student[18],
+        student[19],
+        student[20],
+        student[21],
+        student[22],
+        student[23],
       ],
       semester: spring2020,
       course: softwareEngineering,
-      studentWorkProject: [
+      studentWorkProjects: [
         software_engineering_exercise_1,
         software_engineering_exercise_2,
         software_engineering_quiz_1,
@@ -507,19 +507,19 @@ const data = async () => {
     },
     {
       instructor: instructors[5],
-      student: [
-        students[8],
-        students[9],
-        students[10],
-        students[11],
-        students[12],
-        students[13],
-        students[14],
-        students[15],
+      students: [
+        student[8],
+        student[9],
+        student[10],
+        student[11],
+        student[12],
+        student[13],
+        student[14],
+        student[15],
       ],
       semester: spring2020,
       course: algorithm,
-      studentWorkProject: [
+      studentWorkProjects: [
         algorithms_quiz_1,
         algorithms_quiz_2,
         algorithms_quiz_3,
@@ -528,19 +528,19 @@ const data = async () => {
     },
     {
       instructor: instructors[5],
-      student: [
-        students[16],
-        students[17],
-        students[18],
-        students[19],
-        students[20],
-        students[21],
-        students[22],
-        students[23],
+      students: [
+        student[16],
+        student[17],
+        student[18],
+        student[19],
+        student[20],
+        student[21],
+        student[22],
+        student[23],
       ],
       semester: fall2019,
       course: algorithm,
-      studentWorkProject: [
+      studentWorkProjects: [
         algorithms_quiz_1,
         algorithms_quiz_2,
         algorithms_quiz_3,
