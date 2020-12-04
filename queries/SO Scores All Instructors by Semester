@@ -3,29 +3,29 @@
 [
   {
     '$match': {
-      'semester': new ObjectId('5fc2e25ba981b28decd9c4a4')  // semester ObjectId
+      'semester': new ObjectId('5fca6aa5706c1ba3b4d311bf')
     }
   }, {
     '$project': {
       '_id': 0, 
-      'student': 1, 
-      'studentWorkProject': 1, 
+      'students': 1, 
+      'studentWorkProjects': 1, 
       'instructor': 1
     }
   }, {
     '$unwind': {
-      'path': '$student'
+      'path': '$students'
     }
   }, {
     '$unwind': {
-      'path': '$studentWorkProject'
+      'path': '$studentWorkProjects'
     }
   }, {
     '$lookup': {
       'from': 'assessments', 
       'let': {
-        'id': '$student', 
-        'swp': '$studentWorkProject'
+        'id': '$students', 
+        'swp': '$studentWorkProjects'
       }, 
       'pipeline': [
         {
@@ -48,7 +48,7 @@
           '$project': {
             '_id': 0, 
             'score': 1, 
-            'studentOutcome': 1
+            'studentOutcomes': 1
           }
         }
       ], 
@@ -60,7 +60,7 @@
     }
   }, {
     '$unwind': {
-      'path': '$so+score.studentOutcome'
+      'path': '$so+score.studentOutcomes'
     }
   }, {
     '$group': {
@@ -69,7 +69,7 @@
         '$avg': '$so+score.score'
       }, 
       'so': {
-        '$addToSet': '$so+score.studentOutcome'
+        '$addToSet': '$so+score.studentOutcomes'
       }
     }
   }, {

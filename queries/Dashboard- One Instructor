@@ -4,22 +4,22 @@
 [
   {
     '$match': {
-      'instructor': new ObjectId('5fc2e25ba981b28decd9c473')
+      'instructor': new ObjectId('5fca6aa5706c1ba3b4d3118e')
     }
   }, {
     '$unwind': {
-      'path': '$student'
+      'path': '$students'
     }
   }, {
     '$unwind': {
-      'path': '$studentWorkProject'
+      'path': '$studentWorkProjects'
     }
   }, {
     '$lookup': {
       'from': 'assessments', 
       'let': {
-        'id': '$student', 
-        'swp': '$studentWorkProject'
+        'id': '$students', 
+        'swp': '$studentWorkProjects'
       }, 
       'pipeline': [
         {
@@ -42,7 +42,7 @@
           '$project': {
             '_id': 0, 
             'score': 1, 
-            'studentOutcome': 1
+            'studentOutcomes': 1
           }
         }
       ], 
@@ -54,13 +54,13 @@
     }
   }, {
     '$unwind': {
-      'path': '$soAndScore.studentOutcome'
+      'path': '$soAndScore.studentOutcomes'
     }
   }, {
     '$lookup': {
       'from': 'studentoutcomes', 
       'let': {
-        'id': '$soAndScore.studentOutcome'
+        'id': '$soAndScore.studentOutcomes'
       }, 
       'pipeline': [
         {
