@@ -13,7 +13,7 @@ const courseSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    studentOutcome: [
+    studentOutcomes: [
       {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

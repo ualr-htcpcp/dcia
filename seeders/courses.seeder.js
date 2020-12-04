@@ -13,42 +13,42 @@ const data = async () => {
     {
       title: "Programming I",
       courseNumber: 1375,
-      studentOutcome: [so1, so2],
+      studentOutcomes: [so1, so2],
     },
     {
       title: "Capstone Project",
       courseNumber: 4392,
-      studentOutcome: [so5, so6],
+      studentOutcomes: [so5, so6],
     },
     {
       title: "First Year Experience for Computing Majors",
       courseNumber: 1105,
-      studentOutcome: [so1, so3],
+      studentOutcomes: [so1, so3],
     },
     {
       title: "Algorithms",
       courseNumber: 2380,
-      studentOutcome: [so1, so2],
+      studentOutcomes: [so1, so2],
     },
     {
       title: "Computer Organization",
       courseNumber: 2482,
-      studentOutcome: [so1, so4],
+      studentOutcomes: [so1, so4],
     },
     {
       title: "Operating Systems",
       courseNumber: 3380,
-      studentOutcome: [so3, so4],
+      studentOutcomes: [so3, so4],
     },
     {
       title: "Programming Languages",
       courseNumber: 3383,
-      studentOutcome: [so4, so6],
+      studentOutcomes: [so4, so6],
     },
     {
       title: "Software Engineering",
       courseNumber: 4373,
-      studentOutcome: [so3, so5],
+      studentOutcomes: [so3, so5],
     },
   ];
 };

@@ -17,7 +17,7 @@ const assessmentSchema = new mongoose.Schema(
       required: true,
       ref: "StudentWorkProject",
     },
-    studentOutcome: [
+    studentOutcomes: [
       {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

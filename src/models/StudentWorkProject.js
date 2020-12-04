@@ -6,7 +6,7 @@ const studentWorkProjectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    studentOutcome: [
+    studentOutcomes: [
       {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
