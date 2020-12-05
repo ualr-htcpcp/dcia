@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Alert, Card } from "react-bootstrap";
 import LineGraph from "./LineGraph.jsx";
 import useSWR from "swr";
 import { fetchWithYearAndTerm } from "utils/fetch";
@@ -21,6 +21,7 @@ export default function ScoresByLevelChart({ className, term }) {
     <Card className={className}>
       <Card.Header className="bg-white">SO Scores by LEVEL</Card.Header>
       <Card.Body>
+        {error && <Alert variant="danger">{error.message}</Alert>}
         <LineGraph
           data={graphData ? graphData : blankLevelsData}
           dataKeys={dataKeysForSOs}
