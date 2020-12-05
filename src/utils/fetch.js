@@ -11,14 +11,8 @@ export async function fetchWithYearAndTerm(baseURL, year, term, amount = null) {
   return response.json();
 }
 
-export async function fetchWithYearTermOutcomeAndInstructor(
-  baseURL,
-  year,
-  term,
-  so,
-  instructor
-) {
-  const url = `${baseURL}?year=${year}&term=${term}&so=${so}&instructor=${instructor}`;
+export async function fetchWithInstructor(baseURL, instructor) {
+  const url = `${baseURL}?instructor=${instructor}`;
   const response = await fetch(url);
   return response.json();
 }
