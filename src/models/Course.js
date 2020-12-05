@@ -5,8 +5,9 @@ const courseSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
-    courseNumber: {
+    number: {
       type: Number,
       min: 1000,
       max: 9999,

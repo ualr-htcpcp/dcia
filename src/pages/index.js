@@ -1,14 +1,16 @@
+import AppLayout from "components/AppLayout.jsx";
+import ScoresByLevelChart from "components/ScoresByLevelChart.jsx";
+import ScoresByTermChart from "components/ScoresByTermChart.jsx";
+import ScoreSummaryCard from "components/ScoreSummaryCard.jsx";
+import TermSelector from "components/TermSelector.jsx";
 import Head from "next/head";
 import { Col, Row } from "react-bootstrap";
-import AppLayout from "../components/AppLayout.jsx";
-import ScoreSummaryCard from "../components/ScoreSummaryCard.jsx";
-import ScoresByLevelChart from "../components/ScoresByLevelChart.jsx";
-import ScoresByTermChart from "../components/ScoresByTermChart.jsx";
-import TermSelector from "../components/TermSelector.jsx";
-
-export { ProtectPage as getServerSideProps } from "../utils/auth";
+import { useProtectPage } from "utils/auth";
 
 export default function Dashboard() {
+  const session = useProtectPage();
+  if (!session) return null;
+
   return (
     <>
       <Head>

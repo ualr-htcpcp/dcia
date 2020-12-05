@@ -9,9 +9,9 @@ import StudentWorkProject from "../src/models/StudentWorkProject";
 const data = async () => {
   const instructors = await Instructor.find({});
   const student = await Student.find({});
-  const fall2020 = await Semester.findOne({ year: 2020, term: "Fall" });
-  const spring2020 = await Semester.findOne({ year: 2020, term: "Spring" });
-  const fall2019 = await Semester.findOne({ year: 2019, term: "Fall" });
+  const fall2020 = await Semester.findOne({ year: 2020, term: "fall" });
+  const spring2020 = await Semester.findOne({ year: 2020, term: "spring" });
+  const fall2019 = await Semester.findOne({ year: 2019, term: "fall" });
   const programming1 = await Course.findOne({ title: "Programming I" });
   const capstone = await Course.findOne({ title: "Capstone Project" });
   const firstYear = await Course.findOne({

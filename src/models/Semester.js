@@ -11,7 +11,7 @@ const semesterSchema = new mongoose.Schema(
     term: {
       type: String,
       required: true,
-      enum: ["Fall", "Spring", "Summer"],
+      enum: ["spring", "summer", "fall"],
     },
     isCurrent: {
       type: Boolean,
@@ -21,6 +21,8 @@ const semesterSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+semesterSchema.index({ year: 1, term: 1 }, { unique: true });
 
 export default mongoose.models.Semester ||
   mongoose.model("Semester", semesterSchema);

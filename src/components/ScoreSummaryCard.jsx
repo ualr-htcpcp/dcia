@@ -7,11 +7,11 @@ export default function ScoreSummaryCard({ name, viewAllPath }) {
       <ListGroup variant="flush">
         <ListGroup.Item className="d-flex justify-content-between align-items-center">
           Fiona Rutherford
-          <span className="badge badge-primary badge-pill">3.8</span>
+          <span className="badge badge-info badge-pill">3.8</span>
         </ListGroup.Item>
         <ListGroup.Item className="d-flex justify-content-between align-items-center">
           Jacky Nienow
-          <span className="badge badge-primary badge-pill">3.7</span>
+          <span className="badge badge-info badge-pill">3.7</span>
         </ListGroup.Item>
         <ListGroup.Item className="d-flex justify-content-between align-items-center">
           Prince Beier

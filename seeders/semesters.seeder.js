@@ -4,17 +4,17 @@ import Semester from "../src/models/Semester";
 const data = [
   {
     year: 2019,
-    term: "Fall",
+    term: "fall",
     isCurrent: false,
   },
   {
     year: 2020,
-    term: "Spring",
+    term: "spring",
     isCurrent: false,
   },
   {
     year: 2020,
-    term: "Fall",
+    term: "fall",
     isCurrent: true,
   },
 ];

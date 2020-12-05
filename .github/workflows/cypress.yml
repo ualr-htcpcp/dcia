@@ -18,6 +18,13 @@ jobs:
         with:
           mongodb-version: "4.4"
 
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache
+            ~/.npm
+          key: v1-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+
       - run: npm ci
 
       - name: Seed the Database
@@ -28,8 +35,20 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          start: npm run dev
+          build: npm run build
+          start: npm run start
           wait-on: "http://localhost:3000"
         env:
           NEXTAUTH_URL: http://localhost:3000
           MONGO_URL: mongodb://localhost:27017/dcia
+
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
