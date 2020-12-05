@@ -6,13 +6,6 @@ const studentSchema = new mongoose.Schema(
       first: String,
       last: String,
     },
-    tNumber: {
-      type: Number,
-      required: true,
-      unigue: true,
-      min: 0,
-      max: 99999999,
-    },
   },
   { timestamps: true }
 );

@@ -1,13 +1,15 @@
 import { Seeder } from "mongoose-data-seed";
 import Instructor from "../src/models/Instructor";
+import faker from "faker";
 
-const data = async () => {
-  return [
-    {
-      name: { first: "Albert", last: "Baker" },
-    },
-  ];
-};
+var instructor;
+const data = [];
+for (let i = 0; i < 8; i++) {
+  instructor = {
+    name: { first: faker.name.firstName(), last: faker.name.lastName() },
+  };
+  data[i] = instructor;
+}
 
 class InstructorsSeeder extends Seeder {
   async shouldRun() {
@@ -17,10 +19,8 @@ class InstructorsSeeder extends Seeder {
   }
 
   async run() {
-    const instructors = await data();
-
     return Promise.all(
-      instructors.map(async (instructor) => {
+      data.map(async (instructor) => {
         return Instructor.create(instructor);
       })
     );

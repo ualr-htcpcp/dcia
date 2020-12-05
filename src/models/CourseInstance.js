@@ -24,7 +24,7 @@ const courseInstanceSchema = new mongoose.Schema(
       required: true,
       ref: "Course",
     },
-    studentWorkProject: [
+    studentWorkProjects: [
       {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

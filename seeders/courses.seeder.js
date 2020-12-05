@@ -11,14 +11,44 @@ const data = async () => {
   const so6 = await StudentOutcome.findOne({ number: 6 });
   return [
     {
-      title: "Programming1",
-      number: 1500,
-      studentOutcomes: [so1, so2, so3],
+      title: "Programming I",
+      number: 1375,
+      studentOutcomes: [so1, so2],
     },
     {
-      title: "Capstone",
-      number: 4321,
-      studentOutcomes: [so4, so5, so6],
+      title: "Capstone Project",
+      number: 4392,
+      studentOutcomes: [so5, so6],
+    },
+    {
+      title: "First Year Experience for Computing Majors",
+      number: 1105,
+      studentOutcomes: [so1, so3],
+    },
+    {
+      title: "Algorithms",
+      number: 2380,
+      studentOutcomes: [so1, so2],
+    },
+    {
+      title: "Computer Organization",
+      number: 2482,
+      studentOutcomes: [so1, so4],
+    },
+    {
+      title: "Operating Systems",
+      number: 3380,
+      studentOutcomes: [so3, so4],
+    },
+    {
+      title: "Programming Languages",
+      number: 3383,
+      studentOutcomes: [so4, so6],
+    },
+    {
+      title: "Software Engineering",
+      number: 4373,
+      studentOutcomes: [so3, so5],
     },
   ];
 };
