@@ -36,13 +36,17 @@ export default function LineGraph({
       >
         <CartesianGrid stroke="#a6a6a6" strokeDasharray="5 5" />
         <XAxis dataKey={xAxisKey}>
-          <Label value={xAxisLabel} position="insideBottom" offset={-5} />
+          <Label value={xAxisLabel} position="insideBottom" offset={-4} />
         </XAxis>
         <YAxis>
           <Label value={yAxisLabel} position="insideLeft" offset={-10} />
         </YAxis>
         <Tooltip />
-        <Legend align="right" verticalAlign="bottom" />
+        <Legend
+          align="right"
+          verticalAlign="bottom"
+          wrapperStyle={{ paddingTop: "8px" }}
+        />
 
         {dataKeys &&
           dataKeys.map((xValue, i) => {
