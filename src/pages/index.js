@@ -26,7 +26,10 @@ export default function Dashboard() {
       <AppLayout>
         <h1 className="h3">Dashboard</h1>
 
-        <ScoresByTermChart className="mt-3" isAdminOrRoot={isAdminOrRoot} />
+        <ScoresByTermChart
+          className="mt-3"
+          instructorScope={isAdminOrRoot ? "ALL" : session.user.email}
+        />
 
         {isAdminOrRoot ? <AdminDashboard /> : ""}
       </AppLayout>
