@@ -125,7 +125,7 @@ function SemesterOptions({ course }) {
     <>
       <option></option>
       {semestersByYear.map(({ year, terms }) =>
-        Object.entries(terms).map(([term, { _id: semesterId }]) => (
+        Object.entries(terms).reverse().map(([term, { _id: semesterId }]) => (
           <option
             key={semesterId}
             value={semesterId}
