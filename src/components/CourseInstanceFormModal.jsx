@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import fetcher from "utils/fetcher";
 import { capitalize } from "utils/string";
 
@@ -11,12 +12,13 @@ export default function CourseInstanceFormModal({
   show,
   onHide,
   course,
-  courseInstancesChanged,
   courseInstance = null,
 }) {
   const { register, handleSubmit, errors, clearErrors, setError } = useForm();
   const [baseError, setBaseError] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [instructorOptionsLoaded, setInstructorOptionsLoaded] = useState(false);
+  const [semesterOptionsLoaded, setSemesterOptionsLoaded] = useState(false);
 
   const onSubmit = async (data) => {
     setIsProcessing(true);
@@ -34,7 +36,7 @@ export default function CourseInstanceFormModal({
         body: JSON.stringify({ ...data, course: course._id }),
       });
       if (response.ok) {
-        courseInstancesChanged();
+        mutate(`/api/course-instances?course=${course._id}`);
         onHide();
       } else if (response.status === 422) {
         const { error: errors } = await response.json();
@@ -68,9 +70,14 @@ export default function CourseInstanceFormModal({
               as="select"
               name="semester"
               isInvalid={errors.semester}
+              defaultValue={courseInstance?.semester._id}
+              key={semesterOptionsLoaded}
               ref={register({ required: "Semster is required" })}
             >
-              <SemesterOptions course={course} />
+              <SemesterOptions
+                course={course}
+                onReady={() => setSemesterOptionsLoaded(true)}
+              />
             </Form.Control>
             {errors.semester && (
               <Form.Control.Feedback type="invalid">
@@ -85,9 +92,13 @@ export default function CourseInstanceFormModal({
               as="select"
               name="instructor"
               isInvalid={errors.instructor}
+              defaultValue={courseInstance?.instructor._id}
+              key={instructorOptionsLoaded}
               ref={register({ required: "Instructor is required" })}
             >
-              <InstructorOptions />
+              <InstructorOptions
+                onReady={() => setInstructorOptionsLoaded(true)}
+              />
             </Form.Control>
             {errors.instructor && (
               <Form.Control.Feedback type="invalid">
@@ -106,12 +117,15 @@ export default function CourseInstanceFormModal({
   );
 }
 
-function SemesterOptions({ course }) {
+function SemesterOptions({ course, onReady }) {
   const { data: semestersByYear } = useSWR("/api/semesters", fetcher);
   const { data: courseInstances } = useSWR(
     `/api/course-instances?course=${course._id}`,
     fetcher
   );
+  useEffect(() => {
+    if (semestersByYear && courseInstances) onReady();
+  }, [semestersByYear, courseInstances]);
 
   if (!semestersByYear || !courseInstances) {
     return <option key="loading">Loading...</option>;
@@ -141,8 +155,12 @@ function SemesterOptions({ course }) {
   );
 }
 
-function InstructorOptions() {
+function InstructorOptions({ onReady }) {
   const { data } = useSWR("/api/instructors", fetcher);
+  useEffect(() => {
+    if (data) onReady();
+  }, [data]);
+
   if (!data) return <option key="loading">Loading...</option>;
 
   return (
