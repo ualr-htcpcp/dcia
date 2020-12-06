@@ -1,4 +1,5 @@
 import middleware from "middleware";
+import Instructor from "models/Instructor";
 import User from "models/User";
 import nextConnect from "next-connect";
 import { authenticate, forbiddenUnlessRoot } from "utils/auth";
@@ -11,7 +12,7 @@ handler.use(forbiddenUnlessRoot);
 handler.patch(async (req, res) => {
   const {
     query: { id },
-    body: { accessLevel },
+    body: { accessLevel, instructor: instructorId },
   } = req;
 
   if (!["instructor", "admin", "revoked"].includes(accessLevel)) {
@@ -22,9 +23,14 @@ handler.patch(async (req, res) => {
   }
 
   try {
+    let instructor = null;
+    if (instructorId) {
+      instructor = await Instructor.findOne({ _id: instructorId });
+    }
+
     const updatedUser = await User.findOneAndUpdate(
       { _id: id, accessLevel: { $ne: "root" } },
-      { accessLevel },
+      { accessLevel, instructor },
       { new: true }
     )
       .select({ password: 0 })
