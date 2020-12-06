@@ -33,7 +33,7 @@ function CourseInstanceItems({ course }) {
       className="d-flex justify-content-between align-items-center"
       key={_id}
     >
-      <Link href={`/courses/${course._id}`}>
+      <Link href={`/courses/${course._id}/instances/${_id}`}>
         {`${capitalize(semester.term)} ${semester.year}`}
       </Link>
       <span className="badge badge-secondary badge-pill">
