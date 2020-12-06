@@ -1,6 +1,7 @@
 import { Seeder } from "mongoose-data-seed";
 import User from "../src/models/User";
-import { hashPassword, createExpirationDate } from "../src/utils/auth";
+import { createExpirationDate, hashPassword } from "../src/utils/auth";
+import { fakeTimestamps } from "../src/utils/faker";
 
 const data = [
   {
@@ -56,6 +57,7 @@ class UsersSeeder extends Seeder {
         return User.collection.insertOne({
           ...user,
           password: await hashPassword(user.password),
+          ...fakeTimestamps(),
         });
       })
     );
