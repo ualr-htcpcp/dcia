@@ -4,33 +4,33 @@ export function ScoresByCourse(semester) {
   return [
     {
       $match: {
-        semester: semester, // semester ObjectId
+        semester: semester,
       },
     },
     {
       $project: {
         _id: 0,
-        student: 1,
-        studentWorkProject: 1,
+        students: 1,
+        studentWorkProjects: 1,
         course: 1,
       },
     },
     {
       $unwind: {
-        path: "$student",
+        path: "$students",
       },
     },
     {
       $unwind: {
-        path: "$studentWorkProject",
+        path: "$studentWorkProjects",
       },
     },
     {
       $lookup: {
         from: "assessments",
         let: {
-          id: "$student",
-          swp: "$studentWorkProject",
+          id: "$students",
+          swp: "$studentWorkProjects",
         },
         pipeline: [
           {
@@ -51,31 +51,31 @@ export function ScoresByCourse(semester) {
             $project: {
               _id: 0,
               score: 1,
-              studentOutcome: 1,
+              studentOutcomes: 1,
             },
           },
         ],
-        as: "SO and Score",
+        as: "so+score",
       },
     },
     {
       $unwind: {
-        path: "$SO and Score",
+        path: "$so+score",
       },
     },
     {
       $unwind: {
-        path: "$SO and Score.studentOutcome",
+        path: "$so+score.studentOutcomes",
       },
     },
     {
       $group: {
         _id: "$course",
         averageScore: {
-          $avg: "$SO and Score.score",
+          $avg: "$so+score.score",
         },
         so: {
-          $addToSet: "$SO and Score.studentOutcome",
+          $addToSet: "$so+score.studentOutcomes",
         },
       },
     },
@@ -125,7 +125,7 @@ export function ScoresByCourse(semester) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
@@ -147,7 +147,7 @@ export function ScoresByCourse(semester) {
         _id: 0,
         averageScore: 1,
         "course.title": 1,
-        "so.studentOutcomeNumber": 1,
+        "so.number": 1,
       },
     },
   ];

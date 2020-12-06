@@ -3,20 +3,20 @@
 export const AllSOScores = [
   {
     $unwind: {
-      path: "$student",
+      path: "$students",
     },
   },
   {
     $unwind: {
-      path: "$studentWorkProject",
+      path: "$studentWorkProjects",
     },
   },
   {
     $lookup: {
       from: "assessments",
       let: {
-        id: "$student",
-        swp: "$studentWorkProject",
+        id: "$students",
+        swp: "$studentWorkProjects",
       },
       pipeline: [
         {
@@ -37,7 +37,7 @@ export const AllSOScores = [
           $project: {
             _id: 0,
             score: 1,
-            studentOutcome: 1,
+            studentOutcomes: 1,
           },
         },
       ],
@@ -51,14 +51,14 @@ export const AllSOScores = [
   },
   {
     $unwind: {
-      path: "$soAndScore.studentOutcome",
+      path: "$soAndScore.studentOutcomes",
     },
   },
   {
     $lookup: {
       from: "studentoutcomes",
       let: {
-        id: "$soAndScore.studentOutcome",
+        id: "$soAndScore.studentOutcomes",
       },
       pipeline: [
         {

@@ -4,33 +4,33 @@ export function ScoresByInstructor(semester) {
   return [
     {
       $match: {
-        semester: semester, // semester ObjectId
+        semester: semester,
       },
     },
     {
       $project: {
         _id: 0,
-        student: 1,
-        studentWorkProject: 1,
+        students: 1,
+        studentWorkProjects: 1,
         instructor: 1,
       },
     },
     {
       $unwind: {
-        path: "$student",
+        path: "$students",
       },
     },
     {
       $unwind: {
-        path: "$studentWorkProject",
+        path: "$studentWorkProjects",
       },
     },
     {
       $lookup: {
         from: "assessments",
         let: {
-          id: "$student",
-          swp: "$studentWorkProject",
+          id: "$students",
+          swp: "$studentWorkProjects",
         },
         pipeline: [
           {
@@ -51,7 +51,7 @@ export function ScoresByInstructor(semester) {
             $project: {
               _id: 0,
               score: 1,
-              studentOutcome: 1,
+              studentOutcomes: 1,
             },
           },
         ],
@@ -65,7 +65,7 @@ export function ScoresByInstructor(semester) {
     },
     {
       $unwind: {
-        path: "$so+score.studentOutcome",
+        path: "$so+score.studentOutcomes",
       },
     },
     {
@@ -75,7 +75,7 @@ export function ScoresByInstructor(semester) {
           $avg: "$so+score.score",
         },
         so: {
-          $addToSet: "$so+score.studentOutcome",
+          $addToSet: "$so+score.studentOutcomes",
         },
       },
     },
@@ -125,7 +125,7 @@ export function ScoresByInstructor(semester) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
@@ -147,7 +147,7 @@ export function ScoresByInstructor(semester) {
         _id: 0,
         averageScore: 1,
         "instructor.name": 1,
-        "so.studentOutcomeNumber": 1,
+        "so.number": 1,
       },
     },
   ];

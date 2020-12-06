@@ -9,27 +9,27 @@ export function ScoresByCourseInstance(courseInstance) {
     },
     {
       $unwind: {
-        path: "$student",
+        path: "$students",
       },
     },
     {
       $unwind: {
-        path: "$studentWorkProject",
+        path: "$studentWorkProjects",
       },
     },
     {
       $project: {
         _id: 0,
-        student: 1,
-        studentWorkProject: 1,
+        students: 1,
+        studentWorkProjects: 1,
       },
     },
     {
       $lookup: {
         from: "assessments",
         let: {
-          id: "$student",
-          swp: "$studentWorkProject",
+          id: "$students",
+          swp: "$studentWorkProjects",
         },
         pipeline: [
           {
@@ -50,7 +50,7 @@ export function ScoresByCourseInstance(courseInstance) {
             $project: {
               _id: 0,
               score: 1,
-              studentOutcome: 1,
+              studentOutcomes: 1,
             },
           },
         ],
@@ -64,14 +64,14 @@ export function ScoresByCourseInstance(courseInstance) {
     },
     {
       $unwind: {
-        path: "$soAndScore.studentOutcome",
+        path: "$soAndScore.studentOutcomes",
       },
     },
     {
       $lookup: {
         from: "students",
         let: {
-          student: "$student",
+          student: "$students",
         },
         pipeline: [
           {
@@ -100,7 +100,7 @@ export function ScoresByCourseInstance(courseInstance) {
       $lookup: {
         from: "studentoutcomes",
         let: {
-          id: "$soAndScore.studentOutcome",
+          id: "$soAndScore.studentOutcomes",
         },
         pipeline: [
           {
