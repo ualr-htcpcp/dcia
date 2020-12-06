@@ -125,15 +125,17 @@ function SemesterOptions({ course }) {
     <>
       <option></option>
       {semestersByYear.map(({ year, terms }) =>
-        Object.entries(terms).reverse().map(([term, { _id: semesterId }]) => (
-          <option
-            key={semesterId}
-            value={semesterId}
-            disabled={existingSemesterIds.includes(semesterId)}
-          >
-            {`${capitalize(term)} ${year}`}
-          </option>
-        ))
+        Object.entries(terms)
+          .reverse()
+          .map(([term, { _id: semesterId }]) => (
+            <option
+              key={semesterId}
+              value={semesterId}
+              disabled={existingSemesterIds.includes(semesterId)}
+            >
+              {`${capitalize(term)} ${year}`}
+            </option>
+          ))
       )}
     </>
   );
