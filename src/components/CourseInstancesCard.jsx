@@ -1,6 +1,7 @@
 import EmptyItem from "components/EmptyItem.jsx";
 import Link from "next/link";
-import { Card, ListGroup } from "react-bootstrap";
+import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
+import { RiAddFill } from "react-icons/ri";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import { capitalize } from "utils/string";
@@ -8,7 +9,16 @@ import { capitalize } from "utils/string";
 export default function CourseInstanceCard({ course }) {
   return (
     <Card className="mt-3">
-      <Card.Header className="bg-white">Course Instances</Card.Header>
+      <Card.Header className="bg-white pt-2 pb-2">
+        <Row className="align-items-center flex-column flex-lg-row">
+          <Col>Course Instances</Col>
+          <Col className="d-flex flex-grow-0" style={{ whiteSpace: "nowrap" }}>
+            <Button size="sm">
+              <RiAddFill /> Add
+            </Button>
+          </Col>
+        </Row>
+      </Card.Header>
       <ListGroup variant="flush">
         <CourseInstanceItems course={course} />
       </ListGroup>
@@ -37,7 +47,7 @@ function CourseInstanceItems({ course }) {
         {`${capitalize(semester.term)} ${semester.year}`}
       </Link>
       <span className="badge badge-secondary badge-pill">
-        {instructorName.first} {instructorName.last}
+        Instructor: {instructorName.first} {instructorName.last}
       </span>
     </ListGroup.Item>
   ));
