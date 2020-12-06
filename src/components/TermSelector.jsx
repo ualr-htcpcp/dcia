@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 import { Pagination } from "react-bootstrap";
+import { capitalize } from "utils/string";
 
 function getSelectedIndex(terms) {
   return terms.findIndex((term) => term.isCurrent);
@@ -81,7 +82,8 @@ export default function TermSelector({
       </Pagination.Item>
 
       <Pagination.Item className="w-100 text-center disabled">
-        {selectedTerm && `${selectedTerm.term} ${selectedTerm.year}`}
+        {selectedTerm &&
+          `${capitalize(selectedTerm.term)} ${selectedTerm.year}`}
       </Pagination.Item>
 
       <Pagination.Item
