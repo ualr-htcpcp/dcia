@@ -36,7 +36,7 @@ handler.get(async (req, res) => {
     const isLocked = lockedSemesterIds.some((semesterId) =>
       semesterId.equals(semester._id)
     );
-    year.terms[semester.term] = { isLocked };
+    year.terms[semester.term] = { _id: semester._id, isLocked };
   });
 
   return res.json(years);
