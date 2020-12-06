@@ -1,6 +1,6 @@
 // Returns StudentWorkProject Name, StudentOutCome Number, and Average Score by CourseInstance
 
-export function SWPSCoresByCourseInstance(courseInstance) {
+export function SWPScoresByCourseInstance(courseInstance) {
   return [
     {
       $match: {
@@ -9,19 +9,19 @@ export function SWPSCoresByCourseInstance(courseInstance) {
     },
     {
       $unwind: {
-        path: "$student",
+        path: "$students",
       },
     },
     {
       $unwind: {
-        path: "$studentWorkProject",
+        path: "$studentWorkProjects",
       },
     },
     {
       $lookup: {
         from: "studentworkprojects",
         let: {
-          swp: "$studentWorkProject",
+          swp: "$studentWorkProjects",
         },
         pipeline: [
           {
@@ -50,8 +50,8 @@ export function SWPSCoresByCourseInstance(courseInstance) {
       $lookup: {
         from: "assessments",
         let: {
-          id: "$student",
-          swp: "$studentWorkProject",
+          id: "$students",
+          swp: "$studentWorkProjects",
         },
         pipeline: [
           {
@@ -72,7 +72,7 @@ export function SWPSCoresByCourseInstance(courseInstance) {
             $project: {
               _id: 0,
               score: 1,
-              studentOutcome: 1,
+              studentOutcomes: 1,
             },
           },
         ],
@@ -86,14 +86,14 @@ export function SWPSCoresByCourseInstance(courseInstance) {
     },
     {
       $unwind: {
-        path: "$soAndScore.studentOutcome",
+        path: "$soAndScore.studentOutcomes",
       },
     },
     {
       $lookup: {
         from: "studentoutcomes",
         let: {
-          so: "$soAndScore.studentOutcome",
+          so: "$soAndScore.studentOutcomes",
         },
         pipeline: [
           {
@@ -106,7 +106,7 @@ export function SWPSCoresByCourseInstance(courseInstance) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
@@ -122,7 +122,7 @@ export function SWPSCoresByCourseInstance(courseInstance) {
       $group: {
         _id: {
           studentWorkProject: "$swp.name",
-          studentOutcomeNumber: "$so.studentOutcomeNumber",
+          number: "$so.number",
         },
         averageScore: {
           $avg: "$soAndScore.score",
@@ -135,7 +135,7 @@ export function SWPSCoresByCourseInstance(courseInstance) {
           studentWorkProject: "$_id.studentWorkProject",
         },
         studentOutcomeNumber: {
-          $addToSet: "$_id.studentOutcomeNumber",
+          $addToSet: "$_id.number",
         },
         averageScore: {
           $addToSet: "$averageScore",
