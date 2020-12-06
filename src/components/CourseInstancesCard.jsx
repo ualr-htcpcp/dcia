@@ -1,5 +1,6 @@
 import CourseInstanceFormModal from "components/CourseInstanceFormModal.jsx";
 import EmptyItem from "components/EmptyItem.jsx";
+import { useSession } from "next-auth/client";
 import Link from "next/link";
 import { useState } from "react";
 import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
@@ -32,7 +33,10 @@ export default function CourseInstanceCard({ course }) {
 }
 
 function AddCourseInstanceButton({ course, courseInstancesChanged }) {
+  const [session] = useSession();
   const [showModal, setShowModal] = useState(false);
+
+  if (!["admin", "root"].includes(session?.user.accessLevel)) return null;
 
   return (
     <>
