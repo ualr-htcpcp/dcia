@@ -17,6 +17,13 @@ const assessmentSchema = new mongoose.Schema(
       required: true,
       ref: "StudentWorkProject",
     },
+    studentOutcomes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "StudentOutcome",
+      },
+    ],
   },
   { timestamps: true }
 );

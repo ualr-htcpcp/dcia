@@ -1,20 +1,15 @@
 import { Seeder } from "mongoose-data-seed";
 import Student from "../src/models/Student";
+import faker from "faker";
 
-const data = [
-  {
-    name: { first: "Billy", last: "Maddison" },
-    tNumber: 12345670,
-  },
-  {
-    name: { first: "Johny", last: "Walker" },
-    tNumber: 62589261,
-  },
-  {
-    name: { first: "Some", last: "Guy" },
-    tNumber: 9787775,
-  },
-];
+var student;
+const data = [];
+for (let i = 0; i < 40; i++) {
+  student = {
+    name: { first: faker.name.firstName(), last: faker.name.lastName() },
+  };
+  data[i] = student;
+}
 
 class StudentsSeeder extends Seeder {
   async shouldRun() {
