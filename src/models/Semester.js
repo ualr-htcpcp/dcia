@@ -24,5 +24,12 @@ const semesterSchema = new mongoose.Schema(
 
 semesterSchema.index({ year: 1, term: 1 }, { unique: true });
 
+semesterSchema.statics.getIdOnly = function (term, year) {
+  const result = this.findOne({ term: term.toLowerCase(), year: year })
+    .select({ _id: 1 })
+    .lean();
+  return result._id;
+};
+
 export default mongoose.models.Semester ||
   mongoose.model("Semester", semesterSchema);
