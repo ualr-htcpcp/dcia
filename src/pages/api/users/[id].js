@@ -15,7 +15,10 @@ handler.patch(async (req, res) => {
     body: { accessLevel, instructor: instructorId },
   } = req;
 
-  if (!["instructor", "admin", "revoked"].includes(accessLevel)) {
+  if (
+    accessLevel &&
+    !["instructor", "admin", "revoked"].includes(accessLevel)
+  ) {
     return res.status(422).json({
       error: true,
       message: `"${accessLevel}" is not a valid access level`,
@@ -23,14 +26,15 @@ handler.patch(async (req, res) => {
   }
 
   try {
-    let instructor = null;
-    if (instructorId) {
-      instructor = await Instructor.findOne({ _id: instructorId });
+    const instructor = await Instructor.findOne({ _id: instructorId });
+    let changes = { instructor };
+    if (accessLevel) {
+      changes = { ...changes, accessLevel };
     }
 
     const updatedUser = await User.findOneAndUpdate(
       { _id: id, accessLevel: { $ne: "root" } },
-      { accessLevel, instructor },
+      changes,
       { new: true }
     )
       .select({ password: 0 })

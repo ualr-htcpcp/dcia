@@ -53,7 +53,10 @@ function UserRow({ model }) {
     await fetch(`${USERS_PATH}/${model._id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ accessLevel, instructor }),
+      body: JSON.stringify({
+        accessLevel: accessLevelChanged && accessLevel,
+        instructor,
+      }),
     });
     mutate(USERS_PATH);
   };
