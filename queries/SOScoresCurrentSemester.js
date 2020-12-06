@@ -22,27 +22,27 @@ export const SOScoresCurrentSemester = [
   {
     $project: {
       _id: 0,
-      student: 1,
-      studentWorkProject: 1,
+      students: 1,
+      studentWorkProjects: 1,
       instructor: 1,
     },
   },
   {
     $unwind: {
-      path: "$student",
+      path: "$students",
     },
   },
   {
     $unwind: {
-      path: "$studentWorkProject",
+      path: "$studentWorkProjects",
     },
   },
   {
     $lookup: {
       from: "assessments",
       let: {
-        id: "$student",
-        swp: "$studentWorkProject",
+        id: "$students",
+        swp: "$studentWorkProjects",
       },
       pipeline: [
         {
@@ -63,7 +63,7 @@ export const SOScoresCurrentSemester = [
           $project: {
             _id: 0,
             score: 1,
-            studentOutcome: 1,
+            studentOutcomes: 1,
           },
         },
       ],
@@ -77,14 +77,14 @@ export const SOScoresCurrentSemester = [
   },
   {
     $unwind: {
-      path: "$so+score.studentOutcome",
+      path: "$so+score.studentOutcomes",
     },
   },
   {
     $group: {
       _id: {
         instructor: "$instructor",
-        so: "$so+score.studentOutcome",
+        so: "$so+score.studentOutcomes",
       },
       averageScore: {
         $avg: "$so+score.score",
@@ -108,7 +108,7 @@ export const SOScoresCurrentSemester = [
         {
           $project: {
             _id: 0,
-            studentOutcomeNumber: 1,
+            number: 1,
           },
         },
       ],

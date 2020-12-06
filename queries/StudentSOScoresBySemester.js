@@ -9,20 +9,20 @@ export function StudentSOScoresBySemester(semester) {
     },
     {
       $unwind: {
-        path: "$student",
+        path: "$students",
       },
     },
     {
       $unwind: {
-        path: "$studentWorkProject",
+        path: "$studentWorkProjects",
       },
     },
     {
       $lookup: {
         from: "assessments",
         let: {
-          id: "$student",
-          swp: "$studentWorkProject",
+          id: "$students",
+          swp: "$studentWorkProjects",
         },
         pipeline: [
           {
@@ -43,7 +43,7 @@ export function StudentSOScoresBySemester(semester) {
             $project: {
               _id: 0,
               score: 1,
-              studentOutcome: 1,
+              studentOutcomes: 1,
             },
           },
         ],
@@ -57,13 +57,13 @@ export function StudentSOScoresBySemester(semester) {
     },
     {
       $unwind: {
-        path: "$soAndScore.studentOutcome",
+        path: "$soAndScore.studentOutcomes",
       },
     },
     {
       $group: {
         _id: {
-          student: "$student",
+          student: "$students",
         },
         averageScore: {
           $avg: "$soAndScore.score",
