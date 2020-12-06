@@ -51,7 +51,7 @@ export async function getServerSideProps(context) {
   if (!session) return { props: {} };
 
   const {
-    params: { id: courseId },
+    params: { courseId },
   } = context;
 
   let course;

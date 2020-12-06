@@ -24,5 +24,5 @@ const semesterSchema = new mongoose.Schema(
 
 semesterSchema.index({ year: 1, term: 1 }, { unique: true });
 
-export default mongoose.models.Semester ||
+export default mongoose.models?.Semester ||
   mongoose.model("Semester", semesterSchema);
