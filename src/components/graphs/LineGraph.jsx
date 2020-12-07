@@ -19,6 +19,7 @@ export default function LineGraph({
   xAxisKey,
   xAxisLabel,
   yAxisLabel,
+  yAxisDomain,
 }) {
   return (
     <ContainerFix>
@@ -36,9 +37,9 @@ export default function LineGraph({
       >
         <CartesianGrid stroke="#a6a6a6" strokeDasharray="5 5" />
         <XAxis dataKey={xAxisKey}>
-          <Label value={xAxisLabel} position="insideBottom" offset={-4} />
+          <Label value={xAxisLabel} position="insideBottom" offset={-10} />
         </XAxis>
-        <YAxis>
+        <YAxis domain={yAxisDomain}>
           <Label value={yAxisLabel} position="insideLeft" offset={-10} />
         </YAxis>
         <Tooltip />

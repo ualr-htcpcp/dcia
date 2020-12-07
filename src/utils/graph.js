@@ -14,6 +14,9 @@ function generateBlankScores(levels, sos) {
 export const blankScoresByLevel = generateBlankScores(courseLevels, sos);
 export const blankScoresByTerm = generateBlankScores(termExamples, sos);
 
+// For line graphs using assessment score as Y Axis
+export const yAxisDomainForAssessments = [0, 4];
+
 export const dataKeysForSOs = [
   { key: "SO1", color: "#f50b07" },
   { key: "SO2", color: "#f55a07" },
