@@ -9,15 +9,19 @@ handler.use(middleware);
 handler.use(authenticate);
 handler.use(forbiddenUnlessAdmin);
 
+const termRanks = { spring: 0, summer: 1, fall: 2 };
+
 handler.get(async (req, res) => {
   const semesters = await Semester.find().lean();
+  semesters.sort(
+    (a, b) => a.year - b.year || termRanks[a.term] - termRanks[b.term]
+  );
   const lockedSemesterIds = await CourseInstance.distinct("semester");
 
   const currentDate = new Date();
   const nextYear = currentDate.getFullYear() + 1;
   const defaultYear = nextYear - 9;
-  const earliestYear =
-    semesters.sort((a, b) => b.year - a.year)[0]?.year || defaultYear;
+  const earliestYear = semesters[0]?.year || defaultYear;
 
   // default to 10-ish years ago or older if an earlier record exists
   let currentYear = Math.min(earliestYear, defaultYear);
@@ -36,7 +40,7 @@ handler.get(async (req, res) => {
     const isLocked = lockedSemesterIds.some((semesterId) =>
       semesterId.equals(semester._id)
     );
-    year.terms[semester.term] = { isLocked };
+    year.terms[semester.term] = { _id: semester._id, isLocked };
   });
 
   return res.json(years);

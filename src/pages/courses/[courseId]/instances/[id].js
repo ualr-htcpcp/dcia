@@ -34,7 +34,7 @@ export default function CoursePage({
           <Breadcrumb.Item href="/courses" linkAs={Link}>
             Courses
           </Breadcrumb.Item>
-          <Breadcrumb.Item href={`/courses/${course._id}`}>
+          <Breadcrumb.Item href={`/courses/${course._id}`} linkAs={Link}>
             {course.title}
           </Breadcrumb.Item>
           <Breadcrumb.Item active>{semesterName}</Breadcrumb.Item>
