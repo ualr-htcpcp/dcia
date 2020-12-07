@@ -1,6 +1,8 @@
 import { Seeder } from "mongoose-data-seed";
+import Instructor from "../src/models/Instructor";
 import User from "../src/models/User";
-import { hashPassword, createExpirationDate } from "../src/utils/auth";
+import { createExpirationDate, hashPassword } from "../src/utils/auth";
+import { fakeTimestamps } from "../src/utils/faker";
 
 const data = [
   {
@@ -53,9 +55,16 @@ class UsersSeeder extends Seeder {
   async run() {
     return Promise.all(
       data.map(async (user) => {
+        let instructor = null;
+        if (user.accessLevel === "instructor") {
+          instructor = await Instructor.aggregate([{ $sample: { size: 1 } }]);
+          instructor = instructor[0]._id;
+        }
         return User.collection.insertOne({
           ...user,
           password: await hashPassword(user.password),
+          instructor,
+          ...fakeTimestamps(),
         });
       })
     );

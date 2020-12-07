@@ -1,6 +1,7 @@
 import { Seeder } from "mongoose-data-seed";
 import RegistrationRequest from "../src/models/RegistrationRequest";
 import { hashPassword } from "../src/utils/auth";
+import { fakeTimestamps } from "../src/utils/faker";
 
 const data = [
   {
@@ -58,6 +59,7 @@ class RegistrationrequestsSeeder extends Seeder {
         return RegistrationRequest.collection.insertOne({
           ...registrationRequest,
           password: await hashPassword(registrationRequest.password),
+          ...fakeTimestamps(),
         });
       })
     );
