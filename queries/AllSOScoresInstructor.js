@@ -78,7 +78,7 @@ export function AllSOScoresInstructor(instructor) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
@@ -130,14 +130,14 @@ export function AllSOScoresInstructor(instructor) {
         averageScore: {
           $avg: "$soAndScore.score",
         },
-        studentOutcomeNumber: {
+        number: {
           $addToSet: "$so#",
         },
       },
     },
     {
       $unwind: {
-        path: "$studentOutcomeNumber",
+        path: "$number",
       },
     },
     {

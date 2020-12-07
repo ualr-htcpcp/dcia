@@ -71,7 +71,7 @@ export const AllSOScores = [
         {
           $project: {
             _id: 0,
-            studentOutcomeNumber: 1,
+            number: 1,
           },
         },
       ],
@@ -147,7 +147,7 @@ export const AllSOScores = [
       averageScore: {
         $avg: "$soAndScore.score",
       },
-      studentOutcomeNumber: {
+      number: {
         $addToSet: "$so#",
       },
       instructor: {
@@ -157,7 +157,7 @@ export const AllSOScores = [
   },
   {
     $unwind: {
-      path: "$studentOutcomeNumber",
+      path: "$number",
     },
   },
   {
