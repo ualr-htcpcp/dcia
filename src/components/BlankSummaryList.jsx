@@ -7,7 +7,7 @@ export default function BlankSummaryList({ numItems }) {
       {Array(numItems)
         .fill(0)
         .map((item, i) => {
-          return <SummaryItem key={i} name="" score="" />;
+          return <SummaryItem key={i} name="" score={null} />;
         })}
     </ListGroup>
   );
