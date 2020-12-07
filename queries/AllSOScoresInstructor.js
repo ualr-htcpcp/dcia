@@ -1,4 +1,4 @@
-// Returns SO Scores for all Semesters for One Istructor
+// Returns SO Scores for all Semesters for One Instructor
 // ****Dashboard****
 
 export function AllSOScoresInstructor(instructor) {
@@ -123,13 +123,26 @@ export function AllSOScoresInstructor(instructor) {
     {
       $group: {
         _id: {
-          studentOutcome: "$so#.studentOutcomeNumber",
+          course: "$course",
           year: "$semesters.year",
           term: "$semesters.term",
         },
         averageScore: {
           $avg: "$soAndScore.score",
         },
+        studentOutcomeNumber: {
+          $addToSet: "$so#",
+        },
+      },
+    },
+    {
+      $unwind: {
+        path: "$studentOutcomeNumber",
+      },
+    },
+    {
+      $project: {
+        "_id.course": 0,
       },
     },
   ];
