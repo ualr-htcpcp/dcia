@@ -3,7 +3,14 @@ import EmptyRow from "components/EmptyRow.jsx";
 import { useSession } from "next-auth/client";
 import Link from "next/link";
 import { useState } from "react";
-import { Button, Card, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
+import {
+  Card,
+  Dropdown,
+  OverlayTrigger,
+  Table,
+  Tooltip
+} from "react-bootstrap";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import useSWR, { mutate } from "swr";
 import fetcher from "utils/fetcher";
 
@@ -94,22 +101,26 @@ function CourseRowActions({ course }) {
 
   return (
     <>
-      <Button
-        variant="danger"
-        size="sm"
-        disabled={course.isLocked}
-        onClick={deleteCourse}
-      >
-        Delete
-      </Button>
-      <Button
-        variant="secondary"
-        size="sm"
-        className="ml-2"
-        onClick={() => setIsEditing(true)}
-      >
-        Edit
-      </Button>
+      <Dropdown>
+        <Dropdown.Toggle
+          as="a"
+          bsPrefix="bs-none"
+          style={{
+            position: "relative",
+            top: "0.2rem",
+            cursor: "pointer",
+          }}
+        >
+          <BsThreeDotsVertical className="text-muted" />
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={() => setIsEditing(true)}>Edit</Dropdown.Item>
+          <Dropdown.Item onClick={deleteCourse} disabled={course.isLocked}>
+            Delete
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
 
       <CourseFormModal
         course={course}
