@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Button, Card, Col, Dropdown, ListGroup, Row } from "react-bootstrap";
 import { RiAddFill } from "react-icons/ri";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import fetcher from "utils/fetcher";
 import { capitalize } from "utils/string";
 
@@ -14,7 +14,7 @@ export default function CourseInstanceCard({ course }) {
   return (
     <Card className="mt-3">
       <Card.Header className="bg-white pt-2 pb-2">
-        <Row className="align-items-center flex-column flex-lg-row">
+        <Row className="align-items-center flex-column flex-md-row">
           <Col>Course Instances</Col>
           <Col className="d-flex flex-grow-0" style={{ whiteSpace: "nowrap" }}>
             <AddCourseInstanceButton course={course} />
@@ -95,6 +95,12 @@ function CourseInstanceItems({ course }) {
 
 function CourseInstanceActions({ course, courseInstance }) {
   const [showModal, setShowModal] = useState(false);
+  const deleteInstructor = async () => {
+    await fetch(`/api/course-instances/${courseInstance._id}`, {
+      method: "delete",
+    });
+    mutate(`/api/course-instances?course=${course._id}`);
+  };
 
   return (
     <Dropdown>
@@ -113,7 +119,12 @@ function CourseInstanceActions({ course, courseInstance }) {
 
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => setShowModal(true)}>Edit</Dropdown.Item>
-        <Dropdown.Item>Delete</Dropdown.Item>
+        <Dropdown.Item
+          onClick={deleteInstructor}
+          disabled={courseInstance.studentWorkProjects.length}
+        >
+          Delete
+        </Dropdown.Item>
       </Dropdown.Menu>
 
       <CourseInstanceFormModal
