@@ -80,6 +80,7 @@ function UserRow({ model }) {
       <td>
         <InstructorSelect
           defaultValue={instructor}
+          accessLevel={accessLevel}
           onChange={(event) => setInstructor(event.target.value || null)}
         />
       </td>
@@ -99,7 +100,7 @@ function UserRow({ model }) {
   );
 }
 
-function InstructorSelect({ defaultValue, onChange }) {
+function InstructorSelect({ defaultValue, onChange, accessLevel }) {
   const { data } = useSWR("/api/instructors", fetcher);
   if (!data) return null;
 
@@ -110,6 +111,7 @@ function InstructorSelect({ defaultValue, onChange }) {
       custom
       defaultValue={defaultValue}
       onChange={onChange}
+      disabled={accessLevel === "revoked"}
     >
       <option></option>
       {data.map((instructor) => {
