@@ -1,5 +1,4 @@
 import middleware from "middleware";
-import Course from "models/Course";
 import CourseInstance from "models/CourseInstance";
 import nextConnect from "next-connect";
 import { authenticate, forbiddenUnlessAdmin } from "utils/auth";
