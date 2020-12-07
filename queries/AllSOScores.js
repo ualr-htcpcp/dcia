@@ -114,15 +114,65 @@ export const AllSOScores = [
     },
   },
   {
+    $lookup: {
+      from: "instructors",
+      let: {
+        instructor: "$instructor",
+      },
+      pipeline: [
+        {
+          $match: {
+            $expr: {
+              $eq: ["$_id", "$$instructor"],
+            },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            name: 1,
+          },
+        },
+      ],
+      as: "instructor",
+    },
+  },
+  {
     $group: {
       _id: {
-        studentOutcome: "$so#.studentOutcomeNumber",
+        course: "$course",
         year: "$semesters.year",
         term: "$semesters.term",
       },
       averageScore: {
         $avg: "$soAndScore.score",
       },
+      studentOutcomeNumber: {
+        $addToSet: "$so#",
+      },
+      instructor: {
+        $addToSet: "$instructor",
+      },
+    },
+  },
+  {
+    $unwind: {
+      path: "$studentOutcomeNumber",
+    },
+  },
+  {
+    $unwind: {
+      path: "$instructor",
+    },
+  },
+  {
+    $unwind: {
+      path: "$instructor",
+    },
+  },
+  {
+    $project: {
+      "_id.course": 0,
     },
   },
 ];
