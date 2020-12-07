@@ -28,6 +28,10 @@ const UserSchema = new Schema(
       token: { type: String, default: null },
       expiration: { type: Date, default: null },
     },
+    instructor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Instructor",
+    },
   },
   { timestamps: true }
 );

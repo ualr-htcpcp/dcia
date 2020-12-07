@@ -16,6 +16,7 @@ export default function UsersCard() {
           <tr>
             <th>Access Level</th>
             <th>Email</th>
+            <th>Instructor</th>
             <th>Created On</th>
             <th></th>
           </tr>
@@ -42,13 +43,20 @@ function UserRows() {
 
 function UserRow({ model }) {
   const [accessLevel, setAccessLevel] = useState(model.accessLevel);
+  const [instructor, setInstructor] = useState(model.instructor);
   const isRevoked = model.accessLevel === "revoked";
 
-  const changeAccessLevel = async () => {
+  const accessLevelChanged = accessLevel !== model.accessLevel;
+  const instructorChanged = instructor !== model.instructor;
+
+  const changeAccess = async () => {
     await fetch(`${USERS_PATH}/${model._id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ accessLevel }),
+      body: JSON.stringify({
+        accessLevel: accessLevelChanged && accessLevel,
+        instructor,
+      }),
     });
     mutate(USERS_PATH);
   };
@@ -69,18 +77,53 @@ function UserRow({ model }) {
         </Form.Control>
       </td>
       <td>{model.email}</td>
+      <td>
+        <InstructorSelect
+          defaultValue={instructor}
+          accessLevel={accessLevel}
+          onChange={(event) => setInstructor(event.target.value || null)}
+        />
+      </td>
       <td>{formatTimestamp(model.createdAt)}</td>
       <td className="text-right">
         <Button
-          onClick={changeAccessLevel}
+          onClick={changeAccess}
           size="sm"
           variant="primary"
           className="ml-3"
-          disabled={accessLevel === model.accessLevel}
+          disabled={!accessLevelChanged && !instructorChanged}
         >
-          Update Access Level
+          Update Access
         </Button>
       </td>
     </tr>
+  );
+}
+
+function InstructorSelect({ defaultValue, onChange, accessLevel }) {
+  const { data } = useSWR("/api/instructors", fetcher);
+  if (!data) return null;
+
+  return (
+    <Form.Control
+      as="select"
+      size="sm"
+      custom
+      defaultValue={defaultValue}
+      onChange={onChange}
+      disabled={accessLevel === "revoked"}
+    >
+      <option></option>
+      {data.map((instructor) => {
+        const {
+          _id,
+          name: { first: firstName, last: lastName },
+        } = instructor;
+
+        return (
+          <option key={_id} value={_id}>{`${firstName} ${lastName}`}</option>
+        );
+      })}
+    </Form.Control>
   );
 }
