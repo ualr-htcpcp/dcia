@@ -1,12 +1,56 @@
-// for array of objects in format: {SO#: score}
-function averageArr(arr) {
+import { capitalize } from "./string";
+
+// Takes array of duplicate SO scores and returns array of averages for each SO
+function averageSOs(arr) {
+  return arr.reduce((newData, current) => {
+    // First item, return array with single item
+    if (!newData) return [current];
+
+    /* 
+      1. Get array of all scores for the matching SO
+      2. Get the sum and then average for that SO
+      3. Get array of all the OTHER SOs
+      4. Combine the new, averaged SO score object with the other SOs
+      5. Sort by SO# & return
+    */
+    const matched = newData.filter((soScore) => {
+      return keysMatch(soScore, current);
+    });
+    const groupSOScores = [...matched, current];
+    const sum = groupSOScores.reduce((sum, current) => {
+      return sum + Object.values(current)[0];
+    }, 0);
+    const avg = sum / groupSOScores.length;
+    const so = Object.keys(current)[0];
+    const newSOAvg = {};
+    newSOAvg[so] = round(avg);
+
+    const otherSOs = newData.filter((soScore) => {
+      return !keysMatch(soScore, current);
+    });
+    newData = [...otherSOs, newSOAvg];
+    newData.sort(sortSO);
+    return newData;
+  }, []);
+}
+
+function round(num) {
+  return Math.round((num + Number.EPSILON) * 100) / 100;
+}
+
+function keysMatch(objA, objB) {
   return (
-    arr.reduce((sum, curr) => {
-      return sum + Object.values(curr)[0];
-    }, 0) / arr.length
+    JSON.stringify(Object.keys(objA)) === JSON.stringify(Object.keys(objB))
   );
 }
 
+function distinctArray(arr) {
+  return [...new Set(arr.map((o) => JSON.stringify(o)))].map((s) =>
+    JSON.parse(s)
+  );
+}
+
+// Helper for dashboard scores by course / scores by instructor
 function getScoreNameObject(name, avgScore) {
   return {
     name: name,
@@ -27,18 +71,60 @@ function sortByLevel(a, b) {
   return sortOrder.indexOf(a.level) - sortOrder.indexOf(b.level);
 }
 
+// Helper for dashboard SO Scores by Level
 function formatForLevels(obj) {
   const { level } = obj._id;
   const newObj = { level: level, scores: [] };
 
   const scoreObj = {};
-  const score = obj.averageScore;
+  const score = round(obj.averageScore);
   const so = buildSO(obj["so#"].number);
   scoreObj[so] = score;
 
   newObj.scores.push(scoreObj);
   return newObj;
 }
+
+function formatInstructorForTerm(obj) {
+  const { year, term } = obj._id;
+  const { first, last } = obj.instructor.name;
+
+  const newObj = {
+    year: year,
+    term: term,
+    name: {
+      first: first,
+      last: last,
+    },
+    scores: [],
+  };
+  const scoreObj = {};
+  const so = buildSO(obj.number.number);
+  scoreObj[so] = obj.averageScore;
+  newObj.scores.push(scoreObj);
+
+  return newObj;
+}
+
+function formatForTerm(obj) {
+  return {
+    year: obj.year,
+    term: obj.term,
+    avgScores: [...obj.scores],
+  };
+}
+
+function formatForTermAndInstructor(obj) {
+  const { year, term } = obj._id;
+  const newObj = { year: year, term: term, scores: [] };
+  const scoreObj = {};
+  const so = buildSO(obj.number.number);
+  scoreObj[so] = round(obj.averageScore);
+  newObj.scores.push(scoreObj);
+
+  return newObj;
+}
+
 /*
  Query is returning separate instructor objects for each SO, with the same average score.
  This massages the data by removing the duplicates and returns data in below format:
@@ -124,9 +210,8 @@ export function formatScoresByLevel(data) {
       const formattedLevel = formatForLevels(current);
 
       // First item added to array, format item and return array with single item
-      if (!newData) {
-        return [formattedLevel];
-      }
+      if (!newData) return [formattedLevel];
+
       const found = newData.findIndex(
         (item) => item.level === formattedLevel.level
       );
@@ -150,5 +235,147 @@ export function formatScoresByLevel(data) {
       // Zero index array of scores to meet recharts data format needs
       const temp = { level: level.level };
       return Object.assign(temp, ...level.scores);
+    });
+}
+
+/*
+  Query is returning objects with some unnecessary nesting.
+  In addition, since this is populating the SO Scores by Term graph and dropdowns on the dashboard,
+  we have to return an array of all the instructor names.
+  This massages the data by:
+  - averaging all SO average scores together
+  - providing an array of instructor names to populate dropdowns
+
+  We return one object for each term, with the SO scores zero-indexed for recharts as well:
+  {
+    term: "2020 Spring",
+    SO1: 3.2,
+    SO2: 2.5,
+    etc ...
+  }
+
+  and overall returned data shaped as:
+  {
+    instructors: [
+      "Joe Smith",
+      etc ...
+    ],
+    {
+      term: "2020 Spring",
+      SO1: 3.2,
+      SO2: 2.5,
+      etc ...
+    },
+    {
+      etc ...
+    }
+  }
+*/
+export function formatAllScoresByTerm(data) {
+  // Format into array of clean instructor objects with array of SO scores
+  const gatherSOData = data.reduce((newData, current) => {
+    const formatted = formatInstructorForTerm(current);
+    // First item added to array, format item and return array with single item
+    if (!newData) return [formatted];
+
+    const found = newData.findIndex((term) => {
+      return (
+        term.year === formatted.year &&
+        term.term === formatted.term &&
+        term.name.first === formatted.name.first &&
+        term.name.last === formatted.name.last
+      );
+    });
+
+    // Term data already exists, add SO score to its array and return existing array
+    if (found !== -1) {
+      const newScores = [...newData[found].scores, ...formatted.scores];
+      newScores.sort(sortSO);
+
+      newData[found].scores = newScores;
+      return newData;
+    }
+
+    // First time term is added, format, push to existing array and return that array
+    newData.push(formatted);
+    return newData;
+  }, []);
+
+  const instructorNames = distinctArray(
+    gatherSOData.map((instr) => instr.name)
+  );
+
+  // Strip instructor names, create object for each term and average for each SO in the term
+  const formattedToTerms = gatherSOData.reduce((newData, current) => {
+    const formatted = formatForTerm(current);
+
+    // First item
+    if (!newData) return [formatted];
+
+    const found = newData.findIndex(
+      (term) => term.year === formatted.year && term.term === formatted.term
+    );
+
+    // Term exists in array
+    if (found !== -1) {
+      const allScores = [...newData[found].avgScores, ...formatted.avgScores];
+      newData[found].avgScores = allScores;
+      return newData;
+    }
+
+    // First time term has been added, format, push to existing array and return that array
+    newData.push(formatted);
+    return newData;
+  }, []);
+
+  const averageSOsForTerms = formattedToTerms
+    .map((term) => {
+      const averaged = averageSOs(term.avgScores);
+      return {
+        ...term,
+        avgScores: averaged,
+      };
+    })
+    .map((term) => {
+      // Zero index array of scores to meet recharts data format needs and capitalize term
+      const temp = { year: term.year, term: capitalize(term.term) };
+      return Object.assign(temp, ...term.avgScores);
+    });
+
+  return {
+    instructors: instructorNames,
+    graphData: averageSOsForTerms,
+  };
+}
+
+export function formatInstructorScoresByTerm(data) {
+  return data
+    .reduce((newData, current) => {
+      const formatted = formatForTermAndInstructor(current);
+
+      // First item added to array, format item and return array with single item
+      if (!newData) return [formatted];
+
+      const found = newData.findIndex((term) => {
+        return term.year === formatted.year && term.term === formatted.term;
+      });
+
+      // Term exists in array, add current SO score to term's array and return it
+      if (found !== -1) {
+        const newScores = [...newData[found].scores, ...formatted.scores];
+        newScores.sort(sortSO);
+
+        newData[found].scores = newScores;
+        return newData;
+      }
+
+      // Term does not exist in array, push current to array and return it
+      newData.push(formatted);
+      return newData;
+    }, [])
+    .map((term) => {
+      // Zero index array of scores to meet recharts data format needs and capitalize term
+      const temp = { year: term.year, term: capitalize(term.term) };
+      return Object.assign(temp, ...term.scores);
     });
 }
