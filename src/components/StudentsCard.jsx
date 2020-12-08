@@ -1,6 +1,6 @@
 import { Button, Card, Col, Dropdown, ListGroup, Row } from "react-bootstrap";
 import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 import EmptyItem from "components/EmptyItem.jsx";
 import { useState } from "react";
 import StudentFormModal from "components/StudentFormModal.jsx";

@@ -28,3 +28,10 @@ export async function fetchWithInstructor(
   const response = await fetch(url);
   return response.json();
 }
+
+export async function fetchWithCourseId(baseURL, courseId) {
+  const url = `${baseURL}?id=${courseId}`;
+
+  const response = await fetch(url);
+  return response.json();
+}

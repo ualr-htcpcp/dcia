@@ -27,6 +27,12 @@ export const scoresByLevelConfig = {
   yAxisLabel: "Score",
   yAxisDomain: [0, 4],
 };
+
+export const soCountsConfig = {
+  xAxisKey: "score",
+  xAxisLabel: "Score",
+  yAxisLabel: "Count",
+};
 export const dataKeysForSOs = [
   { key: "SO1", color: "#f50b07" },
   { key: "SO2", color: "#f55a07" },

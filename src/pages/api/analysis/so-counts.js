@@ -11,16 +11,16 @@ handler.use(authenticate);
 
 handler.get(async (req, res) => {
   try {
-    const { course } = req.query;
+    const { id } = req.query;
 
-    if (!course) throw new Error("No course instance param provided");
+    if (!id) throw new Error("No course id param provided");
 
-    const courseInstance = await CourseInstance.findOne({ _id: course })
+    const courseInstance = await CourseInstance.findOne({ _id: id })
       .select("_id")
       .lean();
 
     if (!courseInstance) {
-      throw new Error(`No course instance associated with id: ${course}`);
+      throw new Error(`No course instance associated with id: ${id}`);
     }
     const results = await CourseInstance.aggregate(
       ScoreCountsByCourseInstance(courseInstance._id)

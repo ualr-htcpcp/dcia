@@ -1,5 +1,7 @@
 import { capitalize } from "./string";
 
+const ALL_SOS = ["SO1", "SO2", "SO3", "SO4", "SO5", "SO6"];
+
 // Takes array of duplicate SO scores and returns array of averages for each SO
 function averageSOs(arr) {
   return arr.reduce((newData, current) => {
@@ -126,7 +128,7 @@ function formatForTermAndInstructor(obj) {
 
 function formatForSOCount(obj) {
   const { score, studentOutcome } = obj._id;
-  const scoreObj = {};
+  const scoreObj = { score: score };
   scoreObj[score] = obj.count;
 
   const newObj = {
@@ -261,8 +263,9 @@ export function formatScoresByLevel(data) {
       return newData;
     }, [])
     .map((level) => {
-      // Zero index array of scores to meet recharts data format needs
       const temp = { level: level.level };
+
+      // Zero index array of scores to meet recharts data format needs
       return Object.assign(temp, ...level.scores);
     });
 }
@@ -410,40 +413,33 @@ export function formatInstructorScoresByTerm(data) {
 
 /*
   Query is returning objects with unnecessary nesting.
-  This massages the data into the format below, including zero-indexing the scores for recharts
+  This massages the data into the format below for re-charts
   {
     outcome: "SO1",
-    0: 2,
-    1: 13,
-    2: 9,
-    3: 2,
-    4: 1
+    scores: [
+      {score: 0, 0: 1},
+      {score: 1, 1: 10}
+    ]
   }
 */
 export function formatSOCounts(data) {
-  return data
-    .reduce((newData, current) => {
-      const formatted = formatForSOCount(current);
+  return data.reduce((newData, current) => {
+    const formatted = formatForSOCount(current);
 
-      if (!newData) return [formatted];
+    if (!newData) return [formatted];
 
-      const found = newData.findIndex((so) => so.outcome === formatted.outcome);
+    const found = newData.findIndex((so) => so.outcome === formatted.outcome);
 
-      if (found !== -1) {
-        const newScores = [...newData[found].scores, ...formatted.scores];
-        newScores.sort((a, b) => Object.keys(a)[0] - Object.keys(b)[0]);
-        newData[found].scores = newScores;
-        return newData;
-      }
-
-      newData.push(formatted);
+    if (found !== -1) {
+      const newScores = [...newData[found].scores, ...formatted.scores];
+      newScores.sort((a, b) => Object.keys(a)[0] - Object.keys(b)[0]);
+      newData[found].scores = newScores;
       return newData;
-    }, [])
-    .map((outcome) => {
-      // Zero index array of scores to meet recharts data format needs
-      const temp = { outcome: outcome.outcome };
-      return Object.assign(temp, ...outcome.scores);
-    });
+    }
+
+    newData.push(formatted);
+    return newData;
+  }, []);
 }
 
 /*
