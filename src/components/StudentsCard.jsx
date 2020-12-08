@@ -2,28 +2,42 @@ import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import EmptyItem from "components/EmptyItem.jsx";
+import { useState } from "react";
+import StudentFormModal from "components/StudentFormModal.jsx";
 
-export default function StudentsCard({ courseInstanceId }) {
+export default function StudentsCard({ courseInstance }) {
+  const [version, setVersion] = useState(0);
+  const [showAddStudent, setShowAddStudent] = useState(false);
+
   return (
     <Card>
       <Card.Header className="bg-white">
         <Row className="align-items-center flex-column flex-md-row">
           <Col>Students</Col>
           <Col className="d-flex flex-grow-0" style={{ whiteSpace: "nowrap" }}>
-            <Button size="sm">Add Student</Button>
+            <Button size="sm" onClick={() => setShowAddStudent(true)}>
+              Add Student
+            </Button>
+
+            <StudentFormModal
+              courseInstance={courseInstance}
+              show={showAddStudent}
+              onHide={() => setShowAddStudent(false)}
+              studentsChanged={() => setVersion(version + 1)}
+            />
           </Col>
         </Row>
       </Card.Header>
       <ListGroup variant="flush">
-        <StudentListItems courseInstanceId={courseInstanceId} />
+        <StudentListItems key={version} courseInstance={courseInstance} />
       </ListGroup>
     </Card>
   );
 }
 
-function StudentListItems({ courseInstanceId }) {
+function StudentListItems({ courseInstance }) {
   const { data: students, error } = useSWR(
-    `/api/students?courseInstance=${courseInstanceId}`,
+    `/api/students?courseInstance=${courseInstance._id}`,
     fetcher
   );
 

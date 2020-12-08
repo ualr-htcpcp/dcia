@@ -1,6 +1,6 @@
 import middleware from "middleware";
 import CourseInstance from "models/CourseInstance";
-import "models/Student";
+import Student from "models/Student";
 import nextConnect from "next-connect";
 import { authenticate, forbiddenUnlessAdmin } from "utils/auth";
 
@@ -30,15 +30,26 @@ handler.get(async (req, res) => {
 handler.post(async (req, res) => {
   await forbiddenUnlessAdmin(req, res);
   const {
-    body: { course, semester, instructor },
+    body: {
+      courseInstance: courseInstanceId,
+      name: { first, last },
+    },
   } = req;
 
   try {
-    const courseInstance = await CourseInstance.create({
-      course,
-      semester,
-      instructor,
+    const query = { name: { first: first.trim(), last: last.trim() } };
+    let student = await Student.findOne(query).collation({
+      locale: "en",
+      strength: 2,
     });
+    if (!student) {
+      student = await Student.create(query);
+    }
+    const courseInstance = await CourseInstance.update(
+      { _id: courseInstanceId },
+      { $addToSet: { students: [student._id] } },
+      { new: true }
+    );
     res.json(courseInstance);
   } catch (error) {
     res.status(400).json({ error: true });

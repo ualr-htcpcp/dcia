@@ -14,9 +14,8 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { useProtectPage } from "utils/auth";
 import { capitalize } from "utils/string";
 
-export default function CoursePage({
-  courseInstance: { _id, course, semester },
-}) {
+export default function CoursePage({ courseInstance }) {
+  const { _id, course, semester } = courseInstance;
   const session = useProtectPage();
   if (!session) return null;
 
@@ -64,7 +63,7 @@ export default function CoursePage({
 
         <Row>
           <Col lg={6}>
-            <StudentsCard courseInstanceId={_id} />
+            <StudentsCard courseInstance={courseInstance} />
           </Col>
         </Row>
       </AppLayout>
