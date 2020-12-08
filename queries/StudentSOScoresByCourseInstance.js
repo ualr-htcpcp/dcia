@@ -1,10 +1,10 @@
-// Returns all students overall scores for all SOs combined by specified semester
+// Returns all students overall scores for all SOs combined by specified course instance
 
-export function StudentSOScoresBySemester(semester) {
+export function StudentSOScoresByCourseInstance(courseInstance) {
   return [
     {
       $match: {
-        semester: semester,
+        courseInstance: courseInstance,
       },
     },
     {
