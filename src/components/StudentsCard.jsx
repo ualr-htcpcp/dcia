@@ -5,9 +5,12 @@ import EmptyItem from "components/EmptyItem.jsx";
 import { useState } from "react";
 import StudentFormModal from "components/StudentFormModal.jsx";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { getPillStyle } from "utils/analysis";
 
 const studentsPath = (courseInstance) =>
   `/api/course-instances/${courseInstance._id}/students`;
+const studentsDataPath = (courseInstance) =>
+  `/api/analysis/scores_by/student?course=${courseInstance._id}`;
 
 export default function StudentsCard({ courseInstance }) {
   const [version, setVersion] = useState(0);
@@ -44,9 +47,24 @@ function StudentListItems({ courseInstance }) {
     studentsPath(courseInstance),
     fetcher
   );
+  const { data: studentsData, error: studentsDataError } = useSWR(
+    studentsDataPath(courseInstance),
+    fetcher
+  );
 
-  if (error) return <EmptyItem message="Failed to load." />;
-  if (!students) return <EmptyItem message={<em>Loading...</em>} />;
+  const getScore = (allScores, student) => {
+    const { first, last } = student.name;
+    const found = allScores.find((score) => score.name === `${first} ${last}`);
+
+    if (!found) return null;
+
+    return Object.values(found)[1];
+  };
+
+  if (error || studentsDataError)
+    return <EmptyItem message="Failed to load." />;
+  if (!students || !studentsData)
+    return <EmptyItem message={<em>Loading...</em>} />;
   if (students.length === 0) {
     return <EmptyItem message="No students added." />;
   }
@@ -59,7 +77,9 @@ function StudentListItems({ courseInstance }) {
       <span className="flex-grow-1">
         {student.name.first} {student.name.last}
       </span>
-      <span className="badge badge-secondary badge-pill">1.3</span>
+      <span className={getPillStyle(getScore(studentsData, student))}>
+        {getScore(studentsData, student)}
+      </span>
       <StudentActions courseInstance={courseInstance} student={student} />
     </ListGroup.Item>
   ));
@@ -68,7 +88,10 @@ function StudentListItems({ courseInstance }) {
 function StudentActions({ courseInstance, student }) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const studentsChanged = () => mutate(studentsPath(courseInstance));
+  const studentsChanged = () => {
+    mutate(studentsPath(courseInstance));
+    mutate(studentsDataPath(courseInstance));
+  };
   const dropStudentFromCourseInstance = async () => {
     await fetch(`${studentsPath(courseInstance)}/${student._id}`, {
       method: "delete",
