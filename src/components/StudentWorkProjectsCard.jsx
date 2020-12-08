@@ -1,6 +1,5 @@
 import EmptyRow from "components/EmptyRow.jsx";
 import StudentWorkProjectFormModal from "components/StudentWorkProjectFormModal.jsx";
-import faker from "faker";
 import React, { useState } from "react";
 import { Button, Card, Col, Dropdown, Row, Table } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -9,6 +8,8 @@ import useSWR, { mutate } from "swr";
 const tableSpacingStyle = { paddingLeft: "1.25rem", paddingRight: "1.25rem" };
 const swpsPath = (courseInstance) =>
   `/api/course-instances/${courseInstance._id}/swps`;
+const swpsDataPath = (courseInstance) =>
+  `/api/analysis/swp-scores?course=${courseInstance._id}`;
 
 export default function StudentWorkProjectsCard({
   className,
@@ -74,7 +75,17 @@ function StudentWorkProjects({ courseInstance, studentOutcomes }) {
   const { data: swps, error } = useSWR(
     `/api/course-instances/${courseInstance._id}/swps`
   );
-  if (error) return <EmptyRow message="Failed to load." />;
+  const { data: swpScores, error: swpScoresError } = useSWR(
+    `/api/analysis/swp-scores?course=${courseInstance._id}`
+  );
+
+  const getSOScores = (scoresData, swp) => {
+    const found = scoresData.find((workProject) => workProject.swp === swp);
+    if (!found) return null;
+
+    return found.scores;
+  };
+  if (error || swpScoresError) return <EmptyRow message="Failed to load." />;
   if (!swps) return <EmptyRow message={<em>Loading...</em>} />;
   if (swps.length === 0) {
     return <EmptyRow message="No student work projects added." />;
@@ -86,19 +97,28 @@ function StudentWorkProjects({ courseInstance, studentOutcomes }) {
       swp={swp}
       courseInstance={courseInstance}
       studentOutcomes={studentOutcomes}
+      studentOutcomeScores={swpScores ? getSOScores(swpScores, swp.name) : null}
     />
   ));
 }
 
-function StudentWorkProjectRow({ swp, courseInstance, studentOutcomes }) {
-  const randomFloat = () => faker.random.float({ min: 1, max: 4 }).toFixed(1);
-
+function StudentWorkProjectRow({
+  swp,
+  courseInstance,
+  studentOutcomes,
+  studentOutcomeScores,
+}) {
+  const getScore = (allScores, so) => {
+    return Object.values(
+      allScores.find((score) => Object.keys(score)[0][2] === so.toString())
+    )[0];
+  };
   return (
     <tr>
       <td style={tableSpacingStyle}>{swp.name}</td>
-      {studentOutcomes.map(({ _id }) => (
+      {studentOutcomes.map(({ _id, number }) => (
         <td key={_id} className="pl-5 text-right">
-          {swp.studentOutcomes.includes(_id) ? randomFloat() : "–"}
+          {studentOutcomeScores ? getScore(studentOutcomeScores, number) : "–"}
         </td>
       ))}
       <td className="pl-5 pb-0 d-flex" style={tableSpacingStyle}>
@@ -122,7 +142,10 @@ function StudentWorkProjectRow({ swp, courseInstance, studentOutcomes }) {
 function StudentWorkProjectActions({ courseInstance, swp, studentOutcomes }) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const swpsChanged = () => mutate(swpsPath(courseInstance));
+  const swpsChanged = () => {
+    mutate(swpsPath(courseInstance));
+    mutate(swpsDataPath(courseInstance));
+  };
   const deleteSwp = async () => {
     await fetch(`${swpsPath(courseInstance)}/${swp._id}`, {
       method: "delete",

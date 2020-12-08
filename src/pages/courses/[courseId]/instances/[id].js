@@ -1,6 +1,5 @@
 import AppLayout from "components/AppLayout.jsx";
-import ScoreDistributions from "components/graphs/ScoreDistributions";
-import ScoreDistributionChart from "components/ScoreDistributionChart.jsx";
+import ScoreDistributions from "components/graphs/ScoreDistributions.jsx";
 import StudentsCard from "components/StudentsCard.jsx";
 import StudentWorkProjectsCard from "components/StudentWorkProjectsCard.jsx";
 import "models/Course";

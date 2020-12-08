@@ -145,7 +145,7 @@ function formatForSWP(obj) {
   const sos = obj.studentOutcomeNumber.map((so) => {
     const newSo = buildSO(so);
     const soScore = {};
-    soScore[newSo] = obj.averageScore[0];
+    soScore[newSo] = round(obj.averageScore[0]);
 
     return soScore;
   });
