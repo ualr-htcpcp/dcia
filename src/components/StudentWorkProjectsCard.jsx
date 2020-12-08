@@ -1,11 +1,14 @@
+import EmptyRow from "components/EmptyRow.jsx";
+import faker from "faker";
 import React from "react";
 import { Button, Card, Col, Row, Table } from "react-bootstrap";
-import faker from "faker";
+import useSWR from "swr";
 
 const tableSpacingStyle = { paddingLeft: "1.25rem", paddingRight: "1.25rem" };
 
 export default function StudentWorkProjectsCard({
   className,
+  courseInstance,
   studentOutcomes,
 }) {
   return (
@@ -39,21 +42,41 @@ export default function StudentWorkProjectsCard({
           </tr>
         </thead>
         <tbody>
-          <StudentWorkProjectRow studentOutcomes={studentOutcomes} />
-          <StudentWorkProjectRow studentOutcomes={studentOutcomes} />
-          <StudentWorkProjectRow studentOutcomes={studentOutcomes} />
+          <StudentWorkProjects
+            courseInstance={courseInstance}
+            studentOutcomes={studentOutcomes}
+          />
         </tbody>
       </Table>
     </Card>
   );
 }
 
-function StudentWorkProjectRow({ studentOutcomes }) {
+function StudentWorkProjects({ courseInstance, studentOutcomes }) {
+  const { data: swps, error } = useSWR(
+    `/api/course-instances/${courseInstance._id}/swps`
+  );
+  if (error) return <EmptyRow message="Failed to load." />;
+  if (!swps) return <EmptyRow message={<em>Loading...</em>} />;
+  if (swps.length === 0) {
+    return <EmptyRow message="No student work projects added." />;
+  }
+
+  return swps.map((swp) => (
+    <StudentWorkProjectRow
+      key={swp._id}
+      swp={swp}
+      studentOutcomes={studentOutcomes}
+    />
+  ));
+}
+
+function StudentWorkProjectRow({ swp, studentOutcomes }) {
   const randomFloat = () => faker.random.float({ min: 1, max: 4 }).toFixed(1);
 
   return (
     <tr>
-      <td style={tableSpacingStyle}>{faker.lorem.sentence(3)}</td>
+      <td style={tableSpacingStyle}>{swp.name}</td>
       {studentOutcomes.map(({ number }) => (
         <td key={number} className="pl-5 text-right">
           {randomFloat()}

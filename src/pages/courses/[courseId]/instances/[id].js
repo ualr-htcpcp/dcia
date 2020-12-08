@@ -15,7 +15,7 @@ import { useProtectPage } from "utils/auth";
 import { capitalize } from "utils/string";
 
 export default function CoursePage({ courseInstance }) {
-  const { _id, course, semester } = courseInstance;
+  const { course, semester } = courseInstance;
   const session = useProtectPage();
   if (!session) return null;
 
@@ -57,7 +57,7 @@ export default function CoursePage({ courseInstance }) {
 
         <StudentWorkProjectsCard
           className="mb-3"
-          courseInstanceId={_id}
+          courseInstance={courseInstance}
           studentOutcomes={course.studentOutcomes}
         />
 
