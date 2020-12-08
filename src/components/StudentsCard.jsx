@@ -1,17 +1,19 @@
-import { Button, Card, Col, Dropdown, ListGroup, Row } from "react-bootstrap";
-import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
 import EmptyItem from "components/EmptyItem.jsx";
-import { useState } from "react";
 import StudentFormModal from "components/StudentFormModal.jsx";
+import { useSession } from "next-auth/client";
+import { useState } from "react";
+import { Button, Card, Col, Dropdown, ListGroup, Row } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import useSWR, { mutate } from "swr";
+import { isAdmin } from "utils/auth";
+import fetcher from "utils/fetcher";
 
 const studentsPath = (courseInstance) =>
   `/api/course-instances/${courseInstance._id}/students`;
 
 export default function StudentsCard({ courseInstance }) {
+  const [session] = useSession();
   const [version, setVersion] = useState(0);
-  const [showAddStudent, setShowAddStudent] = useState(false);
 
   return (
     <Card>
@@ -19,16 +21,12 @@ export default function StudentsCard({ courseInstance }) {
         <Row className="align-items-center flex-column flex-md-row">
           <Col>Students</Col>
           <Col className="d-flex flex-grow-0" style={{ whiteSpace: "nowrap" }}>
-            <Button size="sm" onClick={() => setShowAddStudent(true)}>
-              Add Student
-            </Button>
-
-            <StudentFormModal
-              courseInstance={courseInstance}
-              show={showAddStudent}
-              onHide={() => setShowAddStudent(false)}
-              studentsChanged={() => setVersion(version + 1)}
-            />
+            {isAdmin(session) && (
+              <AddStudentButton
+                courseInstance={courseInstance}
+                studentsChanged={() => setVersion(version + 1)}
+              />
+            )}
           </Col>
         </Row>
       </Card.Header>
@@ -39,7 +37,27 @@ export default function StudentsCard({ courseInstance }) {
   );
 }
 
+function AddStudentButton({ courseInstance, studentsChanged }) {
+  const [showAddStudent, setShowAddStudent] = useState(false);
+
+  return (
+    <>
+      <Button size="sm" onClick={() => setShowAddStudent(true)}>
+        Add Student
+      </Button>
+
+      <StudentFormModal
+        courseInstance={courseInstance}
+        show={showAddStudent}
+        onHide={() => setShowAddStudent(false)}
+        studentsChanged={studentsChanged}
+      />
+    </>
+  );
+}
+
 function StudentListItems({ courseInstance }) {
+  const [session] = useSession();
   const { data: students, error } = useSWR(
     studentsPath(courseInstance),
     fetcher
@@ -60,7 +78,9 @@ function StudentListItems({ courseInstance }) {
         {student.name.first} {student.name.last}
       </span>
       <span className="badge badge-secondary badge-pill">1.3</span>
-      <StudentActions courseInstance={courseInstance} student={student} />
+      {isAdmin(session) && (
+        <StudentActions courseInstance={courseInstance} student={student} />
+      )}
     </ListGroup.Item>
   ));
 }
