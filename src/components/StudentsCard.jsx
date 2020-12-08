@@ -47,6 +47,9 @@ function StudentListItems({ courseInstance }) {
 
   if (error) return <EmptyItem message="Failed to load." />;
   if (!students) return <EmptyItem message={<em>Loading...</em>} />;
+  if (students.length === 0) {
+    return <EmptyItem message="No students added." />;
+  }
 
   return students.map((student) => (
     <ListGroup.Item
