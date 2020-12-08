@@ -12,147 +12,435 @@ const data = async () => {
 
   return [
     {
-      name: "Programming I Assignment 1",
+      name: "Programming I Assignment 1 F19",
       studentOutcomes: [so1, so2],
     },
     {
-      name: "Programming I Assignment 2",
+      name: "Programming I Assignment 2 F19",
       studentOutcomes: [so1, so2],
     },
     {
-      name: "Programming I Quiz 1",
+      name: "Programming I Quiz 1 F19",
       studentOutcomes: [so1, so2],
     },
     {
-      name: "Programming I Assignment 3",
+      name: "Programming I Assignment 3 F19",
       studentOutcomes: [so1, so2],
     },
     {
-      name: "Capstone Project",
+      name: "Capstone Project F19",
       studentOutcomes: [so5, so6],
     },
     {
-      name: "Request For Proposal",
+      name: "Request For Proposal F19",
       studentOutcomes: [so5, so6],
     },
     {
-      name: "Skills Survey",
+      name: "Skills Survey F19",
       studentOutcomes: [so5, so6],
     },
     {
-      name: "First Year Experience for Computing Majors Assignment 1",
+      name: "First Year Experience for Computing Majors Assignment 1 F19",
       studentOutcomes: [so1, so3],
     },
     {
-      name: "First Year Experience for Computing Majors Assignment 2",
+      name: "First Year Experience for Computing Majors Assignment 2 F19",
       studentOutcomes: [so1, so3],
     },
     {
-      name: "First Year Experience for Computing Majors Quiz 1",
+      name: "First Year Experience for Computing Majors Quiz 1 F19",
       studentOutcomes: [so1, so3],
     },
     {
-      name: "First Year Experience for Computing Majors Quiz 2",
+      name: "First Year Experience for Computing Majors Quiz 2 F19",
       studentOutcomes: [so1, so3],
     },
     {
-      name: "First Year Experience for Computing Majors Assignment 3",
+      name: "First Year Experience for Computing Majors Assignment 3 F19",
       studentOutcomes: [so1, so3],
     },
     {
-      name: "Algorithms Quiz 1",
+      name: "Algorithms Quiz 1 F19",
       studentOutcomes: [so1, so2],
     },
     {
-      name: "Algorithms Quiz 2",
+      name: "Algorithms Quiz 2 F19",
       studentOutcomes: [so1, so2],
     },
     {
-      name: "Algorithms Quiz 3",
+      name: "Algorithms Quiz 3 F19",
       studentOutcomes: [so1, so2],
     },
     {
-      name: "Algorithms Quiz 4",
+      name: "Algorithms Quiz 4 F19",
       studentOutcomes: [so1, so2],
     },
     {
-      name: "Computer Organization Exercise 1",
+      name: "Computer Organization Exercise 1 F19",
       studentOutcomes: [so1, so4],
     },
     {
-      name: "Computer Organization Exercise 2",
+      name: "Computer Organization Exercise 2 F19",
       studentOutcomes: [so1, so4],
     },
     {
-      name: "Computer Organization Exercise 3",
+      name: "Computer Organization Exercise 3 F19",
       studentOutcomes: [so1, so4],
     },
     {
-      name: "Computer Organization Exercise 4",
+      name: "Computer Organization Exercise 4 F19",
       studentOutcomes: [so1, so4],
     },
     {
-      name: "Computer Organization Final",
+      name: "Computer Organization Final F19",
       studentOutcomes: [so1, so4],
     },
     {
-      name: "Operating Systems Assignment 1",
+      name: "Operating Systems Assignment 1 F19",
       studentOutcomes: [so3, so4],
     },
     {
-      name: "Operating Systems Assignment 2",
+      name: "Operating Systems Assignment 2 F19",
       studentOutcomes: [so3, so4],
     },
     {
-      name: "Operating Systems Assignment 3",
+      name: "Operating Systems Assignment 3 F19",
       studentOutcomes: [so3, so4],
     },
     {
-      name: "Operating Systems Quiz 1",
+      name: "Operating Systems Quiz 1 F19",
       studentOutcomes: [so3, so4],
     },
     {
-      name: "Operating Systems Assignment 4",
+      name: "Operating Systems Assignment 4 F19",
       studentOutcomes: [so3, so4],
     },
     {
-      name: "Programming Languages Assignment 1",
+      name: "Programming Languages Assignment 1 F19",
       studentOutcomes: [so4, so6],
     },
     {
-      name: "Programming Languages Assignment 2",
+      name: "Programming Languages Assignment 2 F19",
       studentOutcomes: [so4, so6],
     },
     {
-      name: "Programming Languages Assignment 3",
+      name: "Programming Languages Assignment 3 F19",
       studentOutcomes: [so4, so6],
     },
     {
-      name: "Programming Languages Assignment 4",
+      name: "Programming Languages Assignment 4 F19",
       studentOutcomes: [so4, so6],
     },
     {
-      name: "Programming Languages Project",
+      name: "Programming Languages Project F19",
       studentOutcomes: [so4, so6],
     },
     {
-      name: "Software Engineering Exercise 1",
+      name: "Software Engineering Exercise 1 F19",
       studentOutcomes: [so3, so5],
     },
     {
-      name: "Software Engineering Exercise 2",
+      name: "Software Engineering Exercise 2 F19",
       studentOutcomes: [so3, so5],
     },
     {
-      name: "Software Engineering Quiz 1",
+      name: "Software Engineering Quiz 1 F19",
       studentOutcomes: [so3, so5],
     },
     {
-      name: "Software Engineering Exercise 3",
+      name: "Software Engineering Exercise 3 F19",
       studentOutcomes: [so3, so5],
     },
     {
-      name: "Software Engineering Final",
+      name: "Software Engineering Final F19",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Programming I Assignment 1 Sp20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Programming I Assignment 2 Sp20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Programming I Quiz 1 Sp20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Programming I Assignment 3 Sp20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Capstone Project Sp20",
+      studentOutcomes: [so5, so6],
+    },
+    {
+      name: "Request For Proposal Sp20",
+      studentOutcomes: [so5, so6],
+    },
+    {
+      name: "Skills Survey Sp20",
+      studentOutcomes: [so5, so6],
+    },
+    {
+      name: "First Year Experience for Computing Majors Assignment 1 Sp20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "First Year Experience for Computing Majors Assignment 2 Sp20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "First Year Experience for Computing Majors Quiz 1 Sp20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "First Year Experience for Computing Majors Quiz 2 Sp20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "First Year Experience for Computing Majors Assignment 3 Sp20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "Algorithms Quiz 1 Sp20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Algorithms Quiz 2 Sp20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Algorithms Quiz 3 Sp20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Algorithms Quiz 4 Sp20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Computer Organization Exercise 1 Sp20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Computer Organization Exercise 2 Sp20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Computer Organization Exercise 3 Sp20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Computer Organization Exercise 4 Sp20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Computer Organization Final Sp20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Operating Systems Assignment 1 Sp20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Operating Systems Assignment 2 Sp20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Operating Systems Assignment 3 Sp20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Operating Systems Quiz 1 Sp20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Operating Systems Assignment 4 Sp20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Programming Languages Assignment 1 Sp20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Programming Languages Assignment 2 Sp20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Programming Languages Assignment 3 Sp20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Programming Languages Assignment 4 Sp20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Programming Languages Project Sp20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Software Engineering Exercise 1 Sp20",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Software Engineering Exercise 2 Sp20",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Software Engineering Quiz 1 Sp20",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Software Engineering Exercise 3 Sp20",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Software Engineering Final Sp20",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Programming I Assignment 1 F20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Programming I Assignment 2 F20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Programming I Quiz 1 F20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Programming I Assignment 3 F20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Capstone Project F20",
+      studentOutcomes: [so5, so6],
+    },
+    {
+      name: "Request For Proposal F20",
+      studentOutcomes: [so5, so6],
+    },
+    {
+      name: "Skills Survey F20",
+      studentOutcomes: [so5, so6],
+    },
+    {
+      name: "First Year Experience for Computing Majors Assignment 1 F20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "First Year Experience for Computing Majors Assignment 2 F20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "First Year Experience for Computing Majors Quiz 1 F20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "First Year Experience for Computing Majors Quiz 2 F20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "First Year Experience for Computing Majors Assignment 3 F20",
+      studentOutcomes: [so1, so3],
+    },
+    {
+      name: "Algorithms Quiz 1 F20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Algorithms Quiz 2 F20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Algorithms Quiz 3 F20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Algorithms Quiz 4 F20",
+      studentOutcomes: [so1, so2],
+    },
+    {
+      name: "Computer Organization Exercise 1 F20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Computer Organization Exercise 2 F20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Computer Organization Exercise 3 F20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Computer Organization Exercise 4 F20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Computer Organization Final F20",
+      studentOutcomes: [so1, so4],
+    },
+    {
+      name: "Operating Systems Assignment 1 F20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Operating Systems Assignment 2 F20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Operating Systems Assignment 3 F20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Operating Systems Quiz 1 F20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Operating Systems Assignment 4 F20",
+      studentOutcomes: [so3, so4],
+    },
+    {
+      name: "Programming Languages Assignment 1 F20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Programming Languages Assignment 2 F20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Programming Languages Assignment 3 F20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Programming Languages Assignment 4 F20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Programming Languages Project F20",
+      studentOutcomes: [so4, so6],
+    },
+    {
+      name: "Software Engineering Exercise 1 F20",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Software Engineering Exercise 2 F20",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Software Engineering Quiz 1 F20",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Software Engineering Exercise 3 F20",
+      studentOutcomes: [so3, so5],
+    },
+    {
+      name: "Software Engineering Final F20",
       studentOutcomes: [so3, so5],
     },
   ];

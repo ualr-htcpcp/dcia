@@ -30,113 +30,313 @@ const data = async () => {
   const softwareEngineering = await Course.findOne({
     title: "Software Engineering",
   });
-  const programming_I_assignment_1 = await StudentWorkProject.findOne({
-    name: "Programming I Assignment 1",
+  const programming_I_assignment_1_F19 = await StudentWorkProject.findOne({
+    name: "Programming I Assignment 1 F19",
   });
-  const programming_I_assignment_2 = await StudentWorkProject.findOne({
-    name: "Programming I Assignment 2",
+  const programming_I_assignment_2_F19 = await StudentWorkProject.findOne({
+    name: "Programming I Assignment 2 F19",
   });
-  const programming_I_quiz_1 = await StudentWorkProject.findOne({
-    name: "Programming I Quiz 1",
+  const programming_I_quiz_1_F19 = await StudentWorkProject.findOne({
+    name: "Programming I Quiz 1 F19",
   });
-  const programming_I_assignment_3 = await StudentWorkProject.findOne({
-    name: "Programming I Assignment 3",
+  const programming_I_assignment_3_F19 = await StudentWorkProject.findOne({
+    name: "Programming I Assignment 3 F19",
   });
-  const capstone_skill_survey = await StudentWorkProject.findOne({
-    name: "Skills Survey",
+  const capstone_project_F19 = await StudentWorkProject.findOne({
+    name: "Capstone Project F19",
   });
-  const capstone_request_for_proposal = await StudentWorkProject.findOne({
-    name: "Request For Proposal",
+  const capstone_request_for_proposal_F19 = await StudentWorkProject.findOne({
+    name: "Request For Proposal F19",
   });
-  const capstone_project = await StudentWorkProject.findOne({
-    name: "Capstone Project",
+  const capstone_skill_survey_F19 = await StudentWorkProject.findOne({
+    name: "Skills Survey F19",
   });
-  const first_year_experience_assignment_1 = await StudentWorkProject.findOne({
-    name: "First Year Experience for Computing Majors Assignment 1",
+  const first_year_experience_assignment_1_F19 = await StudentWorkProject.findOne(
+    {
+      name: "First Year Experience for Computing Majors Assignment 1 F19",
+    }
+  );
+  const first_year_experience_assignment_2_F19 = await StudentWorkProject.findOne(
+    {
+      name: "First Year Experience for Computing Majors Assignment 2 F19",
+    }
+  );
+  const first_year_experience_quiz_1_F19 = await StudentWorkProject.findOne({
+    name: "First Year Experience for Computing Majors Quiz 1 F19",
   });
-  const first_year_experience_assignment_2 = await StudentWorkProject.findOne({
-    name: "First Year Experience for Computing Majors Assignment 2",
+  const first_year_experience_quiz_2_F19 = await StudentWorkProject.findOne({
+    name: "First Year Experience for Computing Majors Quiz 2 F19",
   });
-  const first_year_experience_quiz_1 = await StudentWorkProject.findOne({
-    name: "First Year Experience for Computing Majors Quiz 1",
+  const first_year_experience_assignment_3_F19 = await StudentWorkProject.findOne(
+    {
+      name: "First Year Experience for Computing Majors Assignment 3 F19",
+    }
+  );
+  const operating_systems_assignment_1_F19 = await StudentWorkProject.findOne({
+    name: "Operating Systems Assignment 1 F19",
   });
-  const first_year_experience_quiz_2 = await StudentWorkProject.findOne({
-    name: "First Year Experience for Computing Majors Quiz 2",
+  const operating_systems_assignment_2_F19 = await StudentWorkProject.findOne({
+    name: "Operating Systems Assignment 2 F19",
   });
-  const first_year_experience_assignment_3 = await StudentWorkProject.findOne({
-    name: "First Year Experience for Computing Majors Assignment 3",
+  const operating_systems_assignment_3_F19 = await StudentWorkProject.findOne({
+    name: "Operating Systems Assignment 3 F19",
   });
-  const algorithms_quiz_1 = await StudentWorkProject.findOne({
-    name: "Algorithms Quiz 1",
+  const operating_systems_quiz_1_F19 = await StudentWorkProject.findOne({
+    name: "Operating Systems Quiz 1 F19",
   });
-  const algorithms_quiz_2 = await StudentWorkProject.findOne({
-    name: "Algorithms Quiz 2",
+  const operating_systems_assignment_4_F19 = await StudentWorkProject.findOne({
+    name: "Operating Systems Assignment 4 F19",
   });
-  const algorithms_quiz_3 = await StudentWorkProject.findOne({
-    name: "Algorithms Quiz 3",
+  const programming_languages_assignment_1_F19 = await StudentWorkProject.findOne(
+    {
+      name: "Programming Languages Assignment 1 F19",
+    }
+  );
+  const programming_languages_assignment_2_F19 = await StudentWorkProject.findOne(
+    {
+      name: "Programming Languages Assignment 2 F19",
+    }
+  );
+  const programming_languages_assignment_3_F19 = await StudentWorkProject.findOne(
+    {
+      name: "Programming Languages Assignment 3 F19",
+    }
+  );
+  const programming_languages_assignment_4_F19 = await StudentWorkProject.findOne(
+    {
+      name: "Programming Languages Assignment 4 F19",
+    }
+  );
+  const programming_languages_project_F19 = await StudentWorkProject.findOne({
+    name: "Programming Languages Project F19",
   });
-  const algorithms_quiz_4 = await StudentWorkProject.findOne({
-    name: "Algorithms Quiz 4",
+  const algorithms_quiz_1_F19 = await StudentWorkProject.findOne({
+    name: "Algorithms Quiz 1 F19",
   });
-  const computer_organization_exercise_1 = await StudentWorkProject.findOne({
-    name: "Computer Organization Exercise 1",
+  const algorithms_quiz_2_F19 = await StudentWorkProject.findOne({
+    name: "Algorithms Quiz 2 F19",
   });
-  const computer_organization_exercise_2 = await StudentWorkProject.findOne({
-    name: "Computer Organization Exercise 2",
+  const algorithms_quiz_3_F19 = await StudentWorkProject.findOne({
+    name: "Algorithms Quiz 3 F19",
   });
-  const computer_organization_exercise_3 = await StudentWorkProject.findOne({
-    name: "Computer Organization Exercise 3",
+  const algorithms_quiz_4_F19 = await StudentWorkProject.findOne({
+    name: "Algorithms Quiz 4 F19",
   });
-  const computer_organization_exercise_4 = await StudentWorkProject.findOne({
-    name: "Computer Organization Exercise 4",
+  const programming_I_assignment_1_Sp20 = await StudentWorkProject.findOne({
+    name: "Programming I Assignment 1 Sp20",
   });
-  const computer_organization_final = await StudentWorkProject.findOne({
-    name: "Computer Organization Final",
+  const programming_I_assignment_2_Sp20 = await StudentWorkProject.findOne({
+    name: "Programming I Assignment 2 Sp20",
   });
-  const operating_systems_assignment_1 = await StudentWorkProject.findOne({
-    name: "Operating Systems Assignment 1",
+  const programming_I_quiz_1_Sp20 = await StudentWorkProject.findOne({
+    name: "Programming I Quiz 1 Sp20",
   });
-  const operating_systems_assignment_2 = await StudentWorkProject.findOne({
-    name: "Operating Systems Assignment 2",
+  const programming_I_assignment_3_Sp20 = await StudentWorkProject.findOne({
+    name: "Programming I Assignment 3 Sp20",
   });
-  const operating_systems_assignment_3 = await StudentWorkProject.findOne({
-    name: "Operating Systems Assignment 3",
+  const capstone_project_Sp20 = await StudentWorkProject.findOne({
+    name: "Capstone Project Sp20",
   });
-  const operating_systems_quiz_1 = await StudentWorkProject.findOne({
-    name: "Operating Systems Quiz 1",
+  const capstone_request_for_proposal_Sp20 = await StudentWorkProject.findOne({
+    name: "Request For Proposal Sp20",
   });
-  const operating_systems_assignment_4 = await StudentWorkProject.findOne({
-    name: "Operating Systems Assignment 4",
+  const capstone_skill_survey_Sp20 = await StudentWorkProject.findOne({
+    name: "Skills Survey Sp20",
   });
-  const programming_languages_assignment_1 = await StudentWorkProject.findOne({
-    name: "Programming Languages Assignment 1",
+  const first_year_experience_assignment_1_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "First Year Experience for Computing Majors Assignment 1 Sp20",
+    }
+  );
+  const first_year_experience_assignment_2_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "First Year Experience for Computing Majors Assignment 2 Sp20",
+    }
+  );
+  const first_year_experience_quiz_1_Sp20 = await StudentWorkProject.findOne({
+    name: "First Year Experience for Computing Majors Quiz 1 Sp20",
   });
-  const programming_languages_assignment_2 = await StudentWorkProject.findOne({
-    name: "Programming Languages Assignment 2",
+  const first_year_experience_quiz_2_Sp20 = await StudentWorkProject.findOne({
+    name: "First Year Experience for Computing Majors Quiz 2 Sp20",
   });
-  const programming_languages_assignment_3 = await StudentWorkProject.findOne({
-    name: "Programming Languages Assignment 3",
+  const first_year_experience_assignment_3_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "First Year Experience for Computing Majors Assignment 3 Sp20",
+    }
+  );
+  const computer_organization_exercise_1_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "Computer Organization Exercise 1 Sp20",
+    }
+  );
+  const computer_organization_exercise_2_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "Computer Organization Exercise 2 Sp20",
+    }
+  );
+  const computer_organization_exercise_3_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "Computer Organization Exercise 3 Sp20",
+    }
+  );
+  const computer_organization_exercise_4_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "Computer Organization Exercise 4 Sp20",
+    }
+  );
+  const computer_organization_final_Sp20 = await StudentWorkProject.findOne({
+    name: "Computer Organization Final Sp20",
   });
-  const programming_languages_assignment_4 = await StudentWorkProject.findOne({
-    name: "Programming Languages Assignment 4",
+  const operating_systems_assignment_1_Sp20 = await StudentWorkProject.findOne({
+    name: "Operating Systems Assignment 1 Sp20",
   });
-  const programming_languages_project = await StudentWorkProject.findOne({
-    name: "Programming Languages Project",
+  const operating_systems_assignment_2_Sp20 = await StudentWorkProject.findOne({
+    name: "Operating Systems Assignment 2 Sp20",
   });
-  const software_engineering_exercise_1 = await StudentWorkProject.findOne({
-    name: "Software Engineering Exercise 1",
+  const operating_systems_assignment_3_Sp20 = await StudentWorkProject.findOne({
+    name: "Operating Systems Assignment 3 Sp20",
   });
-  const software_engineering_exercise_2 = await StudentWorkProject.findOne({
-    name: "Software Engineering Exercise 2",
+  const operating_systems_quiz_1_Sp20 = await StudentWorkProject.findOne({
+    name: "Operating Systems Quiz 1 Sp20",
   });
-  const software_engineering_quiz_1 = await StudentWorkProject.findOne({
-    name: "Software Engineering Quiz 1",
+  const operating_systems_assignment_4_Sp20 = await StudentWorkProject.findOne({
+    name: "Operating Systems Assignment 4 Sp20",
   });
-  const software_engineering_exercise_3 = await StudentWorkProject.findOne({
-    name: "Software Engineering Exercise 3",
+  const software_engineering_exercise_1_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "Software Engineering Exercise 1 Sp20",
+    }
+  );
+  const software_engineering_exercise_2_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "Software Engineering Exercise 2 Sp20",
+    }
+  );
+  const software_engineering_quiz_1_Sp20 = await StudentWorkProject.findOne({
+    name: "Software Engineering Quiz 1 Sp20",
   });
-  const software_engineering_final = await StudentWorkProject.findOne({
-    name: "Software Engineering Final",
+  const software_engineering_exercise_3_Sp20 = await StudentWorkProject.findOne(
+    {
+      name: "Software Engineering Exercise 3 Sp20",
+    }
+  );
+  const software_engineering_final_Sp20 = await StudentWorkProject.findOne({
+    name: "Software Engineering Final Sp20",
+  });
+  const algorithms_quiz_1_Sp20 = await StudentWorkProject.findOne({
+    name: "Algorithms Quiz 1 Sp20",
+  });
+  const algorithms_quiz_2_Sp20 = await StudentWorkProject.findOne({
+    name: "Algorithms Quiz 2 Sp20",
+  });
+  const algorithms_quiz_3_Sp20 = await StudentWorkProject.findOne({
+    name: "Algorithms Quiz 3 Sp20",
+  });
+  const algorithms_quiz_4_Sp20 = await StudentWorkProject.findOne({
+    name: "Algorithms Quiz 4 Sp20",
+  });
+  const programming_I_assignment_1_F20 = await StudentWorkProject.findOne({
+    name: "Programming I Assignment 1 F20",
+  });
+  const programming_I_assignment_2_F20 = await StudentWorkProject.findOne({
+    name: "Programming I Assignment 2 F20",
+  });
+  const programming_I_quiz_1_F20 = await StudentWorkProject.findOne({
+    name: "Programming I Quiz 1 F20",
+  });
+  const programming_I_assignment_3_F20 = await StudentWorkProject.findOne({
+    name: "Programming I Assignment 3 F20",
+  });
+  const capstone_project_F20 = await StudentWorkProject.findOne({
+    name: "Capstone Project F20",
+  });
+  const capstone_request_for_proposal_F20 = await StudentWorkProject.findOne({
+    name: "Request For Proposal F20",
+  });
+  const capstone_skill_survey_F20 = await StudentWorkProject.findOne({
+    name: "Skills Survey F20",
+  });
+  const first_year_experience_assignment_1_F20 = await StudentWorkProject.findOne(
+    {
+      name: "First Year Experience for Computing Majors Assignment 1 F20",
+    }
+  );
+  const first_year_experience_assignment_2_F20 = await StudentWorkProject.findOne(
+    {
+      name: "First Year Experience for Computing Majors Assignment 2 F20",
+    }
+  );
+  const first_year_experience_quiz_1_F20 = await StudentWorkProject.findOne({
+    name: "First Year Experience for Computing Majors Quiz 1 F20",
+  });
+  const first_year_experience_quiz_2_F20 = await StudentWorkProject.findOne({
+    name: "First Year Experience for Computing Majors Quiz 2 F20",
+  });
+  const first_year_experience_assignment_3_F20 = await StudentWorkProject.findOne(
+    {
+      name: "First Year Experience for Computing Majors Assignment 3 F20",
+    }
+  );
+  const computer_organization_exercise_1_F20 = await StudentWorkProject.findOne(
+    {
+      name: "Computer Organization Exercise 1 F20",
+    }
+  );
+  const computer_organization_exercise_2_F20 = await StudentWorkProject.findOne(
+    {
+      name: "Computer Organization Exercise 2 F20",
+    }
+  );
+  const computer_organization_exercise_3_F20 = await StudentWorkProject.findOne(
+    {
+      name: "Computer Organization Exercise 3 F20",
+    }
+  );
+  const computer_organization_exercise_4_F20 = await StudentWorkProject.findOne(
+    {
+      name: "Computer Organization Exercise 4 F20",
+    }
+  );
+  const computer_organization_final_F20 = await StudentWorkProject.findOne({
+    name: "Computer Organization Final F20",
+  });
+  const programming_languages_assignment_1_F20 = await StudentWorkProject.findOne(
+    {
+      name: "Programming Languages Assignment 1 F20",
+    }
+  );
+  const programming_languages_assignment_2_F20 = await StudentWorkProject.findOne(
+    {
+      name: "Programming Languages Assignment 2 F20",
+    }
+  );
+  const programming_languages_assignment_3_F20 = await StudentWorkProject.findOne(
+    {
+      name: "Programming Languages Assignment 3 F20",
+    }
+  );
+  const programming_languages_assignment_4_F20 = await StudentWorkProject.findOne(
+    {
+      name: "Programming Languages Assignment 4 F20",
+    }
+  );
+  const programming_languages_project_F20 = await StudentWorkProject.findOne({
+    name: "Programming Languages Project F20",
+  });
+  const software_engineering_exercise_1_F20 = await StudentWorkProject.findOne({
+    name: "Software Engineering Exercise 1 F20",
+  });
+  const software_engineering_exercise_2_F20 = await StudentWorkProject.findOne({
+    name: "Software Engineering Exercise 2 F20",
+  });
+  const software_engineering_quiz_1_F20 = await StudentWorkProject.findOne({
+    name: "Software Engineering Quiz 1 F20",
+  });
+  const software_engineering_exercise_3_F20 = await StudentWorkProject.findOne({
+    name: "Software Engineering Exercise 3 F20",
+  });
+  const software_engineering_final_F20 = await StudentWorkProject.findOne({
+    name: "Software Engineering Final F20",
   });
 
   return [
@@ -155,10 +355,10 @@ const data = async () => {
       semester: fall2020,
       course: programming1,
       studentWorkProjects: [
-        programming_I_assignment_1,
-        programming_I_assignment_2,
-        programming_I_quiz_1,
-        programming_I_assignment_3,
+        programming_I_assignment_1_F20,
+        programming_I_assignment_2_F20,
+        programming_I_quiz_1_F20,
+        programming_I_assignment_3_F20,
       ],
     },
     {
@@ -176,10 +376,10 @@ const data = async () => {
       semester: spring2020,
       course: programming1,
       studentWorkProjects: [
-        programming_I_assignment_1,
-        programming_I_assignment_2,
-        programming_I_quiz_1,
-        programming_I_assignment_3,
+        programming_I_assignment_1_Sp20,
+        programming_I_assignment_2_Sp20,
+        programming_I_quiz_1_Sp20,
+        programming_I_assignment_3_Sp20,
       ],
     },
     {
@@ -197,10 +397,10 @@ const data = async () => {
       semester: fall2019,
       course: programming1,
       studentWorkProjects: [
-        programming_I_assignment_1,
-        programming_I_assignment_2,
-        programming_I_quiz_1,
-        programming_I_assignment_3,
+        programming_I_assignment_1_F19,
+        programming_I_assignment_2_F19,
+        programming_I_quiz_1_F19,
+        programming_I_assignment_3_F19,
       ],
     },
     {
@@ -218,9 +418,9 @@ const data = async () => {
       semester: fall2020,
       course: capstone,
       studentWorkProjects: [
-        capstone_skill_survey,
-        capstone_request_for_proposal,
-        capstone_project,
+        capstone_skill_survey_F20,
+        capstone_request_for_proposal_F20,
+        capstone_project_F20,
       ],
     },
     {
@@ -238,9 +438,9 @@ const data = async () => {
       semester: spring2020,
       course: capstone,
       studentWorkProjects: [
-        capstone_skill_survey,
-        capstone_request_for_proposal,
-        capstone_project,
+        capstone_skill_survey_Sp20,
+        capstone_request_for_proposal_Sp20,
+        capstone_project_Sp20,
       ],
     },
     {
@@ -258,9 +458,9 @@ const data = async () => {
       semester: fall2019,
       course: capstone,
       studentWorkProjects: [
-        capstone_skill_survey,
-        capstone_request_for_proposal,
-        capstone_project,
+        capstone_skill_survey_F19,
+        capstone_request_for_proposal_F19,
+        capstone_project_F19,
       ],
     },
     {
@@ -278,11 +478,11 @@ const data = async () => {
       semester: fall2020,
       course: firstYear,
       studentWorkProjects: [
-        first_year_experience_assignment_1,
-        first_year_experience_assignment_2,
-        first_year_experience_quiz_1,
-        first_year_experience_quiz_2,
-        first_year_experience_assignment_3,
+        first_year_experience_assignment_1_F20,
+        first_year_experience_assignment_2_F20,
+        first_year_experience_quiz_1_F20,
+        first_year_experience_quiz_2_F20,
+        first_year_experience_assignment_3_F20,
       ],
     },
     {
@@ -300,11 +500,11 @@ const data = async () => {
       semester: spring2020,
       course: firstYear,
       studentWorkProjects: [
-        first_year_experience_assignment_1,
-        first_year_experience_assignment_2,
-        first_year_experience_quiz_1,
-        first_year_experience_quiz_2,
-        first_year_experience_assignment_3,
+        first_year_experience_assignment_1_Sp20,
+        first_year_experience_assignment_2_Sp20,
+        first_year_experience_quiz_1_Sp20,
+        first_year_experience_quiz_2_Sp20,
+        first_year_experience_assignment_3_Sp20,
       ],
     },
     {
@@ -322,11 +522,11 @@ const data = async () => {
       semester: fall2019,
       course: firstYear,
       studentWorkProjects: [
-        first_year_experience_assignment_1,
-        first_year_experience_assignment_2,
-        first_year_experience_quiz_1,
-        first_year_experience_quiz_2,
-        first_year_experience_assignment_3,
+        first_year_experience_assignment_1_F19,
+        first_year_experience_assignment_2_F19,
+        first_year_experience_quiz_1_F19,
+        first_year_experience_quiz_2_F19,
+        first_year_experience_assignment_3_F19,
       ],
     },
     {
@@ -344,11 +544,11 @@ const data = async () => {
       semester: fall2020,
       course: computerOrganization,
       studentWorkProjects: [
-        computer_organization_exercise_1,
-        computer_organization_exercise_2,
-        computer_organization_exercise_3,
-        computer_organization_exercise_4,
-        computer_organization_final,
+        computer_organization_exercise_1_F20,
+        computer_organization_exercise_2_F20,
+        computer_organization_exercise_3_F20,
+        computer_organization_exercise_4_F20,
+        computer_organization_final_F20,
       ],
     },
     {
@@ -366,11 +566,11 @@ const data = async () => {
       semester: spring2020,
       course: computerOrganization,
       studentWorkProjects: [
-        computer_organization_exercise_1,
-        computer_organization_exercise_2,
-        computer_organization_exercise_3,
-        computer_organization_exercise_4,
-        computer_organization_final,
+        computer_organization_exercise_1_Sp20,
+        computer_organization_exercise_2_Sp20,
+        computer_organization_exercise_3_Sp20,
+        computer_organization_exercise_4_Sp20,
+        computer_organization_final_Sp20,
       ],
     },
     {
@@ -388,11 +588,11 @@ const data = async () => {
       semester: spring2020,
       course: operatingSystems,
       studentWorkProjects: [
-        operating_systems_assignment_1,
-        operating_systems_assignment_2,
-        operating_systems_assignment_3,
-        operating_systems_quiz_1,
-        operating_systems_assignment_4,
+        operating_systems_assignment_1_Sp20,
+        operating_systems_assignment_2_Sp20,
+        operating_systems_assignment_3_Sp20,
+        operating_systems_quiz_1_Sp20,
+        operating_systems_assignment_4_Sp20,
       ],
     },
     {
@@ -410,11 +610,11 @@ const data = async () => {
       semester: fall2019,
       course: operatingSystems,
       studentWorkProjects: [
-        operating_systems_assignment_1,
-        operating_systems_assignment_2,
-        operating_systems_assignment_3,
-        operating_systems_quiz_1,
-        operating_systems_assignment_4,
+        operating_systems_assignment_1_F19,
+        operating_systems_assignment_2_F19,
+        operating_systems_assignment_3_F19,
+        operating_systems_quiz_1_F19,
+        operating_systems_assignment_4_F19,
       ],
     },
     {
@@ -432,11 +632,11 @@ const data = async () => {
       semester: fall2020,
       course: programmingLanguages,
       studentWorkProjects: [
-        programming_languages_assignment_1,
-        programming_languages_assignment_2,
-        programming_languages_assignment_3,
-        programming_languages_assignment_4,
-        programming_languages_project,
+        programming_languages_assignment_1_F20,
+        programming_languages_assignment_2_F20,
+        programming_languages_assignment_3_F20,
+        programming_languages_assignment_4_F20,
+        programming_languages_project_F20,
       ],
     },
     {
@@ -454,11 +654,11 @@ const data = async () => {
       semester: fall2019,
       course: programmingLanguages,
       studentWorkProjects: [
-        programming_languages_assignment_1,
-        programming_languages_assignment_2,
-        programming_languages_assignment_3,
-        programming_languages_assignment_4,
-        programming_languages_project,
+        programming_languages_assignment_1_F19,
+        programming_languages_assignment_2_F19,
+        programming_languages_assignment_3_F19,
+        programming_languages_assignment_4_F19,
+        programming_languages_project_F19,
       ],
     },
     {
@@ -476,11 +676,11 @@ const data = async () => {
       semester: fall2020,
       course: softwareEngineering,
       studentWorkProjects: [
-        software_engineering_exercise_1,
-        software_engineering_exercise_2,
-        software_engineering_quiz_1,
-        software_engineering_exercise_3,
-        software_engineering_final,
+        software_engineering_exercise_1_F20,
+        software_engineering_exercise_2_F20,
+        software_engineering_quiz_1_F20,
+        software_engineering_exercise_3_F20,
+        software_engineering_final_F20,
       ],
     },
     {
@@ -498,11 +698,11 @@ const data = async () => {
       semester: spring2020,
       course: softwareEngineering,
       studentWorkProjects: [
-        software_engineering_exercise_1,
-        software_engineering_exercise_2,
-        software_engineering_quiz_1,
-        software_engineering_exercise_3,
-        software_engineering_final,
+        software_engineering_exercise_1_Sp20,
+        software_engineering_exercise_2_Sp20,
+        software_engineering_quiz_1_Sp20,
+        software_engineering_exercise_3_Sp20,
+        software_engineering_final_Sp20,
       ],
     },
     {
@@ -520,10 +720,10 @@ const data = async () => {
       semester: spring2020,
       course: algorithm,
       studentWorkProjects: [
-        algorithms_quiz_1,
-        algorithms_quiz_2,
-        algorithms_quiz_3,
-        algorithms_quiz_4,
+        algorithms_quiz_1_Sp20,
+        algorithms_quiz_2_Sp20,
+        algorithms_quiz_3_Sp20,
+        algorithms_quiz_4_Sp20,
       ],
     },
     {
@@ -541,10 +741,10 @@ const data = async () => {
       semester: fall2019,
       course: algorithm,
       studentWorkProjects: [
-        algorithms_quiz_1,
-        algorithms_quiz_2,
-        algorithms_quiz_3,
-        algorithms_quiz_4,
+        algorithms_quiz_1_F19,
+        algorithms_quiz_2_F19,
+        algorithms_quiz_3_F19,
+        algorithms_quiz_4_F19,
       ],
     },
   ];
