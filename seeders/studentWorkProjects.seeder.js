@@ -41,39 +41,39 @@ const data = async () => {
     },
     {
       name: "First Year Experience for Computing Majors Assignment 1 F19",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Assignment 2 F19",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Quiz 1 F19",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Quiz 2 F19",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Assignment 3 F19",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "Algorithms Quiz 1 F19",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Algorithms Quiz 2 F19",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Algorithms Quiz 3 F19",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Algorithms Quiz 4 F19",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Computer Organization Exercise 1 F19",
@@ -97,63 +97,63 @@ const data = async () => {
     },
     {
       name: "Operating Systems Assignment 1 F19",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Assignment 2 F19",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Assignment 3 F19",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Quiz 1 F19",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Assignment 4 F19",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Programming Languages Assignment 1 F19",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Assignment 2 F19",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Assignment 3 F19",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Assignment 4 F19",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Project F19",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Software Engineering Exercise 1 F19",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Exercise 2 F19",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Quiz 1 F19",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Exercise 3 F19",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Final F19",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Programming I Assignment 1 Sp20",
@@ -185,39 +185,39 @@ const data = async () => {
     },
     {
       name: "First Year Experience for Computing Majors Assignment 1 Sp20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Assignment 2 Sp20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Quiz 1 Sp20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Quiz 2 Sp20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Assignment 3 Sp20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "Algorithms Quiz 1 Sp20",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Algorithms Quiz 2 Sp20",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Algorithms Quiz 3 Sp20",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Algorithms Quiz 4 Sp20",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Computer Organization Exercise 1 Sp20",
@@ -241,63 +241,63 @@ const data = async () => {
     },
     {
       name: "Operating Systems Assignment 1 Sp20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Assignment 2 Sp20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Assignment 3 Sp20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Quiz 1 Sp20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Assignment 4 Sp20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Programming Languages Assignment 1 Sp20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Assignment 2 Sp20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Assignment 3 Sp20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Assignment 4 Sp20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Project Sp20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Software Engineering Exercise 1 Sp20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Exercise 2 Sp20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Quiz 1 Sp20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Exercise 3 Sp20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Final Sp20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Programming I Assignment 1 F20",
@@ -329,39 +329,39 @@ const data = async () => {
     },
     {
       name: "First Year Experience for Computing Majors Assignment 1 F20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Assignment 2 F20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Quiz 1 F20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Quiz 2 F20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "First Year Experience for Computing Majors Assignment 3 F20",
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       name: "Algorithms Quiz 1 F20",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Algorithms Quiz 2 F20",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Algorithms Quiz 3 F20",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Algorithms Quiz 4 F20",
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       name: "Computer Organization Exercise 1 F20",
@@ -385,63 +385,63 @@ const data = async () => {
     },
     {
       name: "Operating Systems Assignment 1 F20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Assignment 2 F20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Assignment 3 F20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Quiz 1 F20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Operating Systems Assignment 4 F20",
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       name: "Programming Languages Assignment 1 F20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Assignment 2 F20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Assignment 3 F20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Assignment 4 F20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Programming Languages Project F20",
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       name: "Software Engineering Exercise 1 F20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Exercise 2 F20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Quiz 1 F20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Exercise 3 F20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
     {
       name: "Software Engineering Final F20",
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
   ];
 };
