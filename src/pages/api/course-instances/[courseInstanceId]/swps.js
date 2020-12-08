@@ -1,4 +1,5 @@
 import middleware from "middleware";
+import Assessment from "models/Assessment";
 import CourseInstance from "models/CourseInstance";
 import "models/StudentWorkProject";
 import StudentWorkProject from "models/StudentWorkProject";
@@ -24,6 +25,14 @@ handler.get(async (req, res) => {
   const swps = courseInstance.studentWorkProjects.sort((a, b) =>
     a.name.localeCompare(b.name)
   );
+
+  const swpsWithAssessments = await Assessment.find({
+    studentWorkProject: courseInstance.studentWorkProjects,
+  }).distinct("studentWorkProject");
+
+  swps.forEach((swp) => {
+    swp.isLocked = swpsWithAssessments.some((swpId) => swpId.equals(swp._id));
+  });
 
   res.json(swps);
 });

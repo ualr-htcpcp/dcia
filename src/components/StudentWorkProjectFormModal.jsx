@@ -123,9 +123,7 @@ export default function StudentWorkProjectFormModal({
 }
 
 function StudentOutcomeCheckbox({ swp, studentOutcome: so, register }) {
-  const defaultChecked = swp?.studentOutcomes.some(
-    (swpSO) => swpSO._id === so._id
-  );
+  const defaultChecked = swp?.studentOutcomes.some((swpId) => swpId === so._id);
 
   return (
     <Form.Check custom type="checkbox" id={`so_${so._id}`} className="mt-2">

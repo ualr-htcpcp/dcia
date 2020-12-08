@@ -1,12 +1,14 @@
 import EmptyRow from "components/EmptyRow.jsx";
-import faker from "faker";
-import React from "react";
-import { useState } from "react";
-import { Button, Card, Col, Row, Table } from "react-bootstrap";
-import useSWR from "swr";
 import StudentWorkProjectFormModal from "components/StudentWorkProjectFormModal.jsx";
+import faker from "faker";
+import React, { useState } from "react";
+import { Button, Card, Col, Dropdown, Row, Table } from "react-bootstrap";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import useSWR, { mutate } from "swr";
 
 const tableSpacingStyle = { paddingLeft: "1.25rem", paddingRight: "1.25rem" };
+const swpsPath = (courseInstance) =>
+  `/api/course-instances/${courseInstance._id}/swps`;
 
 export default function StudentWorkProjectsCard({
   className,
@@ -82,12 +84,13 @@ function StudentWorkProjects({ courseInstance, studentOutcomes }) {
     <StudentWorkProjectRow
       key={swp._id}
       swp={swp}
+      courseInstance={courseInstance}
       studentOutcomes={studentOutcomes}
     />
   ));
 }
 
-function StudentWorkProjectRow({ swp, studentOutcomes }) {
+function StudentWorkProjectRow({ swp, courseInstance, studentOutcomes }) {
   const randomFloat = () => faker.random.float({ min: 1, max: 4 }).toFixed(1);
 
   return (
@@ -98,11 +101,67 @@ function StudentWorkProjectRow({ swp, studentOutcomes }) {
           {swp.studentOutcomes.includes(_id) ? randomFloat() : "–"}
         </td>
       ))}
-      <td className="pl-5 pt-2 pb-0" style={tableSpacingStyle}>
-        <Button size="sm" variant="secondary" style={{ whiteSpace: "nowrap" }}>
+      <td className="pl-5 pb-0 d-flex" style={tableSpacingStyle}>
+        <Button
+          size="sm"
+          variant="secondary"
+          style={{ whiteSpace: "nowrap", lineHeight: 1 }}
+        >
           Record Assessment
         </Button>
+        <StudentWorkProjectActions
+          courseInstance={courseInstance}
+          swp={swp}
+          studentOutcomes={studentOutcomes}
+        />
       </td>
     </tr>
+  );
+}
+
+function StudentWorkProjectActions({ courseInstance, swp, studentOutcomes }) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const swpsChanged = () => mutate(swpsPath(courseInstance));
+  const deleteSwp = async () => {
+    await fetch(`${swpsPath(courseInstance)}/${swp._id}`, {
+      method: "delete",
+    });
+    swpsChanged();
+  };
+
+  return (
+    <>
+      <Dropdown>
+        <Dropdown.Toggle
+          as="a"
+          bsPrefix="bs-none"
+          style={{
+            position: "relative",
+            top: "-0.1rem",
+            margin: "0 -0.25rem 0 0.75rem",
+            cursor: "pointer",
+          }}
+        >
+          <BsThreeDotsVertical className="text-muted" />
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={() => setIsEditing(true)}>Edit</Dropdown.Item>
+          <Dropdown.Item onClick={deleteSwp} disabled={swp.isLocked}>
+            Drop
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
+      <StudentWorkProjectFormModal
+        swp={swp}
+        courseInstance={courseInstance}
+        show={isEditing}
+        onHide={() => setIsEditing(false)}
+        studentOutcomes={studentOutcomes}
+        swpsChanged={swpsChanged}
+      />
+    </>
   );
 }
