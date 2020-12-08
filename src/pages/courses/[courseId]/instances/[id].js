@@ -1,4 +1,5 @@
 import AppLayout from "components/AppLayout.jsx";
+import ScoreDistributions from "components/graphs/ScoreDistributions";
 import ScoreDistributionChart from "components/ScoreDistributionChart.jsx";
 import StudentsCard from "components/StudentsCard.jsx";
 import StudentWorkProjectsCard from "components/StudentWorkProjectsCard.jsx";
@@ -20,7 +21,6 @@ export default function CoursePage({ courseInstance }) {
   if (!session) return null;
 
   const semesterName = `${capitalize(semester.term)} ${semester.year}`;
-
   return (
     <>
       <Head>
@@ -47,13 +47,7 @@ export default function CoursePage({ courseInstance }) {
           </span>
         </h1>
 
-        <Row>
-          {course.studentOutcomes.map((so) => (
-            <Col lg={6} key={so._id}>
-              <ScoreDistributionChart className="mb-3" studentOutcome={so} />
-            </Col>
-          ))}
-        </Row>
+        <ScoreDistributions course={course} instanceId={courseInstance._id} />
 
         <StudentWorkProjectsCard
           className="mb-3"
