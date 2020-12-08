@@ -3,10 +3,12 @@ import CourseInstance from "models/CourseInstance";
 import Semester from "models/Semester";
 import nextConnect from "next-connect";
 import { formatScoresByInstructor } from "utils/analysis";
+import { authenticate } from "utils/auth";
 import { ScoresByInstructor } from "../../../../../queries/ScoresByInstructor";
 
 const handler = nextConnect();
 handler.use(middleware);
+handler.use(authenticate);
 
 // Return mean overall SO scores for each instructor by specified term & year
 // With no amount param, returns all results

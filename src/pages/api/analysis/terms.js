@@ -1,9 +1,11 @@
 import middleware from "middleware";
 import nextConnect from "next-connect";
 import Semester from "models/Semester";
+import { authenticate } from "utils/auth";
 
 const handler = nextConnect();
 handler.use(middleware);
+handler.use(authenticate);
 
 function sortTerms(a, b) {
   const termOrder = ["spring", "summer", "fall"];

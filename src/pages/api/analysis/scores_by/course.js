@@ -3,10 +3,12 @@ import CourseInstance from "models/CourseInstance";
 import Semester from "models/Semester";
 import nextConnect from "next-connect";
 import { formatScoresByCourse } from "utils/analysis";
+import { authenticate } from "utils/auth";
 import { ScoresByCourse } from "../../../../../queries/ScoresByCourse";
 
 const handler = nextConnect();
 handler.use(middleware);
+handler.use(authenticate);
 
 // Return mean overall SO scores for each course by specified term & year
 // With no amount param, returns all results

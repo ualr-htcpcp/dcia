@@ -3,6 +3,7 @@ import CourseInstance from "models/CourseInstance";
 import Semester from "models/Semester";
 import nextConnect from "next-connect";
 import { formatScoresByLevel } from "utils/analysis";
+import { authenticate } from "utils/auth";
 import { ScoresByLevel } from "../../../../../queries/ScoresByLevel";
 
 // Return mean overall SO scores for each course level by specified term & year
@@ -30,6 +31,7 @@ async function getScoresByLevel(term, year) {
 
 const handler = nextConnect();
 handler.use(middleware);
+handler.use(authenticate);
 
 handler.get(async (req, res) => {
   try {
