@@ -1,8 +1,10 @@
 import EmptyRow from "components/EmptyRow.jsx";
 import faker from "faker";
 import React from "react";
+import { useState } from "react";
 import { Button, Card, Col, Row, Table } from "react-bootstrap";
 import useSWR from "swr";
+import StudentWorkProjectFormModal from "components/StudentWorkProjectFormModal.jsx";
 
 const tableSpacingStyle = { paddingLeft: "1.25rem", paddingRight: "1.25rem" };
 
@@ -11,13 +13,26 @@ export default function StudentWorkProjectsCard({
   courseInstance,
   studentOutcomes,
 }) {
+  const [version, setVersion] = useState(0);
+  const [showAddSWP, setShowAddSWP] = useState(false);
+
   return (
     <Card className={className}>
       <Card.Header className="bg-white pt-2 pb-2">
         <Row className="align-items-center flex-column flex-lg-row">
           <Col>Student Work Projects (SWPs)</Col>
           <Col className="d-flex flex-grow-0" style={{ whiteSpace: "nowrap" }}>
-            <Button size="sm">Add SWP</Button>
+            <Button size="sm" onClick={() => setShowAddSWP(true)}>
+              Add SWP
+            </Button>
+
+            <StudentWorkProjectFormModal
+              courseInstance={courseInstance}
+              show={showAddSWP}
+              onHide={() => setShowAddSWP(false)}
+              studentOutcomes={studentOutcomes}
+              swpsChanged={() => setVersion(version + 1)}
+            />
           </Col>
         </Row>
       </Card.Header>
