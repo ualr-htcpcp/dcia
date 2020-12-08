@@ -4,7 +4,7 @@ export function StudentSOScoresByCourseInstance(courseInstance) {
   return [
     {
       $match: {
-        courseInstance: courseInstance,
+        _id: courseInstance,
       },
     },
     {
