@@ -4,6 +4,8 @@ import "models/Semester";
 import "models/Instructor";
 import nextConnect from "next-connect";
 import { authenticate, forbiddenUnlessAdmin } from "utils/auth";
+import User from "models/User";
+import { getSession } from "next-auth/client";
 
 const handler = nextConnect();
 handler.use(middleware);
@@ -28,11 +30,18 @@ handler.post(async (req, res) => {
 });
 
 handler.get(async (req, res) => {
+  const session = await getSession({ req });
   const {
     query: { course },
   } = req;
 
-  const courseInstances = await CourseInstance.find({ course })
+  let query = { course };
+  if (session.user.accessLevel === "instructor") {
+    const user = await User.findOne({ _id: session.user.id });
+    query = { course, instructor: user.instructor };
+  }
+
+  const courseInstances = await CourseInstance.find(query)
     .populate("semester", "year term")
     .populate("instructor", "name");
 
