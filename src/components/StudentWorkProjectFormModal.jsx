@@ -25,14 +25,21 @@ export default function StudentWorkProjectFormModal({
       ? ["put", `${SWPS_PATH}/${swp._id}`]
       : ["post", SWPS_PATH];
 
+    const studentOutcomeIds = Object.entries(data.studentOutcomes || {}).reduce(
+      (ids, [id, isChecked]) => {
+        isChecked && ids.push(id);
+        return ids;
+      },
+      []
+    );
+
+    if (!studentOutcomeIds.length) {
+      setBaseError("You must choose at least one student outcome.");
+      setIsProcessing(false);
+      return false;
+    }
+
     try {
-      const studentOutcomeIds = Object.entries(data.studentOutcomes).reduce(
-        (ids, [id, isChecked]) => {
-          isChecked && ids.push(id);
-          return ids;
-        },
-        []
-      );
       const response = await fetch(url, {
         method: method,
         headers: { "Content-Type": "application/json" },
@@ -90,11 +97,19 @@ export default function StudentWorkProjectFormModal({
               </Form.Control.Feedback>
             )}
             <p className="mt-4 mb-1">Student Outcomes</p>
-            <StudentOutcomes
-              swp={swp}
-              studentOutcomes={studentOutcomes}
-              register={register}
-            />
+            {studentOutcomes.map((so) => (
+              <StudentOutcomeCheckbox
+                key={so._id}
+                swp={swp}
+                studentOutcome={so}
+                register={register}
+              />
+            ))}
+            {!studentOutcomes.length && (
+              <Alert variant="warning" className="mt-2">
+                No student outcomes associated with course.
+              </Alert>
+            )}
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
@@ -105,17 +120,6 @@ export default function StudentWorkProjectFormModal({
       </Form>
     </Modal>
   );
-}
-
-function StudentOutcomes({ swp, studentOutcomes, register }) {
-  return studentOutcomes.map((so) => (
-    <StudentOutcomeCheckbox
-      key={so._id}
-      swp={swp}
-      studentOutcome={so}
-      register={register}
-    />
-  ));
 }
 
 function StudentOutcomeCheckbox({ swp, studentOutcome: so, register }) {

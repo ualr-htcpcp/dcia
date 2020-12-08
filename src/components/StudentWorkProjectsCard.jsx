@@ -58,6 +58,7 @@ export default function StudentWorkProjectsCard({
         </thead>
         <tbody>
           <StudentWorkProjects
+            key={version}
             courseInstance={courseInstance}
             studentOutcomes={studentOutcomes}
           />
@@ -92,9 +93,9 @@ function StudentWorkProjectRow({ swp, studentOutcomes }) {
   return (
     <tr>
       <td style={tableSpacingStyle}>{swp.name}</td>
-      {studentOutcomes.map(({ number }) => (
-        <td key={number} className="pl-5 text-right">
-          {randomFloat()}
+      {studentOutcomes.map(({ _id }) => (
+        <td key={_id} className="pl-5 text-right">
+          {swp.studentOutcomes.includes(_id) ? randomFloat() : "–"}
         </td>
       ))}
       <td className="pl-5 pt-2 pb-0" style={tableSpacingStyle}>
