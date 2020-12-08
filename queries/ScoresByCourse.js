@@ -10,9 +10,6 @@ export function ScoresByCourse(semester) {
     {
       $project: {
         _id: 0,
-        students: 1,
-        studentWorkProjects: 1,
-        course: 1,
       },
     },
     {
@@ -51,31 +48,59 @@ export function ScoresByCourse(semester) {
             $project: {
               _id: 0,
               score: 1,
+            },
+          },
+        ],
+        as: "score",
+      },
+    },
+    {
+      $unwind: {
+        path: "$score",
+      },
+    },
+    {
+      $lookup: {
+        from: "studentworkprojects",
+        let: {
+          swp: "$studentWorkProjects",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$_id", "$$swp"],
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
               studentOutcomes: 1,
             },
           },
         ],
-        as: "so+score",
+        as: "studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$so+score",
+        path: "$studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$so+score.studentOutcomes",
+        path: "$studentOutcome.studentOutcomes",
       },
     },
     {
       $group: {
         _id: "$course",
         averageScore: {
-          $avg: "$so+score.score",
+          $avg: "$score.score",
         },
         so: {
-          $addToSet: "$so+score.studentOutcomes",
+          $addToSet: "$studentOutcome.studentOutcomes",
         },
       },
     },
@@ -125,7 +150,7 @@ export function ScoresByCourse(semester) {
           {
             $project: {
               _id: 0,
-              number: 1,
+              studentOutcomeNumber: 1,
             },
           },
         ],
@@ -147,7 +172,7 @@ export function ScoresByCourse(semester) {
         _id: 0,
         averageScore: 1,
         "course.title": 1,
-        "so.number": 1,
+        "so.studentOutcomeNumber": 1,
       },
     },
   ];

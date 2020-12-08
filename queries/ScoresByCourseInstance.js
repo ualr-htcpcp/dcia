@@ -18,10 +18,32 @@ export function ScoresByCourseInstance(courseInstance) {
       },
     },
     {
-      $project: {
-        _id: 0,
-        students: 1,
-        studentWorkProjects: 1,
+      $lookup: {
+        from: "studentworkprojects",
+        let: {
+          swp: "$studentWorkProjects",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$_id", "$$swp"],
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              name: 1,
+            },
+          },
+        ],
+        as: "swp",
+      },
+    },
+    {
+      $unwind: {
+        path: "$swp",
       },
     },
     {
@@ -50,63 +72,62 @@ export function ScoresByCourseInstance(courseInstance) {
             $project: {
               _id: 0,
               score: 1,
-              studentOutcomes: 1,
             },
           },
         ],
-        as: "soAndScore",
+        as: "score",
       },
     },
     {
       $unwind: {
-        path: "$soAndScore",
-      },
-    },
-    {
-      $unwind: {
-        path: "$soAndScore.studentOutcomes",
+        path: "$score",
       },
     },
     {
       $lookup: {
-        from: "students",
+        from: "studentworkprojects",
         let: {
-          student: "$students",
+          swp: "$studentWorkProjects",
         },
         pipeline: [
           {
             $match: {
               $expr: {
-                $eq: ["$_id", "$$student"],
+                $eq: ["$_id", "$$swp"],
               },
             },
           },
           {
             $project: {
               _id: 0,
-              name: 1,
+              studentOutcomes: 1,
             },
           },
         ],
-        as: "student",
+        as: "studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$student",
+        path: "$studentOutcome",
+      },
+    },
+    {
+      $unwind: {
+        path: "$studentOutcome.studentOutcomes",
       },
     },
     {
       $lookup: {
         from: "studentoutcomes",
         let: {
-          id: "$soAndScore.studentOutcomes",
+          so: "$studentOutcome.studentOutcomes",
         },
         pipeline: [
           {
             $match: {
               $expr: {
-                $eq: ["$_id", "$$id"],
+                $eq: ["$_id", "$$so"],
               },
             },
           },
@@ -117,19 +138,35 @@ export function ScoresByCourseInstance(courseInstance) {
             },
           },
         ],
-        as: "so#",
+        as: "so",
       },
     },
     {
       $unwind: {
-        path: "$so#",
+        path: "$so",
       },
     },
     {
       $group: {
-        _id: "$student.name",
+        _id: {
+          studentWorkProject: "$swp.name",
+          studentOutcomeNumber: "$so.studentOutcomeNumber",
+        },
         averageScore: {
-          $avg: "$soAndScore.score",
+          $avg: "$score.score",
+        },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          studentWorkProject: "$_id.studentWorkProject",
+        },
+        studentOutcomeNumber: {
+          $addToSet: "$_id.studentOutcomeNumber",
+        },
+        averageScore: {
+          $addToSet: "$averageScore",
         },
       },
     },
