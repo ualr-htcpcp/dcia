@@ -1,6 +1,6 @@
 import AppLayout from "components/AppLayout.jsx";
 import ScoreDistributionChart from "components/ScoreDistributionChart.jsx";
-import ScoresByStudent from "components/ScoresByStudent.jsx";
+import StudentsCard from "components/StudentsCard.jsx";
 import StudentWorkProjectsCard from "components/StudentWorkProjectsCard.jsx";
 import "models/Course";
 import CourseInstance from "models/CourseInstance";
@@ -64,7 +64,7 @@ export default function CoursePage({
 
         <Row>
           <Col lg={6}>
-            <ScoresByStudent courseInstanceId={_id} />
+            <StudentsCard courseInstanceId={_id} />
           </Col>
         </Row>
       </AppLayout>

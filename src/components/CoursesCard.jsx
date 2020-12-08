@@ -8,7 +8,7 @@ import {
   Dropdown,
   OverlayTrigger,
   Table,
-  Tooltip
+  Tooltip,
 } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import useSWR, { mutate } from "swr";
