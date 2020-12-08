@@ -77,7 +77,7 @@ export function courseSOScoresByTerm(course) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
@@ -152,7 +152,7 @@ export function courseSOScoresByTerm(course) {
         averageScore: {
           $avg: "$soAndScore.score",
         },
-        studentOutcomeNumber: {
+        number: {
           $addToSet: "$so#",
         },
         instructor: {
@@ -162,7 +162,7 @@ export function courseSOScoresByTerm(course) {
     },
     {
       $unwind: {
-        path: "$studentOutcomeNumber",
+        path: "$number",
       },
     },
     {

@@ -1,6 +1,6 @@
 import AppLayout from "components/AppLayout.jsx";
 import CourseInstancesCard from "components/CourseInstancesCard.jsx";
-import ScoresByTermChart from "components/graphs/ScoresByTermChart.jsx";
+import ScoresByTermForCourseChart from "components/graphs/ScoresByTermForCourseChart.jsx";
 import Course from "models/Course";
 import "models/StudentOutcome";
 import { getSession } from "next-auth/client";
@@ -34,7 +34,7 @@ export default function CoursePage({ course }) {
           {course.title}
         </h1>
 
-        <ScoresByTermChart className="mt-3" />
+        <ScoresByTermForCourseChart className="mt-3" courseId={course._id} />
 
         <Row>
           <Col lg={6}>

@@ -375,6 +375,7 @@ export function formatAllScoresByTerm(data) {
   };
 }
 
+// Same as above, just scoped to specific instructor
 export function formatInstructorScoresByTerm(data) {
   return data
     .reduce((newData, current) => {

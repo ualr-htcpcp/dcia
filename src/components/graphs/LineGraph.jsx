@@ -53,6 +53,7 @@ export default function LineGraph({
           dataKeys.map((xValue, i) => {
             return (
               <Line
+                connectNulls
                 key={i}
                 type="monotone"
                 dataKey={xValue.key}

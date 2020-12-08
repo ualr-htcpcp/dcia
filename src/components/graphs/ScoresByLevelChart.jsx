@@ -5,12 +5,8 @@ import { fetchWithYearAndTerm } from "utils/fetch";
 import {
   blankScoresByLevel,
   dataKeysForSOs,
-  yAxisDomainForAssessments,
+  scoresByLevelConfig,
 } from "utils/graph";
-
-const xKey = "level";
-const xLabel = "Course Level";
-const yLabel = "Score";
 
 const GRAPH_DATA_PATH = "/api/analysis/scores_by/level";
 
@@ -28,10 +24,10 @@ export default function ScoresByLevelChart({ className, term }) {
         <LineGraph
           data={graphData ? graphData : blankScoresByLevel}
           dataKeys={dataKeysForSOs}
-          xAxisLabel={xLabel}
-          xAxisKey={xKey}
-          yAxisLabel={yLabel}
-          yAxisDomain={yAxisDomainForAssessments}
+          xAxisLabel={scoresByLevelConfig.xAxisLabel}
+          xAxisKey={scoresByLevelConfig.xAxisKey}
+          yAxisLabel={scoresByLevelConfig.yAxisLabel}
+          yAxisDomain={scoresByLevelConfig.yAxisDomain}
         />
       </Card.Body>
     </Card>

@@ -27,7 +27,8 @@ export default function Dashboard() {
 
         <ScoresByTermChart
           className="mt-3"
-          instructorScope={isAdminOrRoot ? "ALL" : session.user.email}
+          isAdminOrRoot={isAdminOrRoot}
+          instructor={isAdminOrRoot ? null : session.user.email}
         />
 
         {isAdminOrRoot ? <AdminDashboard /> : ""}
