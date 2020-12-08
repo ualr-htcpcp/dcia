@@ -6,6 +6,7 @@ import "models/Course";
 import CourseInstance from "models/CourseInstance";
 import "models/Semester";
 import "models/StudentOutcome";
+import User from "models/User";
 import { getSession } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
@@ -14,7 +15,7 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { useProtectPage } from "utils/auth";
 import { capitalize } from "utils/string";
 
-export default function CoursePage({ courseInstance }) {
+export default function CourseInstancePage({ courseInstance }) {
   const { course, semester } = courseInstance;
   const session = useProtectPage();
   if (!session) return null;
@@ -73,7 +74,7 @@ export default function CoursePage({ courseInstance }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  if (!session) return { props: {} };
+  if (!session) return { props: { courseInstance: {} } };
 
   const {
     params: { id: instanceId },
@@ -93,6 +94,12 @@ export async function getServerSideProps(context) {
   }
 
   if (!courseInstance) return { notFound: true };
+
+  if (session.user.accessLevel === "instructor") {
+    const user = await User.findOne({ _id: session.user.id });
+    const hasAccess = courseInstance.instructor.equals(user.instructor);
+    if (!hasAccess) return { notFound: true };
+  }
 
   courseInstance = JSON.parse(JSON.stringify(courseInstance));
   return { props: { courseInstance } };

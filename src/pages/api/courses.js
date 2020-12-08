@@ -2,6 +2,8 @@ import middleware from "middleware";
 import Course from "models/Course";
 import CourseInstance from "models/CourseInstance";
 import "models/StudentOutcome";
+import User from "models/User";
+import { getSession } from "next-auth/client";
 import nextConnect from "next-connect";
 import { authenticate, forbiddenUnlessAdmin } from "utils/auth";
 
@@ -30,14 +32,27 @@ handler.post(async (req, res) => {
 });
 
 handler.get(async (req, res) => {
-  const [courses, assignedToInstances] = await Promise.all([
-    Course.find()
-      .select("_id number title")
-      .populate("studentOutcomes", "number definition")
-      .sort("number")
-      .lean(),
-    CourseInstance.distinct("course"),
-  ]);
+  const session = await getSession({ req });
+
+  let coursesScope;
+  let assignedToInstances = [];
+
+  if (["admin", "root"].includes(session.user.accessLevel)) {
+    coursesScope = Course.find();
+  } else {
+    const user = await User.findOne({ _id: session.user.id });
+    const courseIds = await CourseInstance.find({
+      instructor: user.instructor,
+    }).distinct("course");
+    coursesScope = Course.find({ _id: courseIds });
+    assignedToInstances = await CourseInstance.distinct("course");
+  }
+
+  const courses = await coursesScope
+    .select("_id number title")
+    .populate("studentOutcomes", "number definition")
+    .sort("number")
+    .lean();
 
   courses.forEach((course) => {
     course.isLocked = assignedToInstances.some((courseId) =>
