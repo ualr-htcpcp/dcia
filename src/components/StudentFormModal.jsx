@@ -14,20 +14,22 @@ export default function StudentFormModal({
   const [baseError, setBaseError] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
+  const STUDENTS_PATH = `/api/course-instances/${courseInstance._id}/students`;
+
   const onSubmit = async (data) => {
     setIsProcessing(true);
     clearErrors();
     setBaseError(null);
 
     const [method, url] = student
-      ? ["put", `/api/students/${student._id}`]
-      : ["post", "/api/students"];
+      ? ["put", `${STUDENTS_PATH}/${student._id}`]
+      : ["post", STUDENTS_PATH];
 
     try {
       const response = await fetch(url, {
         method: method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, courseInstance: courseInstance._id }),
+        body: JSON.stringify(data),
       });
       if (response.ok) {
         studentsChanged();

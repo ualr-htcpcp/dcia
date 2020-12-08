@@ -10,7 +10,7 @@ handler.use(forbiddenUnlessAdmin);
 
 handler.put(async (req, res) => {
   const {
-    query: { id: _id },
+    query: { courseInstanceId: _id },
     body: { course, semester, instructor },
   } = req;
 
@@ -28,7 +28,7 @@ handler.put(async (req, res) => {
 
 handler.delete(async (req, res) => {
   const {
-    query: { id: _id },
+    query: { courseInstanceId: _id },
   } = req;
 
   const courseInstance = await CourseInstance.findOne({ _id });

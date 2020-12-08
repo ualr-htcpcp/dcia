@@ -1,4 +1,5 @@
 import middleware from "middleware";
+import Assessment from "models/Assessment";
 import CourseInstance from "models/CourseInstance";
 import Student from "models/Student";
 import nextConnect from "next-connect";
@@ -10,13 +11,15 @@ handler.use(authenticate);
 
 handler.get(async (req, res) => {
   const {
-    query: { courseInstance: courseInstanceId },
+    query: { courseInstanceId },
   } = req;
 
   const courseInstance = await CourseInstance.findOne(
     { _id: courseInstanceId },
-    { students: 1 }
-  ).populate("students");
+    { students: 1, studentWorkProjects: 1 }
+  )
+    .populate("students")
+    .lean();
 
   const students = courseInstance.students.sort(
     (a, b) =>
@@ -24,14 +27,24 @@ handler.get(async (req, res) => {
       a.name.first.localeCompare(b.name.first)
   );
 
+  const studentsWithAssessments = await Assessment.find({
+    studentWorkProject: courseInstance.studentWorkProjects,
+  }).distinct("student");
+
+  students.forEach((student) => {
+    student.isLocked = studentsWithAssessments.some((studentId) =>
+      studentId.equals(student._id)
+    );
+  });
+
   res.json(students);
 });
 
 handler.post(async (req, res) => {
   await forbiddenUnlessAdmin(req, res);
   const {
+    query: { courseInstanceId },
     body: {
-      courseInstance: courseInstanceId,
       name: { first, last },
     },
   } = req;
