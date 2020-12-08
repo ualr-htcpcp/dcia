@@ -2,7 +2,9 @@ import AppLayout from "components/AppLayout.jsx";
 import CourseInstancesCard from "components/CourseInstancesCard.jsx";
 import ScoresByTermChart from "components/ScoresByTermChart.jsx";
 import Course from "models/Course";
+import CourseInstance from "models/CourseInstance";
 import "models/StudentOutcome";
+import User from "models/User";
 import { getSession } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
@@ -53,6 +55,15 @@ export async function getServerSideProps(context) {
   const {
     params: { courseId },
   } = context;
+
+  if (session.user.accessLevel === "instructor") {
+    const user = await User.findOne({ _id: session.user.id });
+    const hasAccess = await CourseInstance.exists({
+      course: courseId,
+      instructor: user.instructor,
+    });
+    if (!hasAccess) return { notFound: true };
+  }
 
   let course;
   try {
