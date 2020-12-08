@@ -54,7 +54,7 @@ function distinctArray(arr) {
 function getScoreNameObject(name, avgScore) {
   return {
     name: name,
-    score: avgScore,
+    score: round(avgScore),
   };
 }
 
@@ -108,20 +108,49 @@ function formatInstructorForTerm(obj) {
 
 function formatForTerm(obj) {
   return {
-    year: obj.year,
-    term: obj.term,
+    term: `${capitalize(obj.term)} ${obj.year}`,
     avgScores: [...obj.scores],
   };
 }
 
 function formatForTermAndInstructor(obj) {
   const { year, term } = obj._id;
-  const newObj = { year: year, term: term, scores: [] };
+  const newObj = { term: `${capitalize(term)} ${year}`, scores: [] };
   const scoreObj = {};
   const so = buildSO(obj.number.number);
   scoreObj[so] = round(obj.averageScore);
   newObj.scores.push(scoreObj);
 
+  return newObj;
+}
+
+function formatForSOCount(obj) {
+  const { score, studentOutcome } = obj._id;
+  const scoreObj = {};
+  scoreObj[score] = obj.count;
+
+  const newObj = {
+    outcome: buildSO(studentOutcome),
+    scores: [],
+  };
+  newObj.scores.push(scoreObj);
+
+  return newObj;
+}
+
+function formatForSWP(obj) {
+  const { studentWorkProject: swp } = obj._id;
+  const sos = obj.studentOutcomeNumber.map((so) => {
+    const newSo = buildSO(so);
+    const soScore = {};
+    soScore[newSo] = obj.averageScore[0];
+
+    return soScore;
+  });
+  const newObj = {
+    swp: swp,
+    scores: sos,
+  };
   return newObj;
 }
 
@@ -312,9 +341,7 @@ export function formatAllScoresByTerm(data) {
     // First item
     if (!newData) return [formatted];
 
-    const found = newData.findIndex(
-      (term) => term.year === formatted.year && term.term === formatted.term
-    );
+    const found = newData.findIndex((term) => term.term === formatted.term);
 
     // Term exists in array
     if (found !== -1) {
@@ -337,8 +364,8 @@ export function formatAllScoresByTerm(data) {
       };
     })
     .map((term) => {
-      // Zero index array of scores to meet recharts data format needs and capitalize term
-      const temp = { year: term.year, term: capitalize(term.term) };
+      // Zero index array of scores to meet recharts data format needs
+      const temp = { term: term.term };
       return Object.assign(temp, ...term.avgScores);
     });
 
@@ -374,8 +401,77 @@ export function formatInstructorScoresByTerm(data) {
       return newData;
     }, [])
     .map((term) => {
-      // Zero index array of scores to meet recharts data format needs and capitalize term
-      const temp = { year: term.year, term: capitalize(term.term) };
+      // Zero index array of scores to meet recharts data format needs
+      const temp = { term: term.term };
       return Object.assign(temp, ...term.scores);
     });
+}
+
+/*
+  Query is returning objects with unnecessary nesting.
+  This massages the data into the format below, including zero-indexing the scores for recharts
+  {
+    outcome: "SO1",
+    0: 2,
+    1: 13,
+    2: 9,
+    3: 2,
+    4: 1
+  }
+*/
+export function formatSOCounts(data) {
+  return data
+    .reduce((newData, current) => {
+      const formatted = formatForSOCount(current);
+
+      if (!newData) return [formatted];
+
+      const found = newData.findIndex((so) => so.outcome === formatted.outcome);
+
+      if (found !== -1) {
+        const newScores = [...newData[found].scores, ...formatted.scores];
+        newScores.sort((a, b) => Object.keys(a)[0] - Object.keys(b)[0]);
+        newData[found].scores = newScores;
+        return newData;
+      }
+
+      newData.push(formatted);
+      return newData;
+    }, [])
+    .map((outcome) => {
+      // Zero index array of scores to meet recharts data format needs
+      const temp = { outcome: outcome.outcome };
+      return Object.assign(temp, ...outcome.scores);
+    });
+}
+
+/*
+  Minor massaging of query data.
+  Output format:
+  {
+    swp: "Programming I Assignment I",
+    scores: [
+      {
+        SO1: 3
+      },
+      {
+        SO3: 3.22
+      }
+    ]
+  }
+*/
+export function formatSWPScores(data) {
+  return data.map((swp) => {
+    return formatForSWP(swp);
+  });
+}
+
+// Minor massaging of query data
+export function formatScoresByStudent(data) {
+  return data.map((student) => {
+    return {
+      name: `${student.student.name.first} ${student.student.name.last}`,
+      score: student.averageScore,
+    };
+  });
 }
