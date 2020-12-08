@@ -1,4 +1,4 @@
-import AdminDashboard from "components/AdminDashboard";
+import AdminDashboard from "components/AdminDashboard.jsx";
 import AppLayout from "components/AppLayout.jsx";
 import ScoresByTermChart from "components/graphs/ScoresByTermChart.jsx";
 import Head from "next/head";
@@ -17,7 +17,6 @@ export default function Dashboard() {
   }, [session, setIsAdminOrRoot]);
 
   if (!session) return null;
-
   return (
     <>
       <Head>
