@@ -1,6 +1,6 @@
 import AppLayout from "components/AppLayout.jsx";
 import ScoreDistributionChart from "components/ScoreDistributionChart.jsx";
-import ScoresByStudent from "components/ScoresByStudent.jsx";
+import StudentsCard from "components/StudentsCard.jsx";
 import StudentWorkProjectsCard from "components/StudentWorkProjectsCard.jsx";
 import "models/Course";
 import CourseInstance from "models/CourseInstance";
@@ -14,9 +14,8 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { useProtectPage } from "utils/auth";
 import { capitalize } from "utils/string";
 
-export default function CoursePage({
-  courseInstance: { _id, course, semester },
-}) {
+export default function CoursePage({ courseInstance }) {
+  const { course, semester } = courseInstance;
   const session = useProtectPage();
   if (!session) return null;
 
@@ -58,13 +57,13 @@ export default function CoursePage({
 
         <StudentWorkProjectsCard
           className="mb-3"
-          courseInstanceId={_id}
+          courseInstance={courseInstance}
           studentOutcomes={course.studentOutcomes}
         />
 
         <Row>
           <Col lg={6}>
-            <ScoresByStudent courseInstanceId={_id} />
+            <StudentsCard courseInstance={courseInstance} />
           </Col>
         </Row>
       </AppLayout>
