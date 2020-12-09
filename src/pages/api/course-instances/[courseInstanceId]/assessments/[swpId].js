@@ -50,16 +50,23 @@ handler.post(async (req, res) => {
   if (!scores) return res.json({});
 
   await Promise.all(
-    Object.entries(scores).map(([studentId, score]) =>
-      Assessment.update(
-        {
+    Object.entries(scores).map(([studentId, score]) => {
+      if (score) {
+        return Assessment.update(
+          {
+            studentWorkProject: swpId,
+            student: studentId,
+          },
+          { score },
+          { upsert: true }
+        );
+      } else {
+        return Assessment.findOneAndDelete({
           studentWorkProject: swpId,
           student: studentId,
-        },
-        { score },
-        { upsert: true }
-      )
-    )
+        });
+      }
+    })
   );
 
   res.json(scores);

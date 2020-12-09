@@ -2,7 +2,7 @@ import EmptyRow from "components/EmptyRow.jsx";
 import { useState } from "react";
 import { Button, Card, Form, Table } from "react-bootstrap";
 import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 import { formatTimestamp } from "../utils/datetime";
 
 const USERS_PATH = "/api/users";

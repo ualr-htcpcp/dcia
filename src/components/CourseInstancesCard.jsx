@@ -7,7 +7,7 @@ import { Button, Card, Col, Dropdown, ListGroup, Row } from "react-bootstrap";
 import { RiAddFill } from "react-icons/ri";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 import { capitalize } from "utils/string";
 
 export default function CourseInstanceCard({ course }) {

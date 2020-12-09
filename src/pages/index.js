@@ -1,16 +1,22 @@
+import AdminDashboard from "components/AdminDashboard.jsx";
 import AppLayout from "components/AppLayout.jsx";
-import ScoresByLevelChart from "components/ScoresByLevelChart.jsx";
-import ScoresByTermChart from "components/ScoresByTermChart.jsx";
-import ScoreSummaryCard from "components/ScoreSummaryCard.jsx";
-import TermSelector from "components/TermSelector.jsx";
+import ScoresByTermChart from "components/graphs/ScoresByTermChart.jsx";
 import Head from "next/head";
-import { Col, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
 import { useProtectPage } from "utils/auth";
 
 export default function Dashboard() {
   const session = useProtectPage();
-  if (!session) return null;
+  const [isAdminOrRoot, setIsAdminOrRoot] = useState(false);
+  //TODO: If user is instructor, need to pass that info to ScoresByTerm
 
+  useEffect(() => {
+    if (session) {
+      setIsAdminOrRoot(["admin", "root"].includes(session.user?.accessLevel));
+    }
+  }, [session, setIsAdminOrRoot]);
+
+  if (!session) return null;
   return (
     <>
       <Head>
@@ -19,26 +25,13 @@ export default function Dashboard() {
       <AppLayout>
         <h1 className="h3">Dashboard</h1>
 
-        <ScoresByTermChart className="mt-3" />
+        <ScoresByTermChart
+          className="mt-3"
+          isAdminOrRoot={isAdminOrRoot}
+          instructor={isAdminOrRoot ? null : session.user.email}
+        />
 
-        <TermSelector className="mt-4" />
-        <ScoresByLevelChart className="mt-4" />
-
-        <Row className="mt-4">
-          <Col lg={6}>
-            <ScoreSummaryCard
-              name="SO Scores by INSTRUCTOR"
-              viewAllPath="#instructors"
-            />
-          </Col>
-
-          <Col lg={6} className="mt-4 mt-lg-0">
-            <ScoreSummaryCard
-              name="SO Scores by COURSE"
-              viewAllPath="#courses"
-            />
-          </Col>
-        </Row>
+        {isAdminOrRoot ? <AdminDashboard /> : ""}
       </AppLayout>
     </>
   );

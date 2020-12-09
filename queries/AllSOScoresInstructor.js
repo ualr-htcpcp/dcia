@@ -158,14 +158,14 @@ export function AllSOScoresInstructor(instructor) {
         averageScore: {
           $avg: "$score.score",
         },
-        studentOutcomeNumber: {
+        number: {
           $addToSet: "$so#",
         },
       },
     },
     {
       $unwind: {
-        path: "$studentOutcomeNumber",
+        path: "$number",
       },
     },
     {

@@ -185,7 +185,7 @@ export function courseSOScoresByTerm(course) {
         averageScore: {
           $avg: "$score.score",
         },
-        studentOutcomeNumber: {
+        number: {
           $addToSet: "$so#",
         },
         instructor: {
@@ -195,7 +195,7 @@ export function courseSOScoresByTerm(course) {
     },
     {
       $unwind: {
-        path: "$studentOutcomeNumber",
+        path: "$number",
       },
     },
     {

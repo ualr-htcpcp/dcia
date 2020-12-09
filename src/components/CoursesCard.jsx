@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 
 const COURSES_PATH = "/api/courses";
 

@@ -3,7 +3,7 @@ import StudentOutcomeFormModal from "components/StudentOutcomeFormModal.jsx";
 import { useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
 import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 
 export default function StudentOutcomesCard() {
   return (

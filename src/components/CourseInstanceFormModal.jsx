@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 import { capitalize } from "utils/string";
 
 const COURSE_INSTANCES_PATH = "/api/course-instances";

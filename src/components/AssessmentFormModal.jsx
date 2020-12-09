@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert, Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 
 const assessmentsPath = (courseInstance, swp) =>
   `/api/course-instances/${courseInstance._id}/assessments/${swp._id}`;

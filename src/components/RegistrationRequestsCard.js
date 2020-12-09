@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Card, Form, Table } from "react-bootstrap";
 import { formatTimestamp } from "utils/datetime";
 import useSWR, { mutate } from "swr";
-import fetcher from "utils/fetcher";
+import { fetcher } from "utils/fetch";
 import EmptyRow from "components/EmptyRow.jsx";
 
 const REGISTRATION_REQUESTS_PATH = "/api/registration-requests";
