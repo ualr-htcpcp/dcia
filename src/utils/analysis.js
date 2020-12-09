@@ -190,24 +190,26 @@ function formatForSWP(obj) {
  }
 */
 export function formatScoresByInstructor(data) {
-  return data.reduce((newData, current) => {
-    const concatName = `${current.instructor.name.first} ${current.instructor.name.last}`;
+  return data
+    .reduce((newData, current) => {
+      const concatName = `${current.instructor.name.first} ${current.instructor.name.last}`;
 
-    // First item added to array, format item and return array with single item
-    if (!newData) {
-      const formatted = getScoreNameObject(concatName, current.averageScore);
-      return [formatted];
-    }
-    const found = newData.find((instr) => instr.name === concatName);
-    // First time instructor is added, format, push to existing array and return that array
-    if (!found) {
-      const formatted = getScoreNameObject(concatName, current.averageScore);
-      newData.push(formatted);
+      // First item added to array, format item and return array with single item
+      if (!newData) {
+        const formatted = getScoreNameObject(concatName, current.averageScore);
+        return [formatted];
+      }
+      const found = newData.find((instr) => instr.name === concatName);
+      // First time instructor is added, format, push to existing array and return that array
+      if (!found) {
+        const formatted = getScoreNameObject(concatName, current.averageScore);
+        newData.push(formatted);
+        return newData;
+      }
+      // Instructor data already exists, make no changes and return existing array
       return newData;
-    }
-    // Instructor data already exists, make no changes and return existing array
-    return newData;
-  }, []);
+    }, [])
+    .sort((a, b) => b.score - a.score);
 }
 
 /*
@@ -219,32 +221,34 @@ export function formatScoresByInstructor(data) {
  }
 */
 export function formatScoresByCourse(data) {
-  return data.reduce((newData, current) => {
-    // First item added to array, format item and return array with single item
-    if (!newData) {
-      const formatted = getScoreNameObject(
-        current.course.title,
-        current.averageScore
+  return data
+    .reduce((newData, current) => {
+      // First item added to array, format item and return array with single item
+      if (!newData) {
+        const formatted = getScoreNameObject(
+          current.course.title,
+          current.averageScore
+        );
+        return [formatted];
+      }
+      const found = newData.find(
+        (course) => course.name === current.course.title
       );
-      return [formatted];
-    }
-    const found = newData.find(
-      (course) => course.name === current.course.title
-    );
 
-    // First time course is added, format, push to existing array and return that array
-    if (!found) {
-      const formatted = getScoreNameObject(
-        current.course.title,
-        current.averageScore
-      );
-      newData.push(formatted);
+      // First time course is added, format, push to existing array and return that array
+      if (!found) {
+        const formatted = getScoreNameObject(
+          current.course.title,
+          current.averageScore
+        );
+        newData.push(formatted);
+        return newData;
+      }
+
+      // Course data already exists, make no changes and return existing array
       return newData;
-    }
-
-    // Course data already exists, make no changes and return existing array
-    return newData;
-  }, []);
+    }, [])
+    .sort((a, b) => b.score - a.score);
 }
 
 /*
