@@ -509,7 +509,7 @@ export function formatScoresByStudent(data) {
   return data.map((student) => {
     return {
       name: `${student.student.name.first} ${student.student.name.last}`,
-      score: student.averageScore,
+      score: round(student.averageScore),
     };
   });
 }
