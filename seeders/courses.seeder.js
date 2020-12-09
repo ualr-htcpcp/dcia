@@ -23,12 +23,12 @@ const data = async () => {
     {
       title: "First Year Experience for Computing Majors",
       number: 1105,
-      studentOutcomes: [so1, so3],
+      studentOutcomes: [so4, so5],
     },
     {
       title: "Algorithms",
       number: 2380,
-      studentOutcomes: [so1, so2],
+      studentOutcomes: [so3, so6],
     },
     {
       title: "Computer Organization",
@@ -38,17 +38,17 @@ const data = async () => {
     {
       title: "Operating Systems",
       number: 3380,
-      studentOutcomes: [so3, so4],
+      studentOutcomes: [so3, so5],
     },
     {
       title: "Programming Languages",
       number: 3383,
-      studentOutcomes: [so4, so6],
+      studentOutcomes: [so1, so2],
     },
     {
       title: "Software Engineering",
       number: 4373,
-      studentOutcomes: [so3, so5],
+      studentOutcomes: [so3, so4],
     },
   ];
 };
