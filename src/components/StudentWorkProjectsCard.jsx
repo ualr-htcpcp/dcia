@@ -1,3 +1,4 @@
+import AssessmentFormModal from "components/AssessmentFormModal.jsx";
 import EmptyRow from "components/EmptyRow.jsx";
 import StudentWorkProjectFormModal from "components/StudentWorkProjectFormModal.jsx";
 import React, { useState } from "react";
@@ -122,13 +123,8 @@ function StudentWorkProjectRow({
         </td>
       ))}
       <td className="pl-5 pb-0 d-flex" style={tableSpacingStyle}>
-        <Button
-          size="sm"
-          variant="secondary"
-          style={{ whiteSpace: "nowrap", lineHeight: 1 }}
-        >
-          Record Assessment
-        </Button>
+        <RecordAssessmentButton courseInstance={courseInstance} swp={swp} />
+
         <StudentWorkProjectActions
           courseInstance={courseInstance}
           swp={swp}
@@ -136,6 +132,31 @@ function StudentWorkProjectRow({
         />
       </td>
     </tr>
+  );
+}
+
+function RecordAssessmentButton({ courseInstance, swp }) {
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <>
+      <Button
+        size="sm"
+        variant="secondary"
+        onClick={() => setShowModal(true)}
+        style={{ whiteSpace: "nowrap", lineHeight: 1 }}
+      >
+        Record Assessment
+      </Button>
+
+      <AssessmentFormModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        courseInstance={courseInstance}
+        swp={swp}
+        assessmentsChanged={() => mutate(swpsPath(courseInstance))}
+      />
+    </>
   );
 }
 

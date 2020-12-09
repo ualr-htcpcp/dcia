@@ -53,6 +53,7 @@ function AddCourseInstanceButton({ course }) {
 }
 
 function CourseInstanceItems({ course }) {
+  const [session] = useSession();
   const { data, error } = useSWR(
     `/api/course-instances?course=${course._id}`,
     fetcher
@@ -84,10 +85,13 @@ function CourseInstanceItems({ course }) {
         <span className="badge badge-secondary badge-pill">
           Instructor: {instructorName.first} {instructorName.last}
         </span>
-        <CourseInstanceActions
-          course={course}
-          courseInstance={courseInstance}
-        />
+
+        {["admin", "root"].includes(session?.user.accessLevel) && (
+          <CourseInstanceActions
+            course={course}
+            courseInstance={courseInstance}
+          />
+        )}
       </ListGroup.Item>
     );
   });

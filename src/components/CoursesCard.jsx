@@ -41,6 +41,9 @@ function CourseRows() {
 
   if (error) return <EmptyRow message="Failed to load." />;
   if (!data) return <EmptyRow message={<em>Loading...</em>} />;
+  if (data.length === 0) {
+    return <EmptyRow message="No courses assigned." />;
+  }
 
   return data.map((course) => <CourseRow key={course._id} course={course} />);
 }

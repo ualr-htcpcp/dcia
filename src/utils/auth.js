@@ -98,3 +98,7 @@ export async function forbiddenUnlessRoot(req, res, next) {
       .end();
   }
 }
+
+export function isAdmin(session) {
+  return ["admin", "root"].includes(session?.user.accessLevel);
+}

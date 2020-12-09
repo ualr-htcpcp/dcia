@@ -3,7 +3,7 @@ import CourseFormModal from "components/CourseFormModal.jsx";
 import CoursesCard from "components/CoursesCard.jsx";
 import Head from "next/head";
 import { useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Breadcrumb, Button, Col, Row } from "react-bootstrap";
 import { useProtectPage } from "utils/auth";
 
 const pageTitle = "Courses";
@@ -20,6 +20,10 @@ export default function Courses() {
         <title>{pageTitle}</title>
       </Head>
       <AppLayout>
+        <Breadcrumb>
+          <Breadcrumb.Item active>Courses</Breadcrumb.Item>
+        </Breadcrumb>
+
         <Row>
           <Col>
             <h1 className="h3 mb-0">{pageTitle}</h1>
