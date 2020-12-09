@@ -98,6 +98,17 @@ function sortByLevel(a, b) {
   return sortOrder.indexOf(a.level) - sortOrder.indexOf(b.level);
 }
 
+function sortByTerm(a, b) {
+  const termOrder = ["Spring", "Summer", "Fall"];
+  const [aTerm, aYear] = a.term.split(" ");
+  const [bTerm, bYear] = b.term.split(" ");
+
+  if (aYear === bYear) {
+    return termOrder.indexOf(aTerm) - termOrder.indexOf(bTerm);
+  }
+  return aYear - bYear;
+}
+
 // Helper for dashboard SO Scores by Level
 function formatForLevels(obj) {
   const { level } = obj._id;
@@ -126,7 +137,7 @@ function formatInstructorForTerm(obj) {
     scores: [],
   };
   const scoreObj = {};
-  const so = buildSO(obj.studentOutcomeNumber.number);
+  const so = buildSO(obj.number.number);
   scoreObj[so] = obj.averageScore;
   newObj.scores.push(scoreObj);
 
@@ -144,7 +155,7 @@ function formatForTermAndInstructor(obj) {
   const { year, term } = obj._id;
   const newObj = { term: `${capitalize(term)} ${year}`, scores: [] };
   const scoreObj = {};
-  const so = buildSO(obj.studentOutcomeNumber.number);
+  const so = buildSO(obj.number.number);
   scoreObj[so] = round(obj.averageScore);
   newObj.scores.push(scoreObj);
 
@@ -403,7 +414,7 @@ export function formatAllScoresByTerm(data) {
 
   return {
     instructors: instructorNames,
-    graphData: averageSOsForTerms,
+    graphData: averageSOsForTerms.sort(sortByTerm),
   };
 }
 
@@ -438,7 +449,7 @@ export function formatInstructorScoresByTerm(data) {
       const temp = { term: term.term };
       return Object.assign(temp, ...term.scores);
     });
-  return { graphData: formattedData };
+  return { graphData: formattedData.sort(sortByTerm) };
 }
 
 /*
