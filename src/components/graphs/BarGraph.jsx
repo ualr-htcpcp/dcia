@@ -12,6 +12,16 @@ import ContainerFix from "./ContainerFix.jsx";
 const barWidth = 750;
 const barHeight = 250;
 
+function CustomTooltip({ active, payload }) {
+  if (active) {
+    return (
+      <div className="card">
+        <span>{`Count: ${payload[0].value}`}</span>
+      </div>
+    );
+  }
+  return null;
+}
 export default function BarGraph({
   data,
   dataKeys,
@@ -39,7 +49,7 @@ export default function BarGraph({
         <YAxis>
           <Label value={yAxisLabel} position="insideLeft" offset={-14} />
         </YAxis>
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />} />
 
         {dataKeys &&
           dataKeys.map((xValue, i) => {
