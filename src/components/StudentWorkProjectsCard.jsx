@@ -16,6 +16,7 @@ export default function StudentWorkProjectsCard({
   className,
   courseInstance,
   studentOutcomes,
+  updateBarGraphs,
 }) {
   const [version, setVersion] = useState(0);
   const [showAddSWP, setShowAddSWP] = useState(false);
@@ -35,7 +36,10 @@ export default function StudentWorkProjectsCard({
               show={showAddSWP}
               onHide={() => setShowAddSWP(false)}
               studentOutcomes={studentOutcomes}
-              swpsChanged={() => setVersion(version + 1)}
+              swpsChanged={() => {
+                setVersion(version + 1);
+                updateBarGraphs();
+              }}
             />
           </Col>
         </Row>
@@ -65,6 +69,7 @@ export default function StudentWorkProjectsCard({
             key={version}
             courseInstance={courseInstance}
             studentOutcomes={studentOutcomes}
+            updateBarGraphs={updateBarGraphs}
           />
         </tbody>
       </Table>
@@ -72,7 +77,11 @@ export default function StudentWorkProjectsCard({
   );
 }
 
-function StudentWorkProjects({ courseInstance, studentOutcomes }) {
+function StudentWorkProjects({
+  courseInstance,
+  studentOutcomes,
+  updateBarGraphs,
+}) {
   const { data: swps, error } = useSWR(
     `/api/course-instances/${courseInstance._id}/swps`
   );
@@ -99,6 +108,7 @@ function StudentWorkProjects({ courseInstance, studentOutcomes }) {
       courseInstance={courseInstance}
       studentOutcomes={studentOutcomes}
       studentOutcomeScores={swpScores ? getSOScores(swpScores, swp.name) : null}
+      updateBarGraphs={updateBarGraphs}
     />
   ));
 }
@@ -108,11 +118,14 @@ function StudentWorkProjectRow({
   courseInstance,
   studentOutcomes,
   studentOutcomeScores,
+  updateBarGraphs,
 }) {
   const getScore = (allScores, so) => {
-    return Object.values(
-      allScores.find((score) => Object.keys(score)[0][2] === so.toString())
-    )[0];
+    const found = allScores.find(
+      (score) => Object.keys(score)[0][2] === so.toString()
+    );
+    if (!found) return "-";
+    return Object.values(found)[0];
   };
   return (
     <tr>
@@ -123,19 +136,24 @@ function StudentWorkProjectRow({
         </td>
       ))}
       <td className="pl-5 pb-0 d-flex" style={tableSpacingStyle}>
-        <RecordAssessmentButton courseInstance={courseInstance} swp={swp} />
+        <RecordAssessmentButton
+          courseInstance={courseInstance}
+          swp={swp}
+          updateBarGraphs={updateBarGraphs}
+        />
 
         <StudentWorkProjectActions
           courseInstance={courseInstance}
           swp={swp}
           studentOutcomes={studentOutcomes}
+          updateBarGraphs={updateBarGraphs}
         />
       </td>
     </tr>
   );
 }
 
-function RecordAssessmentButton({ courseInstance, swp }) {
+function RecordAssessmentButton({ courseInstance, swp, updateBarGraphs }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -154,18 +172,28 @@ function RecordAssessmentButton({ courseInstance, swp }) {
         onHide={() => setShowModal(false)}
         courseInstance={courseInstance}
         swp={swp}
-        assessmentsChanged={() => mutate(swpsPath(courseInstance))}
+        assessmentsChanged={() => {
+          mutate(swpsPath(courseInstance));
+          mutate(swpsDataPath(courseInstance));
+          updateBarGraphs();
+        }}
       />
     </>
   );
 }
 
-function StudentWorkProjectActions({ courseInstance, swp, studentOutcomes }) {
+function StudentWorkProjectActions({
+  courseInstance,
+  swp,
+  studentOutcomes,
+  updateBarGraphs,
+}) {
   const [isEditing, setIsEditing] = useState(false);
 
   const swpsChanged = () => {
     mutate(swpsPath(courseInstance));
     mutate(swpsDataPath(courseInstance));
+    updateBarGraphs();
   };
   const deleteSwp = async () => {
     await fetch(`${swpsPath(courseInstance)}/${swp._id}`, {

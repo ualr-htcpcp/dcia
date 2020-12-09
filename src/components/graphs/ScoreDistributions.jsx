@@ -5,17 +5,19 @@ import { fetchWithCourseId } from "utils/fetch";
 
 const BAR_GRAPH_PATH = "/api/analysis/so-counts";
 
-export default function ScoreDistributions({ course, instanceId }) {
+export default function ScoreDistributions({ course, instanceId, version }) {
   const { data, error } = useSWR(
     instanceId ? [BAR_GRAPH_PATH, instanceId] : null,
     fetchWithCourseId
   );
 
   const getGraphData = (allData, soNumber) => {
-    return allData.find((so) => so.outcome === `SO${soNumber}`).scores;
+    const found = allData.find((so) => so.outcome === `SO${soNumber}`).scores;
+    if (!found) return null;
+    return found;
   };
   return (
-    <Row>
+    <Row key={version}>
       {error && <Alert variant="danger">{error.message}</Alert>}
       {course.studentOutcomes.map((so) => (
         <Col lg={6} key={so._id}>

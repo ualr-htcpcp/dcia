@@ -10,6 +10,7 @@ import User from "models/User";
 import { getSession } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { useProtectPage } from "utils/auth";
@@ -17,6 +18,7 @@ import { capitalize } from "utils/string";
 
 export default function CourseInstancePage({ courseInstance }) {
   const { course, semester } = courseInstance;
+  const [version, setVersion] = useState(0);
   const session = useProtectPage();
   if (!session) return null;
 
@@ -47,17 +49,29 @@ export default function CourseInstancePage({ courseInstance }) {
           </span>
         </h1>
 
-        <ScoreDistributions course={course} instanceId={courseInstance._id} />
+        <ScoreDistributions
+          course={course}
+          instanceId={courseInstance._id}
+          version={version}
+        />
 
         <StudentWorkProjectsCard
           className="mb-3"
           courseInstance={courseInstance}
           studentOutcomes={course.studentOutcomes}
+          updateBarGraphs={() => {
+            setVersion(version + 1);
+          }}
         />
 
         <Row>
           <Col lg={6}>
-            <StudentsCard courseInstance={courseInstance} />
+            <StudentsCard
+              courseInstance={courseInstance}
+              updateBarGraphs={() => {
+                setVersion(version + 1);
+              }}
+            />
           </Col>
         </Row>
       </AppLayout>
