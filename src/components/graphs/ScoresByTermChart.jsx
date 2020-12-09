@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Card, Col, Form, Row } from "react-bootstrap";
-import useSWR from "swr";
-import { fetchWithInstructor } from "utils/fetch";
+import useSWR, { mutate } from "swr";
 import {
   blankScoresByTerm,
   dataKeysForSOs,
@@ -10,6 +9,24 @@ import {
 import LineGraph from "./LineGraph.jsx";
 
 const GRAPH_DATA_PATH = "api/analysis/scores_by/term";
+const scopeToInstructor = (url, email) => {
+  return encodeURI(`${url}?type=email&email=${email}`);
+};
+
+const adminUrl = (url, instructor) => {
+  return isDefaultSelection(instructor)
+    ? encodeURI(`${url}?type=ALL`)
+    : encodeURI(
+        `${url}/?type=name&first=${instructor.first}&last=${instructor.last}`
+      );
+};
+
+const isDefaultSelection = (instructor) => {
+  return (
+    instructor.first === defaultInstructorSelect.first &&
+    instructor.last === defaultInstructorSelect.last
+  );
+};
 
 const defaultInstructorSelect = {
   first: "All",
@@ -22,10 +39,10 @@ export default function ScoresByTermChart({
 }) {
   const [selections, setSelections] = useState([defaultInstructorSelect]);
   const [selected, setSelected] = useState(0);
-  const [instructorParam, setInstructorParam] = useState(instructor);
-  const { data: data, error } = useSWR(
-    instructor ? [GRAPH_DATA_PATH, "ALL"] : [GRAPH_DATA_PATH],
-    fetchWithInstructor
+  const { data, error } = useSWR(
+    !isAdminOrRoot
+      ? scopeToInstructor(GRAPH_DATA_PATH, instructor)
+      : adminUrl(GRAPH_DATA_PATH, selections[selected])
   );
 
   useEffect(() => {
@@ -35,14 +52,15 @@ export default function ScoresByTermChart({
   }, [data]);
 
   const handleSelect = (e) => {
-    setSelected(selections[e.target.value]);
+    setSelected(e.target.value);
+    mutate(GRAPH_DATA_PATH);
   };
 
   return (
     <Card className={className}>
       <Card.Header className="bg-white">
         <Row className="align-items-center flex-column flex-lg-row">
-          <Col>SO Scores by TERM</Col>
+          <Col>SO Scores by SEMESTER</Col>
           {isAdminOrRoot && (
             <Col className="d-flex mt-4 mt-lg-0">
               <Form.Control
@@ -50,12 +68,11 @@ export default function ScoresByTermChart({
                 as="select"
                 size="sm"
                 className="ml-4"
-                value={selections[selected]}
                 onChange={handleSelect}
               >
                 {selections.map((selection, i) => {
                   return (
-                    <option key={i} value={i}>
+                    <option key={i} value={i} selected={i === selected}>
                       {selection.first} {selection.last}
                     </option>
                   );

@@ -24,7 +24,6 @@ async function getScoresByInstructor(instructor) {
   const scoresByTerm = await CourseInstance.aggregate(
     AllSOScoresInstructor(instructor)
   );
-  //return scoresByTerm;
   return formatInstructorScoresByTerm(scoresByTerm);
 }
 
@@ -48,9 +47,12 @@ handler.get(async (req, res) => {
       if (!first) throw new Error("No first name param provided");
       if (!last) throw new Error("No last name param provided");
 
+      const lowerFirst = RegExp(first, "i");
+      const lowerLast = RegExp(last, "i");
+
       const instructor = await Instructor.findOne({
-        "name.first": first,
-        "name.last": last,
+        "name.first": { $regex: lowerFirst },
+        "name.last": { $regex: lowerLast },
       })
         .select("_id")
         .lean();
