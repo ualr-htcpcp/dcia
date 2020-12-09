@@ -24,7 +24,7 @@ export function ScoresByLevel(semester) {
           {
             $project: {
               _id: 0,
-              courseNumber: 1,
+              number: 1,
             },
           },
         ],
@@ -45,10 +45,10 @@ export function ScoresByLevel(semester) {
                 {
                   $and: [
                     {
-                      $gte: ["$level.courseNumber", 1000],
+                      $gte: ["$level.number", 1000],
                     },
                     {
-                      $lt: ["$level.courseNumber", 2000],
+                      $lt: ["$level.number", 2000],
                     },
                   ],
                 },
@@ -61,10 +61,10 @@ export function ScoresByLevel(semester) {
                 {
                   $and: [
                     {
-                      $gte: ["$level.courseNumber", 2000],
+                      $gte: ["$level.number", 2000],
                     },
                     {
-                      $lt: ["$level.courseNumber", 3000],
+                      $lt: ["$level.number", 3000],
                     },
                   ],
                 },
@@ -77,10 +77,10 @@ export function ScoresByLevel(semester) {
                 {
                   $and: [
                     {
-                      $gte: ["$level.courseNumber", 3000],
+                      $gte: ["$level.number", 3000],
                     },
                     {
-                      $lt: ["$level.courseNumber", 4000],
+                      $lt: ["$level.number", 4000],
                     },
                   ],
                 },
@@ -93,10 +93,10 @@ export function ScoresByLevel(semester) {
                 {
                   $and: [
                     {
-                      $gte: ["$level.courseNumber", 4000],
+                      $gte: ["$level.number", 4000],
                     },
                     {
-                      $lt: ["$level.courseNumber", 5000],
+                      $lt: ["$level.number", 5000],
                     },
                   ],
                 },

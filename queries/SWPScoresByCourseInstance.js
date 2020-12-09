@@ -4,7 +4,7 @@ export function SWPScoresByCourseInstance(courseInstance) {
   return [
     {
       $match: {
-        courseInstance: courseInstance,
+        _id: courseInstance,
       },
     },
     {
