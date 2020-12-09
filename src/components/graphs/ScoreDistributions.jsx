@@ -12,7 +12,7 @@ export default function ScoreDistributions({ course, instanceId, version }) {
   );
 
   const getGraphData = (allData, soNumber) => {
-    const found = allData.find((so) => so.outcome === `SO${soNumber}`).scores;
+    const found = allData.find((so) => so.outcome === `SO${soNumber}`)?.scores;
     if (!found) return null;
     return found;
   };
