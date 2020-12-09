@@ -50,9 +50,9 @@ export default function CourseInstancePage({ courseInstance }) {
         </h1>
 
         <ScoreDistributions
+          key={version}
           course={course}
           instanceId={courseInstance._id}
-          version={version}
         />
 
         <StudentWorkProjectsCard
@@ -67,6 +67,7 @@ export default function CourseInstancePage({ courseInstance }) {
         <Row>
           <Col lg={6}>
             <StudentsCard
+              key={version}
               courseInstance={courseInstance}
               updateBarGraphs={() => {
                 setVersion(version + 1);
