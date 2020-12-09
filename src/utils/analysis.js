@@ -126,7 +126,7 @@ function formatInstructorForTerm(obj) {
     scores: [],
   };
   const scoreObj = {};
-  const so = buildSO(obj.number.number);
+  const so = buildSO(obj.studentOutcomeNumber.number);
   scoreObj[so] = obj.averageScore;
   newObj.scores.push(scoreObj);
 
@@ -144,7 +144,7 @@ function formatForTermAndInstructor(obj) {
   const { year, term } = obj._id;
   const newObj = { term: `${capitalize(term)} ${year}`, scores: [] };
   const scoreObj = {};
-  const so = buildSO(obj.number.number);
+  const so = buildSO(obj.studentOutcomeNumber.number);
   scoreObj[so] = round(obj.averageScore);
   newObj.scores.push(scoreObj);
 
