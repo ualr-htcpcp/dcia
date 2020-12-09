@@ -43,28 +43,56 @@ export function courseSOScoresByTerm(course) {
             $project: {
               _id: 0,
               score: 1,
+            },
+          },
+        ],
+        as: "score",
+      },
+    },
+    {
+      $lookup: {
+        from: "studentworkprojects",
+        let: {
+          swp: "$studentWorkProjects",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$_id", "$$swp"],
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
               studentOutcomes: 1,
             },
           },
         ],
-        as: "soAndScore",
+        as: "studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$soAndScore",
+        path: "$score",
       },
     },
     {
       $unwind: {
-        path: "$soAndScore.studentOutcomes",
+        path: "$studentOutcome",
+      },
+    },
+    {
+      $unwind: {
+        path: "$studentOutcome.studentOutcomes",
       },
     },
     {
       $lookup: {
         from: "studentoutcomes",
         let: {
-          id: "$soAndScore.studentOutcomes",
+          id: "$studentOutcome.studentOutcomes",
         },
         pipeline: [
           {
@@ -77,11 +105,16 @@ export function courseSOScoresByTerm(course) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
         as: "so#",
+      },
+    },
+    {
+      $unwind: {
+        path: "$so#",
       },
     },
     {
@@ -150,7 +183,7 @@ export function courseSOScoresByTerm(course) {
           term: "$semesters.term",
         },
         averageScore: {
-          $avg: "$soAndScore.score",
+          $avg: "$score.score",
         },
         studentOutcomeNumber: {
           $addToSet: "$so#",

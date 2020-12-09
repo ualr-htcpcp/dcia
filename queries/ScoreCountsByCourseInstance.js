@@ -50,28 +50,56 @@ export function ScoreCountsByCourseInstance(courseInstance) {
             $project: {
               _id: 0,
               score: 1,
+            },
+          },
+        ],
+        as: "score",
+      },
+    },
+    {
+      $unwind: {
+        path: "$score",
+      },
+    },
+    {
+      $lookup: {
+        from: "studentworkprojects",
+        let: {
+          swp: "$studentWorkProjects",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$_id", "$$swp"],
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
               studentOutcomes: 1,
             },
           },
         ],
-        as: "soAndScore",
+        as: "studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$soAndScore",
+        path: "$studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$soAndScore.studentOutcomes",
+        path: "$studentOutcome.studentOutcomes",
       },
     },
     {
       $lookup: {
         from: "studentoutcomes",
         let: {
-          so: "$soAndScore.studentOutcomes",
+          so: "$studentOutcome.studentOutcomes",
         },
         pipeline: [
           {
@@ -99,7 +127,7 @@ export function ScoreCountsByCourseInstance(courseInstance) {
     {
       $group: {
         _id: {
-          score: "$soAndScore.score",
+          score: "$score.score",
           studentOutcome: "$so.number",
         },
         count: {
