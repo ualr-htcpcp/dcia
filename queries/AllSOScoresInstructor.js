@@ -44,28 +44,56 @@ export function AllSOScoresInstructor(instructor) {
             $project: {
               _id: 0,
               score: 1,
+            },
+          },
+        ],
+        as: "score",
+      },
+    },
+    {
+      $unwind: {
+        path: "$score",
+      },
+    },
+    {
+      $lookup: {
+        from: "studentworkprojects",
+        let: {
+          swp: "$studentWorkProjects",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$_id", "$$swp"],
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
               studentOutcomes: 1,
             },
           },
         ],
-        as: "soAndScore",
+        as: "studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$soAndScore",
+        path: "$studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$soAndScore.studentOutcomes",
+        path: "$studentOutcome.studentOutcomes",
       },
     },
     {
       $lookup: {
         from: "studentoutcomes",
         let: {
-          id: "$soAndScore.studentOutcomes",
+          id: "$studentOutcome.studentOutcomes",
         },
         pipeline: [
           {
@@ -128,7 +156,7 @@ export function AllSOScoresInstructor(instructor) {
           term: "$semesters.term",
         },
         averageScore: {
-          $avg: "$soAndScore.score",
+          $avg: "$score.score",
         },
         number: {
           $addToSet: "$so#",

@@ -24,7 +24,7 @@ export function ScoresByLevel(semester) {
           {
             $project: {
               _id: 0,
-              number: 1,
+              courseNumber: 1,
             },
           },
         ],
@@ -45,10 +45,10 @@ export function ScoresByLevel(semester) {
                 {
                   $and: [
                     {
-                      $gte: ["$level.number", 1000],
+                      $gte: ["$level.courseNumber", 1000],
                     },
                     {
-                      $lt: ["$level.number", 2000],
+                      $lt: ["$level.courseNumber", 2000],
                     },
                   ],
                 },
@@ -61,10 +61,10 @@ export function ScoresByLevel(semester) {
                 {
                   $and: [
                     {
-                      $gte: ["$level.number", 2000],
+                      $gte: ["$level.courseNumber", 2000],
                     },
                     {
-                      $lt: ["$level.number", 3000],
+                      $lt: ["$level.courseNumber", 3000],
                     },
                   ],
                 },
@@ -77,10 +77,10 @@ export function ScoresByLevel(semester) {
                 {
                   $and: [
                     {
-                      $gte: ["$level.number", 3000],
+                      $gte: ["$level.courseNumber", 3000],
                     },
                     {
-                      $lt: ["$level.number", 4000],
+                      $lt: ["$level.courseNumber", 4000],
                     },
                   ],
                 },
@@ -93,10 +93,10 @@ export function ScoresByLevel(semester) {
                 {
                   $and: [
                     {
-                      $gte: ["$level.number", 4000],
+                      $gte: ["$level.courseNumber", 4000],
                     },
                     {
-                      $lt: ["$level.number", 5000],
+                      $lt: ["$level.courseNumber", 5000],
                     },
                   ],
                 },
@@ -147,31 +147,59 @@ export function ScoresByLevel(semester) {
             $project: {
               _id: 0,
               score: 1,
+            },
+          },
+        ],
+        as: "score",
+      },
+    },
+    {
+      $unwind: {
+        path: "$score",
+      },
+    },
+    {
+      $lookup: {
+        from: "studentworkprojects",
+        let: {
+          swp: "$studentWorkProjects",
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$_id", "$$swp"],
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
               studentOutcomes: 1,
             },
           },
         ],
-        as: "soAndScore",
+        as: "studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$soAndScore",
+        path: "$studentOutcome",
       },
     },
     {
       $unwind: {
-        path: "$soAndScore.studentOutcomes",
+        path: "$studentOutcome.studentOutcomes",
       },
     },
     {
       $group: {
         _id: {
           level: "$range",
-          so: "$soAndScore.studentOutcomes",
+          so: "$studentOutcome.studentOutcomes",
         },
         averageScore: {
-          $avg: "$soAndScore.score",
+          $avg: "$score.score",
         },
       },
     },
