@@ -24,25 +24,18 @@ function isEmailEnabled() {
 }
 
 export async function getLocationData(ipAddress) {
-  const url = `${process.env.IP_API_ENDPOINT}/${ipAddress}?access_key=${process.env.IP_API_KEY}`;
-  try {
-    if (!isEmailEnabled()) {
-      return Promise.resolve("Localhost, USA 🇺🇸");
-    }
+  if (!isEmailEnabled()) return "Localhost, USA 🇺🇸";
 
+  try {
+    const url = `${process.env.IP_API_ENDPOINT}/${ipAddress}?access_key=${process.env.IP_API_KEY}`;
     const response = await fetch(url);
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
+    if (!response.ok) return ipAddress;
 
     const json = await response.json();
-
-    return Promise.resolve(
-      `${json.city}, ${json.region_name} ${json.location.country_flag_emoji}`
-    );
+    return `${json.city}, ${json.region_name} ${json.location.country_flag_emoji}`;
   } catch (err) {
-    return Promise.reject(err);
+    return ipAddress;
   }
 }
 
@@ -60,11 +53,11 @@ async function getRootUserEmails() {
 }
 
 async function sendEmail(msgContents, emailType) {
-  sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
   return new Promise((resolve, reject) => {
     try {
       // Don't send emails in test/development
       if (isEmailEnabled()) {
+        sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
         sendGrid.send(msgContents);
       } else {
         console.log(`${emailType} EMAIL: `);
@@ -103,7 +96,6 @@ export async function sendRootUserNotification(newRequestDetails) {
 
 export async function sendRegistrationConfirmation(newRequestDetails) {
   const emailType = "NEW REGISTRATION CONFIRMATION"; // logging purposes only
-  sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
   const msgContent = {
     to: newRequestDetails.email,
     from: { email: process.env.SENDGRID_SENDER, name: fromTeam },

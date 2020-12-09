@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p ${PORT:-3000}",
+    "start": "node server.js",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
     "e2e": "start-test dev 3000 cy:open",
     "cy:open": "cypress open",
@@ -20,6 +20,7 @@
     "@sendgrid/mail": "^7.3.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.5.3",
+    "express": "^4.17.1",
     "faker": "^5.1.0",
     "mongoose": "^5.10.11",
     "mongoose-data-seed": "^2.1.6",

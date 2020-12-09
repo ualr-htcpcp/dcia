@@ -69,7 +69,7 @@ UserSchema.post("findOneAndUpdate", async function () {
 // Reset password, clear passwordReset token/expiry
 UserSchema.pre("save", async function (next) {
   try {
-    if (!this.isModified("password")) return next();
+    if (this.isNew || !this.isModified("password")) return next();
     const hashed = await hashPassword(this.password);
     this.password = hashed;
     this.passwordReset.token = null;
