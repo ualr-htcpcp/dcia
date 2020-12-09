@@ -150,7 +150,7 @@ export function ScoresByCourse(semester) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
@@ -172,7 +172,7 @@ export function ScoresByCourse(semester) {
         _id: 0,
         averageScore: 1,
         "course.title": 1,
-        "so.studentOutcomeNumber": 1,
+        "so.number": 1,
       },
     },
   ];

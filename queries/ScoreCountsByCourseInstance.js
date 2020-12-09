@@ -4,7 +4,7 @@ export function ScoreCountsByCourseInstance(courseInstance) {
   return [
     {
       $match: {
-        courseInstance: courseInstance,
+        _id: courseInstance,
       },
     },
     {
@@ -112,7 +112,7 @@ export function ScoreCountsByCourseInstance(courseInstance) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
@@ -128,7 +128,7 @@ export function ScoreCountsByCourseInstance(courseInstance) {
       $group: {
         _id: {
           score: "$score.score",
-          studentOutcome: "$so.studentOutcomeNumber",
+          studentOutcome: "$so.number",
         },
         count: {
           $sum: 1,

@@ -134,7 +134,7 @@ export function SWPScoresByCourseInstance(courseInstance) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
@@ -150,7 +150,7 @@ export function SWPScoresByCourseInstance(courseInstance) {
       $group: {
         _id: {
           studentWorkProject: "$swp.name",
-          studentOutcomeNumber: "$so.studentOutcomeNumber",
+          studentOutcomeNumber: "$so.number",
         },
         averageScore: {
           $avg: "$score.score",

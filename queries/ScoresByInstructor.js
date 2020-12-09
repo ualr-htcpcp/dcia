@@ -150,7 +150,7 @@ export function ScoresByInstructor(semester) {
           {
             $project: {
               _id: 0,
-              studentOutcomeNumber: 1,
+              number: 1,
             },
           },
         ],
