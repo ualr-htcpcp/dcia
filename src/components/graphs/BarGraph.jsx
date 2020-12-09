@@ -13,7 +13,7 @@ const barWidth = 750;
 const barHeight = 250;
 
 function CustomTooltip({ active, payload }) {
-  if (active) {
+  if (active && payload) {
     return (
       <div className="card">
         <span>{`Count: ${payload[0].value}`}</span>
