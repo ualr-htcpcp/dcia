@@ -68,11 +68,12 @@ export default function ScoresByTermChart({
                 as="select"
                 size="sm"
                 className="ml-4"
+                defaultValue={selected}
                 onChange={handleSelect}
               >
                 {selections.map((selection, i) => {
                   return (
-                    <option key={i} value={i} selected={i === selected}>
+                    <option key={i} value={i}>
                       {selection.first} {selection.last}
                     </option>
                   );
