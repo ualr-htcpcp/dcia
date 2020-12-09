@@ -1,7 +1,5 @@
 import { capitalize } from "./string";
 
-const ALL_SOS = ["SO1", "SO2", "SO3", "SO4", "SO5", "SO6"];
-
 export function getPillStyle(score) {
   const bounds = {
     bad: {
@@ -407,7 +405,7 @@ export function formatAllScoresByTerm(data) {
 
 // Same as above, just scoped to specific instructor
 export function formatInstructorScoresByTerm(data) {
-  return data
+  const formattedData = data
     .reduce((newData, current) => {
       const formatted = formatForTermAndInstructor(current);
 
@@ -436,6 +434,7 @@ export function formatInstructorScoresByTerm(data) {
       const temp = { term: term.term };
       return Object.assign(temp, ...term.scores);
     });
+  return { graphData: formattedData };
 }
 
 /*

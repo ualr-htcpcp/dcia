@@ -1,5 +1,5 @@
 import ScoreDistributionChart from "components/ScoreDistributionChart.jsx";
-import { Col, Row } from "react-bootstrap";
+import { Alert, Col, Row } from "react-bootstrap";
 import useSWR from "swr";
 import { fetchWithCourseId } from "utils/fetch";
 
@@ -16,6 +16,7 @@ export default function ScoreDistributions({ course, instanceId }) {
   };
   return (
     <Row>
+      {error && <Alert variant="danger">{error.message}</Alert>}
       {course.studentOutcomes.map((so) => (
         <Col lg={6} key={so._id}>
           <ScoreDistributionChart
